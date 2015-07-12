@@ -10,13 +10,14 @@ import java.util.Set;
 
 
 
-import net.minecraft.server.v1_7_R3.Packet;
-import net.minecraft.server.v1_7_R3.PacketPlayOutWorldEvent;
+
+import net.minecraft.server.v1_8_R3.Packet;
+import net.minecraft.server.v1_8_R3.PacketPlayOutWorldEvent;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
-import org.bukkit.craftbukkit.v1_7_R3.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
@@ -36,7 +37,7 @@ public class PlayerClassBase implements PlayerClass {
 		this.player = p;
 	}
 
-	@Override
+	
 	public void PlayerDamaged() {
 		if(smash){
 			player.setHealth(20);
@@ -44,36 +45,36 @@ public class PlayerClassBase implements PlayerClass {
 
 	}
 
-	@Override
+	
 	public void PlayerDeath() {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
+	
 	public void PlayerAttack(Player victim) {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
+	
 	public void PlayerSpawn() {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
+	
 	public void PlayerPlaceBlock(Block b) {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
+	
 	public PlayerClass newInstance(Player p) {
 		return new PlayerClassBase(p);
 	}
 
-	@Override
+	
 	public ClassType getType() {
 		return ClassType.UNKNOWN;
 	}
@@ -82,19 +83,19 @@ public class PlayerClassBase implements PlayerClass {
 		return "Unkown";
 	}
 
-	@Override
+	
 	public void PlayerShootArrow(Entity pro) {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
+	
 	public void Smash() {
 		player.getInventory().removeItem(player.getItemInHand());
 
 	}
 
-	@Override
+	
 	public void PlayerInteract(Action a) {
 		// TODO Auto-generated method stub
 
@@ -106,7 +107,7 @@ public class PlayerClassBase implements PlayerClass {
 	 */
 	
 	
-	@Override
+	
 	public void PlayerMove() {		
 		if(player.isFlying()){
 			player.setFlying(false);
@@ -147,8 +148,8 @@ public class PlayerClassBase implements PlayerClass {
 			l = l.add(0, -1, 0);
 			for(int x = l.getBlockX() - 1; x<=l.getBlockX()+1; x++){
 				for(int z = l.getBlockZ() - 1; z<=l.getBlockZ()+1; z++){
-				SendPacketToAll(new PacketPlayOutWorldEvent(2001,x, l.getBlockY()+1, z, l.getBlock().getState().getTypeId(), false));
-				//	exploadBlocks(new Location(l.getWorld(), x, l.getBlockY(), z));
+				// SendPacketToAll(new PacketPlayOutWorldEvent(2001,x, l.getBlockY()+1, z, l.getBlock().getState().getTypeId(), false));
+				//	explodeBlocks(new Location(l.getWorld(), x, l.getBlockY(), z));
 				}
 			}
 			for(Entity pl:player.getWorld().getEntities()){

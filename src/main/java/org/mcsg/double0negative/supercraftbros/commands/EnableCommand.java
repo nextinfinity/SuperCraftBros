@@ -5,7 +5,7 @@ import org.mcsg.double0negative.supercraftbros.GameManager;
 
 public class EnableCommand implements SubCommand{
 
-	@Override
+	
 	public boolean onCommand(Player player, String[] args) {
 		if(player.isOp()){
 			
@@ -18,7 +18,7 @@ public class EnableCommand implements SubCommand{
 		return true;
 	}
 
-	@Override
+	
 	public String help(Player p) {
 		// TODO Auto-generated method stub
 		return null;

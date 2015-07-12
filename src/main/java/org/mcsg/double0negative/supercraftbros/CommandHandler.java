@@ -48,7 +48,6 @@ public class CommandHandler implements CommandExecutor
 
 	}
 
-	@Override
 	public boolean onCommand(CommandSender sender, Command cmd1, String commandLabel, String[] args){
 		String cmd = cmd1.getName();
 		PluginDescriptionFile pdfFile = plugin.getDescription();

@@ -9,7 +9,7 @@ import java.util.Set;
 
 
 
-import net.minecraft.server.v1_7_R3.PacketPlayOutWorldEvent;
+import net.minecraft.server.v1_8_R3.PacketPlayOutWorldEvent;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -83,7 +83,7 @@ public class EndermanClass extends PlayerClassBase{
 					
 					Location l = player.getLocation();
 					player.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 1000, 1));
-					SendPacketToAll(new PacketPlayOutWorldEvent(2003,l.getBlockX(), l.getBlockY()+1, l.getBlockZ(), 0, false));
+					//SendPacketToAll(new PacketPlayOutWorldEvent(2003,l.getBlockX(), l.getBlockY()+1, l.getBlockZ(), 0, false));
 					
 				}
 			}

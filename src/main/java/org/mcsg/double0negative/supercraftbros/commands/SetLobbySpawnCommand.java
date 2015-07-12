@@ -5,7 +5,7 @@ import org.mcsg.double0negative.supercraftbros.SettingsManager;
 
 public class SetLobbySpawnCommand implements SubCommand{
 
-	@Override
+	
 	public boolean onCommand(Player player, String[] args) {
 		if(player.isOp()){
 			SettingsManager.getInstance().setLobbySpawn(player.getLocation());
@@ -13,7 +13,7 @@ public class SetLobbySpawnCommand implements SubCommand{
 		return true;
 	}
 
-	@Override
+	
 	public String help(Player p) {
 		// TODO Auto-generated method stub
 		return null;

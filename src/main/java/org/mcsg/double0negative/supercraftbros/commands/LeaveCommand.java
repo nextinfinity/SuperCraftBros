@@ -5,7 +5,7 @@ import org.mcsg.double0negative.supercraftbros.GameManager;
 
 public class LeaveCommand implements SubCommand{
 
-	@Override
+	
 	public boolean onCommand(Player player, String[] args) {
 		int game = GameManager.getInstance().getPlayerGameId(player);
 		if(game != -1){
@@ -14,7 +14,7 @@ public class LeaveCommand implements SubCommand{
 		return true;
 	}
 
-	@Override
+	
 	public String help(Player p) {
 		// TODO Auto-generated method stub
 		return null;

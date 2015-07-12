@@ -5,7 +5,7 @@ import org.mcsg.double0negative.supercraftbros.GameManager;
 
 public class StartCommand implements SubCommand{
 
-	@Override
+	
 	public boolean onCommand(Player player, String[] args) {
 		if(player.hasPermission("scb.start")){
 			int game = GameManager.getInstance().getPlayerGameId(player);
@@ -16,7 +16,7 @@ public class StartCommand implements SubCommand{
 		return true;
 	}
 
-	@Override
+	
 	public String help(Player p) {
 		// TODO Auto-generated method stub
 		return null;
