@@ -7,7 +7,7 @@ public class SetLobbyGameSpawn implements SubCommand{
 
 	
 	public boolean onCommand(Player player, String[] args) {
-		if(player.isOp()){
+		if(player.hasPermission("scb.admin")){
 			
 			if(args.length == 1){
 				int i = Integer.parseInt(args[0]);

@@ -2,18 +2,20 @@ package org.mcsg.double0negative.supercraftbros.commands;
 
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.mcsg.double0negative.supercraftbros.Message;
 
 public class HelpCommand implements SubCommand{
 	public boolean onCommand(Player player, String[] args) {
 		Player p = player;
-		p.sendMessage(ChatColor.GOLD  + "/scb join <number> - Join an arena");
-		p.sendMessage(ChatColor.GOLD  + "/scb leave - Leave a game");
-		p.sendMessage(ChatColor.GOLD  + "/scb start - Start a game");
-		p.sendMessage(ChatColor.GOLD  + "/scb createarena - Create a new arena with the current WorldEdit selection");
-		p.sendMessage(ChatColor.GOLD  + "/scb setspawn next - Adds a spawn to the arena you're in");
-		p.sendMessage(ChatColor.GOLD  + "/scb setlobbyspawn - Sets the scb lobby");
-		p.sendMessage(ChatColor.GOLD  + "/scb set lobby <number> - Set the lobby for an arena");
-		p.sendMessage(ChatColor.GOLD  + "");
+		Message.send(p, ChatColor.GOLD  + "/scb join <number> - Join an arena");
+		Message.send(p, ChatColor.GOLD  + "/scb leave - Leave a game");
+		Message.send(p, ChatColor.GOLD  + "/scb start - Start a game");
+		Message.send(p, ChatColor.GOLD  + "/scb createarena - Create a new arena with the current WorldEdit selection");
+		Message.send(p, ChatColor.GOLD  + "/scb setspawn next - Adds a spawn to the arena you're in");
+		Message.send(p, ChatColor.GOLD  + "/scb setlobbyspawn - Sets the scb lobby");
+		Message.send(p, ChatColor.GOLD  + "/scb set lobby <number> - Set the lobby for an arena");
+		Message.send(p, ChatColor.GOLD  + "/scb enable <number> - Enable an arena");
+		Message.send(p, ChatColor.GOLD  + "/scb disable <number> - Disable an arena");
 		return true;
 	}
 

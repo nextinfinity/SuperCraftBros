@@ -1,14 +1,19 @@
 package org.mcsg.double0negative.supercraftbros.commands;
 
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.mcsg.double0negative.supercraftbros.GameManager;
+import org.mcsg.double0negative.supercraftbros.SettingsManager;
 
 public class JoinCommand implements SubCommand{
 	
 	public boolean onCommand(Player player, String[] args) {
 		Player p = player;
 		int i = Integer.parseInt(args[0]);
-		GameManager.getInstance().addPlayer(p, i);
+		FileConfiguration c = SettingsManager.getInstance().getSystemConfig();
+		if(c.getBoolean("system.arenas." + i + ".enabled")){
+			GameManager.getInstance().addPlayer(p, i);
+		}	
 		return true;
 	}
 

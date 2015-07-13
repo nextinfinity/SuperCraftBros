@@ -7,7 +7,7 @@ public class SetLobbySpawnCommand implements SubCommand{
 
 	
 	public boolean onCommand(Player player, String[] args) {
-		if(player.isOp()){
+		if(player.hasPermission("scb.admin")){
 			SettingsManager.getInstance().setLobbySpawn(player.getLocation());
 		}
 		return true;

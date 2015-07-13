@@ -87,18 +87,18 @@ public class Game {
 			p.setGameMode(GameMode.SURVIVAL);
 			p.setHealth(20); p.setFoodLevel(20);
 
-			p.sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + "Joined arena " + gameID + ". Select a class! \nHit tab for HUD!");
+			Message.send(p, ChatColor.YELLOW + "" + ChatColor.BOLD + "Joined arena " + gameID + ". Select a class! \nHit tab for HUD!");
 			msgAll(ChatColor.GREEN + p.getName()+ " joined the game!");
 			updateTabAll();
 		}
 		else if(state == State.INGAME){
-			p.sendMessage(ChatColor.RED + "Game already started!");
+			Message.send(p, ChatColor.RED + "Game already started!");
 		}
 		else if(players.size() >= 10){
-			p.sendMessage(ChatColor.RED + "Game Full!");
+			Message.send(p, ChatColor.RED + "Game Full!");
 		}
 		else{
-			p.sendMessage(ChatColor.RED + "Cannot join game!");
+			Message.send(p, ChatColor.RED + "Cannot join game!");
 		}
 
 
@@ -118,7 +118,7 @@ public class Game {
 			}
 			else{
 				removePlayer(p, false);
-				p.sendMessage(ChatColor.RED + "You didn't pick a class!");
+				Message.send(p, ChatColor.RED + "You didn't pick a class!");
 			}
 
 		}
@@ -159,7 +159,7 @@ public class Game {
 	public void setPlayerClass(Player player, PlayerClass playerClass){
 		if(player.hasPermission("scb.class."+playerClass.getName())){
 			clearPotions(player);
-			player.sendMessage(ChatColor.GREEN + "You choose " + playerClass.getName() + "!");
+			Message.send(player, ChatColor.GREEN + "You choose " + playerClass.getName() + "!");
 			//int prev = pClasses.keySet().size();
 			pClasses.put(player, playerClass);
 			updateTabAll();
@@ -169,7 +169,7 @@ public class Game {
 			}
 		}
 		else{
-			player.sendMessage(ChatColor.RED + "You do not have permission for this class!");
+			Message.send(player, ChatColor.RED + "You do not have permission for this class!");
 		}
 	}
 
@@ -370,7 +370,7 @@ public class Game {
 
 	public void msgAll(String msg){
 		for(Player p: players.keySet()){
-			p.sendMessage(msg);
+			Message.send(p, msg);
 		}
 	}
 
@@ -385,7 +385,7 @@ public class Game {
 	public void disable() {
 		for(Player p: players.keySet().toArray(new Player[0])){
 			playerEliminate(p);
-			p.sendMessage(ChatColor.RED + "Game Disabled");
+			Message.send(p, ChatColor.RED + "Game Disabled");
 		}
 		gameEnd();
 		state = State.DISABLED;

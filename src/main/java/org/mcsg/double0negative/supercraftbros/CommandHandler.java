@@ -67,9 +67,9 @@ public class CommandHandler implements CommandExecutor
 
 		if(cmd.equalsIgnoreCase("scb")){ 
 			if(args == null || args.length < 1){
-				player.sendMessage(ChatColor.GOLD +""+ ChatColor.BOLD +"Super Craft Bros - Double0negative"+ChatColor.RESET+  ChatColor.YELLOW +" Version: "+ pdfFile.getVersion() );
-				player.sendMessage(ChatColor.GOLD +""+ ChatColor.BOLD +"Modified by NextInfinity for Minecraft 1.8");
-				//player.sendMessage(ChatColor.GOLD +"Type /scb help for help" );
+				Message.send(player, ChatColor.GOLD +""+ ChatColor.BOLD +"Super Craft Bros - Double0negative"+ChatColor.RESET+  ChatColor.YELLOW +" Version: "+ pdfFile.getVersion() );
+				Message.send(player, ChatColor.GOLD +""+ ChatColor.BOLD +"Modified by NextInfinity for Minecraft 1.8");
+				//Message.send(player, ChatColor.GOLD +"Type /scb help for help" );
 
 				return true;
 			}
@@ -80,14 +80,14 @@ public class CommandHandler implements CommandExecutor
 			l.remove(0);
 			args = (String[]) l.toArray(new String[0]);
 			if(!commands.containsKey(sub)){
-				player.sendMessage(ChatColor.RED+"Command dosent exist.");
-				player.sendMessage(ChatColor.GOLD +"Type /scb help for help" );
+				Message.send(player, ChatColor.RED+"Command dosent exist.");
+				Message.send(player, ChatColor.GOLD +"Type /scb help for help" );
 				return true;
 			}
 			try{
 
 				commands.get(sub).onCommand( player,  args);
-			}catch(Exception e){e.printStackTrace(); player.sendMessage(ChatColor.RED+"An error occured while executing the command. Check the      console");                player.sendMessage(ChatColor.BLUE +"Type /scb help for help" );
+			}catch(Exception e){e.printStackTrace(); Message.send(player, ChatColor.RED+"An error occured while executing the command. Check the      console");                Message.send(player, ChatColor.BLUE +"Type /scb help for help" );
 			}
 			return true;
 		}

@@ -130,7 +130,7 @@ public class GameManager {
         for (Game g: getGames()) {
             if (g.isInQueue(p) && g.getID() != id) {
                 g.removeFromQueue(p);
-                p.sendMessage(ChatColor.GREEN+"Removed from the queue in arena "+ g.getID());
+                Message.send(p, ChatColor.GREEN+"Removed from the queue in arena "+ g.getID());
             }
         }
     }
@@ -180,7 +180,7 @@ public class GameManager {
     public void addPlayer(Player p, int g) {
         Game game = getGame(g);
         if (game == null) {
-            p.sendMessage(ChatColor.RED+ "Game does not exist!");
+            Message.send(p, ChatColor.RED+ "Game does not exist!");
             return;
         }
         getGame(g).addPlayer(p);
@@ -199,7 +199,7 @@ public class GameManager {
         }
         //TODO: fancy auto balance algorithm
         if (qg.size() == 0) {
-            pl.sendMessage(ChatColor.RED + "No games to join");
+            Message.send(pl, ChatColor.RED + "No games to join");
             msgmgr.sendMessage(PrefixType.WARNING, "No games to join!", pl);
             return;
         }
@@ -217,14 +217,14 @@ public class GameManager {
         WorldEditPlugin we = p.getWorldEdit();
         Selection sel = we.getSelection(pl);
         if (sel == null) {
-            pl.sendMessage(ChatColor.RED+"You must make a WorldEdit Selection first!");
+            Message.send(pl, ChatColor.RED+"You must make a WorldEdit Selection first!");
             return;
         }
         Location max = sel.getMaximumPoint();
         Location min = sel.getMinimumPoint();
 
         /* if(max.getWorld()!=SettingsManager.getGameWorld() || min.getWorld()!=SettingsManager.getGameWorld()){
-            pl.sendMessage(ChatColor.RED+"Wrong World!");
+            Message.send(pl, ChatColor.RED+"Wrong World!");
             return;
         }*/
 
@@ -241,11 +241,11 @@ public class GameManager {
         c.set("system.arenas." + no + ".x2", min.getBlockX());
         c.set("system.arenas." + no + ".y2", min.getBlockY());
         c.set("system.arenas." + no + ".z2", min.getBlockZ());
-        c.set("system.arenas." + no + ".enabled", true);
+        c.set("system.arenas." + no + ".enabled", false);
 
         SettingsManager.getInstance().saveSystemConfig();
         hotAddArena(no);
-        pl.sendMessage(ChatColor.GREEN + "Arena ID " + no + " Succesfully added");
+        Message.send(pl, ChatColor.GREEN + "Arena ID " + no + " Succesfully added");
 
     }
 

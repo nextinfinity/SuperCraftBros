@@ -6,7 +6,7 @@ import org.mcsg.double0negative.supercraftbros.GameManager;
 public class CreateArenaCommand implements SubCommand {
 
 	public boolean onCommand(Player player, String[] args) {
-		if(player.isOp()){
+		if(player.hasPermission("scb.admin")){
 			
 			GameManager.getInstance().createArenaFromSelection(player);
 			
