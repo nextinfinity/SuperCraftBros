@@ -24,6 +24,7 @@ public class CactusClass extends PlayerClassBase{
 	}
 
 
+	@SuppressWarnings("deprecation")
 	@Override 
 	public void PlayerSpawn(){
 		player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 80000, 2));

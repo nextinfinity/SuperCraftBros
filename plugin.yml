@@ -1,0 +1,9 @@
+name: SuperCraftBros
+authors: [Double0negative, MCSG, NextInfinity]
+version: 1.0
+main: org.mcsg.double0negative.supercraftbros.SuperCraftBros
+commands:
+  scb:
+    description: Super Craft Bros
+    usage: /scb(command) (args)
+    aliases: [scb]

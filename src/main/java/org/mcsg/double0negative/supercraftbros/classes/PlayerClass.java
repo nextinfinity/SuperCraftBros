@@ -3,7 +3,6 @@ package org.mcsg.double0negative.supercraftbros.classes;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Projectile;
 import org.bukkit.event.block.Action;
 
 public interface PlayerClass {

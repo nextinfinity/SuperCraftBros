@@ -8,7 +8,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.potion.PotionType;
 import org.mcsg.double0negative.supercraftbros.util.Colorizer;
 
 public class WitherClass extends PlayerClassBase{
@@ -29,6 +28,7 @@ public class WitherClass extends PlayerClassBase{
 	}
 	
 	
+	@SuppressWarnings("deprecation")
 	@Override 
 	public void PlayerSpawn(){
 		player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 8000, 4));

@@ -3,14 +3,6 @@ package org.mcsg.double0negative.supercraftbros.classes;
 
 import java.util.Set;
 
-
-
-
-
-
-
-
-
 import net.minecraft.server.v1_8_R3.Packet;
 import net.minecraft.server.v1_8_R3.PacketPlayOutWorldEvent;
 
@@ -25,6 +17,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.mcsg.double0negative.supercraftbros.GameManager;
 
+@SuppressWarnings("unused")
 public class PlayerClassBase implements PlayerClass {
 
 	Player player;
@@ -133,6 +126,7 @@ public class PlayerClassBase implements PlayerClass {
 
 	}
 
+	@SuppressWarnings("deprecation")
 	public boolean isOnGround(){
 		Location l = player.getLocation();
 		l = l.add(0, -1, 0);
@@ -167,6 +161,7 @@ public class PlayerClassBase implements PlayerClass {
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	public void exploadBlocks(Location l){
 		Location l2 = player.getLocation();
 		if(l.getBlock().getState().getTypeId() != 0){
@@ -180,6 +175,7 @@ public class PlayerClassBase implements PlayerClass {
 		}
 	}
 	
+	@SuppressWarnings("rawtypes")
 	public void SendPacketToAll(Packet p){
 		for(Player pl: GameManager.getInstance().getGame(GameManager.getInstance().getPlayerGameId(player)).getActivePlayers()){
 			((CraftPlayer)player).getHandle().playerConnection.sendPacket(p);

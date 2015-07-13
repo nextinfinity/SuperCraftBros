@@ -2,7 +2,6 @@ package org.mcsg.double0negative.supercraftbros;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
@@ -11,13 +10,16 @@ import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scoreboard.DisplaySlot;
+import org.bukkit.scoreboard.Objective;
+import org.bukkit.scoreboard.Score;
+import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.ScoreboardManager;
 import org.mcsg.double0negative.supercraftbros.classes.PlayerClass;
-import org.mcsg.double0negative.tabapi.TabAPI;
 
 public class Game {
 
@@ -85,7 +87,6 @@ public class Game {
 			p.setGameMode(GameMode.SURVIVAL);
 			p.setHealth(20); p.setFoodLevel(20);
 
-			TabAPI.setPriority(GameManager.getInstance().getPlugin(), p, 2);
 			p.sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + "Joined arena " + gameID + ". Select a class! \nHit tab for HUD!");
 			msgAll(ChatColor.GREEN + p.getName()+ " joined the game!");
 			updateTabAll();
@@ -189,6 +190,7 @@ public class Game {
 
 	}
 
+	@SuppressWarnings("deprecation")
 	public void playerEliminate(Player p){
 		started = false;
 		msgAll(ChatColor.DARK_RED + p.getName() + " has been eliminated!");
@@ -212,8 +214,6 @@ public class Game {
 			Bukkit.broadcastMessage(ChatColor.BLUE + pl.getName() + " won Super Craft Bros on arena " + gameID);
 			gameEnd();
 		}
-		TabAPI.setPriority(GameManager.getInstance().getPlugin(), p, -1);
-		TabAPI.updatePlayer(p);
 		updateTabAll();
 
 	}
@@ -225,6 +225,7 @@ public class Game {
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	public void gameEnd(){
 		/*for(Entity e:SettingsManager.getGameWorld(gameID).getEntities()){
 			if(arena.containsBlock(e.getLocation())){
@@ -236,10 +237,10 @@ public class Game {
 			p.getInventory().setArmorContents(new ItemStack[4]);
 			p.updateInventory();
 			p.teleport(SettingsManager.getInstance().getLobbySpawn());
-
+			final ScoreboardManager m = Bukkit.getScoreboardManager();
+			final Scoreboard board = m.getNewScoreboard();
+			p.setScoreboard(board);
 			clearPotions(p);
-			TabAPI.setPriority(GameManager.getInstance().getPlugin(), p, -2);
-			TabAPI.updatePlayer(p);
 			p.setFlying(false);
 			p.setAllowFlight(false);
 		}
@@ -257,44 +258,16 @@ public class Game {
 	}
 
 	public void updateTab(Player p){
-		Plugin plugin = GameManager.getInstance().getPlugin();
-		TabAPI.setTabString(plugin, p, 0, 0, "        \u00a7lSuper");
-		TabAPI.setTabString(plugin, p, 0, 1, "   \u00a7lCraft");
-		TabAPI.setTabString(plugin, p, 0, 2, "  \u00a7lBros");
-		TabAPI.setTabString(plugin, p, 1, 1, "   \u00a7lBrawl");
-		TabAPI.setTabString(plugin, p, 2, 0, " \u00a76\u00a7l----------");
-		TabAPI.setTabString(plugin, p, 2, 1, "\u00a7e\u00a7l----------");
-		TabAPI.setTabString(plugin, p, 2, 2, "\u00a76\u00a7l---------- ");
-
-		TabAPI.setTabString(plugin, p, 4, 0, "\u00a7lArena");
-		TabAPI.setTabString(plugin, p, 4, 1, gameID+TabAPI.nextNull());
-		TabAPI.setTabString(plugin, p, 5, 0, "\u00a7lClass");
-		TabAPI.setTabString(plugin, p, 5, 1, (getPlayerClass(p) != null)? getPlayerClass(p).getName()+TabAPI.nextNull():"None "+TabAPI.nextNull());
-
-		TabAPI.setTabString(plugin, p, 7, 0, "\u00a7e\u00a7lPlayer");
-		TabAPI.setTabString(plugin, p, 7, 1, "\u00a7e\u00a7lLives");
-		TabAPI.setTabString(plugin, p, 7, 2, "\u00a7e\u00a7lClass");
-
-		int a = 8;
-		for(Player pl:players.keySet()){
-			int h = convertHealth(pl.getHealth());
-			TabAPI.setTabString(plugin, p, a, 0, pl.getName(), h);
-			TabAPI.setTabString(plugin, p, a, 1, "\u00a7a"+players.get(pl)+TabAPI.nextNull(), h);
-			TabAPI.setTabString(plugin, p, a, 2, (getPlayerClass(pl) != null)? getPlayerClass(pl).getName()+TabAPI.nextNull():"None "+TabAPI.nextNull(),h );
-			a++;
+		final ScoreboardManager m = Bukkit.getScoreboardManager();
+		final Scoreboard board = m.getNewScoreboard();
+		final Objective o = board.registerNewObjective("title", "dummy");
+		o.setDisplaySlot(DisplaySlot.SIDEBAR);
+		o.setDisplayName("SuperCraftBros");
+		for(Player pl: players.keySet()){
+			Score score = o.getScore(pl);
+			score.setScore(players.get(pl));
+			pl.setScoreboard(board);
 		}
-
-		if(state == State.INGAME){
-			for(Player pl:inactive){
-				TabAPI.setTabString(plugin, p, a, 0, pl.getName(), -1);
-				TabAPI.setTabString(plugin, p, a, 1, "\u00a7c0"+TabAPI.nextNull(), -1);
-				TabAPI.setTabString(plugin, p, a, 2, (getPlayerClass(pl) != null)? getPlayerClass(pl).getName()+TabAPI.nextNull():"None "+TabAPI.nextNull(), -1);
-
-				a++;
-			}
-		}
-		TabAPI.updatePlayer(p);
-
 	}
 	
 	private int convertHealth(double h){
@@ -326,6 +299,7 @@ public class Game {
 
 	}
 
+	@SuppressWarnings("deprecation")
 	public Location getSafePoint(Location l){
 		if(isInVoid(l)){
 			while(l.getBlockY() < 256){
@@ -340,6 +314,7 @@ public class Game {
 		return l; //nothing safe at this point
 	}
 
+	@SuppressWarnings("deprecation")
 	public boolean isInVoid(Location l){
 		Location loc = l.clone();
 		while(loc.getBlockY() > 0){
@@ -381,6 +356,7 @@ public class Game {
 	}
 
 
+	@SuppressWarnings("deprecation")
 	public void removePlayer(Player p, boolean b) {
 		players.remove(p);
 		p.getInventory().clear();

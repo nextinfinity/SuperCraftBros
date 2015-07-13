@@ -14,8 +14,9 @@ public class PlayerJoin implements Listener{
 	
 	@EventHandler
 	public void join(PlayerJoinEvent e){
-	/*	final Player p = e.getPlayer();
+	final Player p = e.getPlayer();
 		Bukkit.getScheduler().scheduleSyncDelayedTask(GameManager.getInstance().getPlugin(), new Runnable(){
+			@SuppressWarnings("deprecation")
 			public void run(){
 				p.teleport(SettingsManager.getInstance().getLobbySpawn());
 				p.getInventory().clear();
@@ -26,7 +27,7 @@ public class PlayerJoin implements Listener{
 						p.removePotionEffect(e);
 				}
 			}
-		}, 2);*/
+		}, 2);
 	}
 
 }

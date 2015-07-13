@@ -4,7 +4,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Fireball;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -42,6 +41,7 @@ public class PlayerClassEvents implements Listener{
 		System.out.println("lighing");
 		final Block b = e.getBlock();
 		Bukkit.getScheduler().scheduleSyncDelayedTask(GameManager.getInstance().getPlugin(), new Runnable(){
+			@SuppressWarnings("deprecation")
 			public void run(){
 				b.setTypeId(0);
 				b.getState().update();

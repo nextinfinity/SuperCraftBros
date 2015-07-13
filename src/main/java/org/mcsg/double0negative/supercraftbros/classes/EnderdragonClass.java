@@ -6,7 +6,6 @@ import java.util.Random;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.util.Vector;
 import org.mcsg.double0negative.supercraftbros.GameManager;
 
 public class EnderdragonClass extends PlayerClassBase{

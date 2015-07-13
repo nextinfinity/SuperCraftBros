@@ -25,6 +25,7 @@ public class BlazeClass extends PlayerClassBase {
 		// TODO Auto-generated constructor stub
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void PlayerSpawn(){
 		player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 8000, 4));
@@ -75,7 +76,7 @@ public class BlazeClass extends PlayerClassBase {
 
 	public void Smash(){
 		smash = true;
-		final Location l = player.getLocation();
+		//final Location l = player.getLocation();
 		final Random r = new Random();
 		
 		final int [] i1 = {2, 1, 0, -1, -2, -1, 0, 1, 2, 1, 0, -1, -2, -1, 0, 1, 2, 1, 0, -1};

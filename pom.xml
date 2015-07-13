@@ -94,12 +94,6 @@
 			<version>5.5.7-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-			<groupId>org.mcsg.double0negative</groupId>
-			<artifactId>tabapi</artifactId>
-			<version>B%200.1.15</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
 			<groupId>org.mcstats.bukkit</groupId>
 			<artifactId>metrics</artifactId>
 			<version>R6</version>

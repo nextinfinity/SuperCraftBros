@@ -2,7 +2,6 @@ package org.mcsg.double0negative.supercraftbros;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -17,17 +16,10 @@ import org.mcsg.double0negative.supercraftbros.event.PlayerLeave;
 import org.mcsg.double0negative.supercraftbros.event.PlayerTeleport;
 
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
-import java.io.IOException;
-import org.mcstats.*;
 
 public class SuperCraftBros extends JavaPlugin{
 
 	public void onEnable(){
-		try {
-				Metrics metrics = new Metrics(this);
-				metrics.start();
-		} catch (IOException e) {
-		}
 		SettingsManager.getInstance().setup(this);
 		GameManager.getInstance().setup(this);
 		

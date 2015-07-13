@@ -19,6 +19,7 @@ public class InventoryEvents implements Listener {
     	
 	}
 	
+	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void itemDrop(InventoryClickEvent e){
 		int game = GameManager.getInstance().getPlayerGameId(Bukkit.getPlayerExact(e.getWhoClicked().getName()));

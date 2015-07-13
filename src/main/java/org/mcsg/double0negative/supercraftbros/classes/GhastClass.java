@@ -2,7 +2,6 @@ package org.mcsg.double0negative.supercraftbros.classes;
 
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Fireball;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
@@ -19,6 +18,7 @@ public class GhastClass extends PlayerClassBase{
 		// TODO Auto-generated constructor stub
 	}
 	
+	@SuppressWarnings("deprecation")
 	@Override 
 	public void PlayerSpawn(){
 		player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 88000, 4));

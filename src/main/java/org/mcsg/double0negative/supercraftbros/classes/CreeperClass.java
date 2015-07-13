@@ -12,7 +12,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.TNTPrimed;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
-import org.bukkit.material.MaterialData;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.mcsg.double0negative.supercraftbros.GameManager;
@@ -25,6 +24,7 @@ public class CreeperClass extends PlayerClassBase{
 		// TODO Auto-generated constructor stub
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void PlayerPlaceBlock(Block b){
 		
@@ -45,6 +45,7 @@ public class CreeperClass extends PlayerClassBase{
 	}
 	
 	
+	@SuppressWarnings("deprecation")
 	@Override 
 	public void PlayerSpawn(){
 		player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 8000, 2));

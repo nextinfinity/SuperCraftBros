@@ -2,13 +2,6 @@ package org.mcsg.double0negative.supercraftbros.classes;
 
 import java.util.Random;
 
-
-
-
-
-
-
-
 import net.minecraft.server.v1_8_R3.Packet;
 import net.minecraft.server.v1_8_R3.PacketPlayOutWorldEvent;
 
@@ -27,6 +20,7 @@ import org.mcsg.double0negative.supercraftbros.Game;
 import org.mcsg.double0negative.supercraftbros.GameManager;
 import org.mcsg.double0negative.supercraftbros.util.Colorizer;
 
+@SuppressWarnings("unused")
 public class WitchClass extends PlayerClassBase{
 
 	int sugar = 0;
@@ -36,6 +30,7 @@ public class WitchClass extends PlayerClassBase{
 		super(p);
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override 
 	public void PlayerSpawn(){
 		player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 80000, 4));

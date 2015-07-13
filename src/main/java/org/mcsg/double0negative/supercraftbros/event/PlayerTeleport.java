@@ -4,7 +4,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerTeleportEvent;
-import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.mcsg.double0negative.supercraftbros.Game;
 import org.mcsg.double0negative.supercraftbros.Game.State;
 import org.mcsg.double0negative.supercraftbros.GameManager;

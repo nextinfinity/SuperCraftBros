@@ -18,6 +18,7 @@ public class SkeletonClass extends PlayerClassBase{
 		// TODO Auto-generated constructor stub
 	}
 
+	@SuppressWarnings("deprecation")
 	public void PlayerSpawn(){
 		player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 8000, 2));
 

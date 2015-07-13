@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Vector;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -15,6 +14,8 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.mcsg.double0negative.supercraftbros.commands.CreateArenaCommand;
 import org.mcsg.double0negative.supercraftbros.commands.DisableCommand;
 import org.mcsg.double0negative.supercraftbros.commands.EnableCommand;
+import org.mcsg.double0negative.supercraftbros.commands.HelpCommand;
+import org.mcsg.double0negative.supercraftbros.commands.JoinCommand;
 import org.mcsg.double0negative.supercraftbros.commands.LeaveCommand;
 import org.mcsg.double0negative.supercraftbros.commands.SetLobbyGameSpawn;
 import org.mcsg.double0negative.supercraftbros.commands.SetLobbySpawnCommand;
@@ -37,6 +38,7 @@ public class CommandHandler implements CommandExecutor
 
 	private void loadCommands()
 	{
+		commands.put("join", new JoinCommand());
 		commands.put("createarena", new CreateArenaCommand());
 		commands.put("disable", new DisableCommand());
 		commands.put("enable", new EnableCommand());
@@ -45,6 +47,7 @@ public class CommandHandler implements CommandExecutor
 		commands.put("setspawn", new SetSpawnCommand());
 		commands.put("leave", new LeaveCommand());
 		commands.put("start", new StartCommand());
+		commands.put("help", new HelpCommand());
 
 	}
 
@@ -65,12 +68,9 @@ public class CommandHandler implements CommandExecutor
 		if(cmd.equalsIgnoreCase("scb")){ 
 			if(args == null || args.length < 1){
 				player.sendMessage(ChatColor.GOLD +""+ ChatColor.BOLD +"Super Craft Bros - Double0negative"+ChatColor.RESET+  ChatColor.YELLOW +" Version: "+ pdfFile.getVersion() );
+				player.sendMessage(ChatColor.GOLD +""+ ChatColor.BOLD +"Modified by NextInfinity for Minecraft 1.8");
 				//player.sendMessage(ChatColor.GOLD +"Type /scb help for help" );
 
-				return true;
-			}
-			if(args[0].equalsIgnoreCase("help")){
-				help(player);
 				return true;
 			}
 			String sub = args[0];
@@ -81,7 +81,7 @@ public class CommandHandler implements CommandExecutor
 			args = (String[]) l.toArray(new String[0]);
 			if(!commands.containsKey(sub)){
 				player.sendMessage(ChatColor.RED+"Command dosent exist.");
-				//player.sendMessage(ChatColor.GOLD +"Type /scb help for help" );
+				player.sendMessage(ChatColor.GOLD +"Type /scb help for help" );
 				return true;
 			}
 			try{
@@ -92,13 +92,5 @@ public class CommandHandler implements CommandExecutor
 			return true;
 		}
 		return false;
-	}
-
-	public void help(Player p){
-		/*
-		p.sendMessage("/scb <command> <args>");
-		for(SubCommand v: commands.values()){
-			p.sendMessage(ChatColor.AQUA +v.help(p));
-		}*/
 	}
 }

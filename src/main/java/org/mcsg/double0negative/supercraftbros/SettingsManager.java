@@ -6,8 +6,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.HashMap;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -24,14 +22,10 @@ public class SettingsManager {
 	private static Plugin p;
 	private FileConfiguration spawns;
 	private FileConfiguration system;
-	private FileConfiguration sponsor;
-	private FileConfiguration messages;
 
 
 	private File f;
 	private File f2;
-	private File f3;
-	private File f4;
 
 	private SettingsManager() {
 
@@ -41,6 +35,7 @@ public class SettingsManager {
 		return instance;
 	}
 
+	@SuppressWarnings("static-access")
 	public void setup(Plugin p) {
 		this.p = p;
 		p.getConfig().options().copyDefaults(true);

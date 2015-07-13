@@ -1,0 +1,226 @@
+featherfalling: &featherfalling
+    ==: org.bukkit.inventory.ItemStack
+    type: LEATHER_BOOTS
+    amount: 1
+    meta:
+        ==: ItemMeta
+        meta-type: UNSPECIFIC
+        enchants:
+            DAMAGE_RESISTANCE: 4
+            PROTECTION_FALL: 10
+jump: &jump
+    ==: PotionEffect
+    amplifier: 2
+    duration: 9999999
+    effect: 8
+    ambient: false
+randomdrops: 'not implemented yet'
+classes:
+    skeleton:
+        equipment:
+            boots:
+                <<: *featherfalling
+        inventory:
+            0:
+                ==: org.bukkit.inventory.ItemStack
+                type: BOW
+                amount: 1
+                meta:
+                    ==: ItemMeta
+                    meta-type: UNSPECIFIC
+                    enchants:
+                        ARROW_INFINITE: 1
+                        KNOCKBACK: 1
+            1:
+                ==: org.bukkit.inventory.ItemStack
+                type: ARROW
+                amount: 1
+        effects:
+            -
+                <<: *jump
+    zombie:
+        equipment:
+            boots:
+                <<: *featherfalling
+        inventory:
+            0:
+                ==: org.bukkit.inventory.ItemStack
+                type: IRON_SPADE
+                amount: 1
+                meta:
+                    ==: ItemMeta
+                    meta-type: UNSPECIFIC
+                    enchants:
+                        ARROW_INFINITE: 1
+                        KNOCKBACK: 1
+        effects:
+            -
+                <<: *jump
+    spider:
+        equipment:
+            boots:
+                <<: *featherfalling
+        inventory:
+            0:
+                ==: org.bukkit.inventory.ItemStack
+                type: SPIDER_EYE
+                amount: 1
+                meta:
+                    ==: ItemMeta
+                    meta-type: UNSPECIFIC
+                    enchants:
+                        DAMAGE_ALL: 2
+                        KNOCKBACK: 1
+        effects:
+            -
+                <<: *jump
+                amplifer: 4
+            -
+                ==: PotionEffect
+                effect: 1
+                amplifier: 2
+                duration: 9999999
+                ambient: false
+    creeper:
+        equipment:
+            boots:
+                <<: *featherfalling
+        inventory:
+            0:
+                ==: org.bukkit.inventory.ItemStack
+                type: SULPHUR
+                amount: 1
+                meta:
+                    ==: ItemMeta
+                    meta-type: UNSPECIFIC
+                    enchants:
+                        KNOCKBACK: 1
+            1:
+                ==: org.bukkit.inventory.ItemStack
+                type: POTION
+                amount: 256
+                durability: 8204
+
+        effects:
+            -
+                <<: *jump
+    enderman:
+        equipment:
+            boots:
+                <<: *featherfalling
+        inventory:
+            0:
+                ==: org.bukkit.inventory.ItemStack
+                type: ENDER_STONE
+                amount: 1
+                meta:
+                    ==: ItemMeta
+                    meta-type: UNSPECIFIC
+                    enchants:
+                        KNOCKBACK: 1
+                        DAMAGE_ALL: 3
+            1:
+                ==: org.bukkit.inventory.ItemStack
+                type: ENDER_PEARL
+                amount: 64
+        effects:
+            -
+                <<: *jump
+    blaze:
+        equipment:
+            boots:
+                <<: *featherfalling
+        inventory:
+            0:
+                ==: org.bukkit.inventory.ItemStack
+                type: BOW
+                amount: 1
+                meta:
+                    ==: ItemMeta
+                    meta-type: UNSPECIFIC
+                    enchants:
+                        ARROW_INFINITE: 1
+                        ARROW_FIRE: 1
+            1:
+                ==: org.bukkit.inventory.ItemStack
+                type: ARROW
+                amount: 1
+            2:
+                ==: org.bukkit.inventory.ItemStack
+                type: BLAZE_ROD
+                amount: 1
+                meta:
+                    ==: ItemMeta
+                    meta-type: UNSPECIFIC
+                    enchants:
+                        KNOCKBACK: 1
+                        FIRE_ASPECT: 1
+        effects:
+            -
+                <<: *jump
+                amplifier: 6
+    cactus:
+        equipment:
+            boots:
+                <<: *featherfalling
+            chestplate:
+                ==: org.bukkit.inventory.ItemStack
+                type: LEATHER_CHESTPLATE
+                amount: 1
+                meta:
+                    ==: ItemMeta
+                    meta-type: UNSPECIFIC
+                    enchants:
+                        PROTECTION_ENVIRONMENTAL: 3
+                        THORNS: 2
+        inventory:
+            0:
+                ==: org.bukkit.inventory.ItemStack
+                type: WOOD_SWORD
+                amount: 1
+                meta:
+                    ==: ItemMeta
+                    meta-type: UNSPECIFIC
+                    enchants:
+                        DAMAGE_ALL: 1
+                        KNOCKBACK: 1
+        effects:
+            -
+                <<: *jump
+    wither:
+        equipment:
+            boots:
+                <<: *featherfalling
+            chestplate:
+                ==: org.bukkit.inventory.ItemStack
+                type: LEATHER_CHESTPLATE
+                amount: 1
+                meta:
+                    ==: ItemMeta
+                    meta-type: UNSPECIFIC
+                    enchants:
+                        PROTECTION_ENVIRONMENTAL: 3
+        inventory:
+            0:
+                ==: org.bukkit.inventory.ItemStack
+                type: BOW
+                amount: 1
+                meta:
+                    ==: ItemMeta
+                    meta-type: UNSPECIFIC
+                    enchants:
+                        KNOCKBACK: 1
+                        ARROW_INFINITE: 1
+            1:
+                ==: org.bukkit.inventory.ItemStack
+                type: ARROW
+                amount: 1
+            2:
+                ==: org.bukkit.inventory.ItemStack
+                type: POTION
+                amount: 256
+                durability: 0
+        effects:
+            -
+                <<: *jump
+                amplifier: 6

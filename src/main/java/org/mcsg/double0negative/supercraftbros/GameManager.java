@@ -2,12 +2,8 @@ package org.mcsg.double0negative.supercraftbros;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
-
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.block.Block;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
