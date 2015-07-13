@@ -19,6 +19,7 @@ import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 
 public class SuperCraftBros extends JavaPlugin{
 
+	@SuppressWarnings("deprecation")
 	public void onEnable(){
 		SettingsManager.getInstance().setup(this);
 		GameManager.getInstance().setup(this);
