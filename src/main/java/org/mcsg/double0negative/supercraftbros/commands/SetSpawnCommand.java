@@ -25,7 +25,7 @@ public class SetSpawnCommand implements SubCommand{
     public boolean onCommand(Player player, String[] args) {
         
         if(!player.hasPermission("scb.admin")){
-            Message.send(player, ChatColor.RED+"No Permission");
+    		Message.send(player, ChatColor.RED + "You don't have permission for that!");
             return true;
         }
         loadNextSpawn();

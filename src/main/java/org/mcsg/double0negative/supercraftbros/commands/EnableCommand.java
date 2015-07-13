@@ -36,6 +36,8 @@ public class EnableCommand implements SubCommand{
 				}
 			}
 			
+		}else{
+			Message.send(player, ChatColor.RED + "You don't have permission for that!");
 		}
 		return true;
 	}

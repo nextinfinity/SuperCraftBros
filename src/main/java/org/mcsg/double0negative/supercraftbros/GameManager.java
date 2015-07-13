@@ -10,7 +10,6 @@ import org.bukkit.plugin.Plugin;
 import org.mcsg.double0negative.supercraftbros.classes.BlazeClass;
 import org.mcsg.double0negative.supercraftbros.classes.CactusClass;
 import org.mcsg.double0negative.supercraftbros.classes.CreeperClass;
-import org.mcsg.double0negative.supercraftbros.classes.EnderdragonClass;
 import org.mcsg.double0negative.supercraftbros.classes.EndermanClass;
 import org.mcsg.double0negative.supercraftbros.classes.GhastClass;
 import org.mcsg.double0negative.supercraftbros.classes.PlayerClass;
@@ -55,7 +54,6 @@ public class GameManager {
         classList.put("blaze", new BlazeClass(null));
         classList.put("witch", new WitchClass(null));
         classList.put("ghast", new GhastClass(null));
-        classList.put("enderdragon", new EnderdragonClass(null));
 
     }
 
