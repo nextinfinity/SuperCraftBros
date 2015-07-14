@@ -73,13 +73,11 @@ public class GameManager {
         while (loaded < no) {
             if (c.isSet("system.arenas." + a + ".x1")) {
                 //c.set("system.arenas."+a+".enabled",c.getBoolean("system.arena."+a+".enabled", true));
-                if (c.getBoolean("system.arenas." + a + ".enabled")) {
                     //System.out.println(c.getString("system.arenas."+a+".enabled"));
                     //c.set("system.arenas."+a+".vip",c.getBoolean("system.arenas."+a+".vip", false));
                     System.out.println("Loading Arena: " + a);
                     loaded++;
                     games.add(new Game(a));
-                }
             }
             a++;
         }
@@ -150,14 +148,10 @@ public class GameManager {
 
     public void disableGame(int id) {
         getGame(id).disable();
-        FileConfiguration c = SettingsManager.getInstance().getSystemConfig();
-        c.set("system.arenas." + id + ".enabled", true);
     }
 
     public void enableGame(int id) {
         getGame(id).enable();
-        FileConfiguration c = SettingsManager.getInstance().getSystemConfig();
-        c.set("system.arenas." + id + ".enabled", true);
     }
 
     public ArrayList<Game> getGames() {

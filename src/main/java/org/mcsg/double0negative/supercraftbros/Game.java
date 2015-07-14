@@ -98,7 +98,7 @@ public class Game {
 			Message.send(p, ChatColor.RED + "Game Full!");
 		}
 		else{
-			Message.send(p, ChatColor.RED + "Cannot join game!");
+			Message.send(p, ChatColor.RED + "Arena is disabled!");
 		}
 
 
