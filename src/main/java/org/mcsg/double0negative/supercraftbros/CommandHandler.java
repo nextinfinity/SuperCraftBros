@@ -67,7 +67,7 @@ public class CommandHandler implements CommandExecutor
 		if(cmd.equalsIgnoreCase("scb")){ 
 			if(player.hasPermission("scb.player")){
 				if(args == null || args.length < 1){
-					Message.send(player, ChatColor.GOLD +""+ ChatColor.BOLD +"Super Craft Bros Reload by NextInfinity");
+					Message.send(player, ChatColor.GOLD +""+ ChatColor.BOLD +"Super Craft Bros Reloaded by NextInfinity");
 					Message.send(player, ChatColor.GOLD +""+ ChatColor.BOLD +"Original source by double0negative");
 					Message.send(player, ChatColor.GOLD +""+ ChatColor.BOLD +"Modified for Minecraft 1.8");
 					Message.send(player, ChatColor.GOLD +""+ ChatColor.BOLD +"Type /scb help for commands");
