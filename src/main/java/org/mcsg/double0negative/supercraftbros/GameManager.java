@@ -150,10 +150,14 @@ public class GameManager {
 
     public void disableGame(int id) {
         getGame(id).disable();
+        FileConfiguration c = SettingsManager.getInstance().getSystemConfig();
+        c.set("system.arenas." + id + ".enabled", true);
     }
 
     public void enableGame(int id) {
         getGame(id).enable();
+        FileConfiguration c = SettingsManager.getInstance().getSystemConfig();
+        c.set("system.arenas." + id + ".enabled", true);
     }
 
     public ArrayList<Game> getGames() {

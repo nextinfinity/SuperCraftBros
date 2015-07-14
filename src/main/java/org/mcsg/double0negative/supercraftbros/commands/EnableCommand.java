@@ -22,6 +22,7 @@ public class EnableCommand implements SubCommand{
 						if(system.contains("system.lobby.spawn.x")){
 							if(spawns.contains("spawns." + i + ".lobby.world")){
 								GameManager.getInstance().getGame(i).enable();
+								Message.send(player, ChatColor.GREEN + "Arena " + i + " enabled!");
 							}else{
 								Message.send(player, ChatColor.RED  + "No game lobby set!");
 							}
