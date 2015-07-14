@@ -83,7 +83,7 @@ public class Game {
 		if(state == State.LOBBY && players.size() < 10){
 			p.teleport(SettingsManager.getInstance().getGameLobbySpawn(gameID));
 
-			players.put(p ,3 );
+			players.put(p , 3);
 			p.setGameMode(GameMode.SURVIVAL);
 			p.setHealth(20); p.setFoodLevel(20);
 

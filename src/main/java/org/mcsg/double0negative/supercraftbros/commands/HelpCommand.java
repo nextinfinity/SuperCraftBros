@@ -11,7 +11,7 @@ public class HelpCommand implements SubCommand{
 		Message.send(p, ChatColor.GOLD  + "/scb leave - Leave a game");
 		Message.send(p, ChatColor.GOLD  + "/scb start - Start a game");
 		Message.send(p, ChatColor.GOLD  + "/scb createarena - Create a new arena with the current WorldEdit selection");
-		Message.send(p, ChatColor.GOLD  + "/scb setspawn next - Adds a spawn to the arena you're in");
+		Message.send(p, ChatColor.GOLD  + "/scb setspawn next - Adds a spawn to arena you're in");
 		Message.send(p, ChatColor.GOLD  + "/scb setlobbyspawn - Sets the scb lobby");
 		Message.send(p, ChatColor.GOLD  + "/scb set lobby <number> - Set the lobby for an arena");
 		Message.send(p, ChatColor.GOLD  + "/scb enable <number> - Enable an arena");
