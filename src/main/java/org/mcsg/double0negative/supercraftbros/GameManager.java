@@ -51,7 +51,6 @@ public class GameManager {
         classList.put("wither", new WitherClass(null));
         classList.put("spider", new SpiderClass(null));
         classList.put("zombie", new ZombieClass(null));
-        classList.put("blaze", new BlazeClass(null));
         classList.put("witch", new WitchClass(null));
         classList.put("ghast", new GhastClass(null));
 

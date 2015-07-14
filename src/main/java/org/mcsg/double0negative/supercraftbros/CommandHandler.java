@@ -10,7 +10,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.PluginDescriptionFile;
 import org.mcsg.double0negative.supercraftbros.commands.CreateArenaCommand;
 import org.mcsg.double0negative.supercraftbros.commands.DisableCommand;
 import org.mcsg.double0negative.supercraftbros.commands.EnableCommand;
@@ -26,6 +25,7 @@ import org.mcsg.double0negative.supercraftbros.commands.SubCommand;
 
 public class CommandHandler implements CommandExecutor
 {
+	@SuppressWarnings("unused")
 	private Plugin plugin;
 	private HashMap<String, SubCommand> commands;
 
@@ -53,7 +53,6 @@ public class CommandHandler implements CommandExecutor
 
 	public boolean onCommand(CommandSender sender, Command cmd1, String commandLabel, String[] args){
 		String cmd = cmd1.getName();
-		PluginDescriptionFile pdfFile = plugin.getDescription();
 
 		Player player = null;
 		if (sender instanceof Player) {
@@ -68,8 +67,10 @@ public class CommandHandler implements CommandExecutor
 		if(cmd.equalsIgnoreCase("scb")){ 
 			if(player.hasPermission("scb.player")){
 				if(args == null || args.length < 1){
-					Message.send(player, ChatColor.GOLD +""+ ChatColor.BOLD +"Super Craft Bros - Double0negative"+ChatColor.RESET+  ChatColor.YELLOW +" Version: "+ pdfFile.getVersion() );
-					Message.send(player, ChatColor.GOLD +""+ ChatColor.BOLD +"Modified by NextInfinity for Minecraft 1.8");
+					Message.send(player, ChatColor.GOLD +""+ ChatColor.BOLD +"Super Craft Bros Reload by NextInfinity");
+					Message.send(player, ChatColor.GOLD +""+ ChatColor.BOLD +"Original source by double0negative");
+					Message.send(player, ChatColor.GOLD +""+ ChatColor.BOLD +"Modified for Minecraft 1.8");
+					Message.send(player, ChatColor.GOLD +""+ ChatColor.BOLD +"Type /scb help for commands");
 					//Message.send(player, ChatColor.GOLD +"Type /scb help for help" );
 
 					return true;
