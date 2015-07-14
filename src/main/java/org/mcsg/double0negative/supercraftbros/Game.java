@@ -260,6 +260,7 @@ public class Game {
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	public void updateTab(Player p){
 		final ScoreboardManager m = Bukkit.getScoreboardManager();
 		final Scoreboard board = m.getNewScoreboard();
@@ -271,24 +272,6 @@ public class Game {
 			score.setScore(players.get(pl));
 			pl.setScoreboard(board);
 		}
-	}
-	
-	private int convertHealth(double h){
-		if(h > 17){
-			return 1;
-		}else if(h >14){
-			return 151;
-		}else if(h > 10){
-			return 301;
-		}else if(h > 5){
-			return 601;
-		}else if(h > 2){
-			return 1001;
-		}
-		else{
-			return -1;
-		}
-		
 	}
 
 	public void spawnPlayer(Player p){
