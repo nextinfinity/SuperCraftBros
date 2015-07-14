@@ -87,7 +87,7 @@ public class Game {
 			p.setGameMode(GameMode.SURVIVAL);
 			p.setHealth(20); p.setFoodLevel(20);
 
-			Message.send(p, ChatColor.YELLOW + "" + ChatColor.BOLD + "Joined arena " + gameID + ". Select a class! \nHit tab for HUD!");
+			Message.send(p, ChatColor.YELLOW + "" + ChatColor.BOLD + "Joined arena " + gameID + ". Select a class!");
 			msgAll(ChatColor.GREEN + p.getName()+ " joined the game!");
 			updateTabAll();
 		}
@@ -205,6 +205,9 @@ public class Game {
 		p.setFlying(false);
 		clearPotions(p);
 		p.teleport(SettingsManager.getInstance().getLobbySpawn());
+		final ScoreboardManager m = Bukkit.getScoreboardManager();
+		final Scoreboard board = m.getNewScoreboard();
+		p.setScoreboard(board);
 
 		if(players.keySet().size() <= 1 && state == State.INGAME){
 			Player pl = null;
@@ -365,6 +368,9 @@ public class Game {
 		playerEliminate(p);
 		inactive.remove(p);
 		p.teleport(SettingsManager.getInstance().getLobbySpawn());
+		final ScoreboardManager m = Bukkit.getScoreboardManager();
+		final Scoreboard board = m.getNewScoreboard();
+		p.setScoreboard(board);
 		msgAll(ChatColor.RED + p.getName() + " left the game!");
 	}
 

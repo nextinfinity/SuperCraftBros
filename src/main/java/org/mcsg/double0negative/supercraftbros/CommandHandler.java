@@ -66,30 +66,32 @@ public class CommandHandler implements CommandExecutor
 
 
 		if(cmd.equalsIgnoreCase("scb")){ 
-			if(args == null || args.length < 1){
-				Message.send(player, ChatColor.GOLD +""+ ChatColor.BOLD +"Super Craft Bros - Double0negative"+ChatColor.RESET+  ChatColor.YELLOW +" Version: "+ pdfFile.getVersion() );
-				Message.send(player, ChatColor.GOLD +""+ ChatColor.BOLD +"Modified by NextInfinity for Minecraft 1.8");
-				//Message.send(player, ChatColor.GOLD +"Type /scb help for help" );
+			if(player.hasPermission("scb.player")){
+				if(args == null || args.length < 1){
+					Message.send(player, ChatColor.GOLD +""+ ChatColor.BOLD +"Super Craft Bros - Double0negative"+ChatColor.RESET+  ChatColor.YELLOW +" Version: "+ pdfFile.getVersion() );
+					Message.send(player, ChatColor.GOLD +""+ ChatColor.BOLD +"Modified by NextInfinity for Minecraft 1.8");
+					//Message.send(player, ChatColor.GOLD +"Type /scb help for help" );
 
+					return true;
+				}
+				String sub = args[0];
+
+				Vector<String> l  = new Vector<String>();
+				l.addAll(Arrays.asList(args));
+				l.remove(0);
+				args = (String[]) l.toArray(new String[0]);
+				if(!commands.containsKey(sub)){
+					Message.send(player, ChatColor.RED+"Command dosent exist.");
+					Message.send(player, ChatColor.GOLD +"Type /scb help for help" );
+					return true;
+				}
+				try{
+
+					commands.get(sub).onCommand( player,  args);
+				}catch(Exception e){e.printStackTrace(); Message.send(player, ChatColor.RED+"An error occured while executing the command. Check the      console");                Message.send(player, ChatColor.BLUE +"Type /scb help for help" );
+				}
 				return true;
 			}
-			String sub = args[0];
-
-			Vector<String> l  = new Vector<String>();
-			l.addAll(Arrays.asList(args));
-			l.remove(0);
-			args = (String[]) l.toArray(new String[0]);
-			if(!commands.containsKey(sub)){
-				Message.send(player, ChatColor.RED+"Command dosent exist.");
-				Message.send(player, ChatColor.GOLD +"Type /scb help for help" );
-				return true;
-			}
-			try{
-
-				commands.get(sub).onCommand( player,  args);
-			}catch(Exception e){e.printStackTrace(); Message.send(player, ChatColor.RED+"An error occured while executing the command. Check the      console");                Message.send(player, ChatColor.BLUE +"Type /scb help for help" );
-			}
-			return true;
 		}
 		return false;
 	}
