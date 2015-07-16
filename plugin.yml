@@ -5,5 +5,5 @@ main: org.mcsg.double0negative.supercraftbros.SuperCraftBros
 commands:
   scb:
     description: Super Craft Bros
-    usage: /scb(command) (args)
+    usage: /scb (command) (args)
     aliases: [scb]
