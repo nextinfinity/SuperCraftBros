@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -65,7 +66,7 @@ public class SettingsManager {
 		p.getConfig().set(arg0, arg1);
 	}
 
-	public FileConfiguration getConfig() {
+	public static FileConfiguration getConfig() {
 		return p.getConfig();
 	}
 
@@ -178,11 +179,6 @@ public class SettingsManager {
 		}
 		GameManager.getInstance().getGame(gameid).addSpawn();
 
-	}
-
-	public static String getSqlPrefix() {
-
-		return getInstance().getConfig().getString("sql.prefix");
 	}
 
 

@@ -40,6 +40,7 @@ public class Game {
 
 
 	private HashMap<Player, Integer>players = new HashMap<Player, Integer>();
+	private HashMap<Player, Double>damage = new HashMap<Player, Double>();
 	private HashMap<Player, PlayerClass>pClasses = new HashMap<Player, PlayerClass>();
 	private ArrayList<Player>inactive = new ArrayList<Player>();
 	private ArrayList<Player>queue = new ArrayList<Player>();
@@ -84,6 +85,7 @@ public class Game {
 			p.teleport(SettingsManager.getInstance().getGameLobbySpawn(gameID));
 
 			players.put(p , 3);
+			damage.put(p, 0D);
 			p.setGameMode(GameMode.SURVIVAL);
 			p.setHealth(20); p.setFoodLevel(20);
 
@@ -151,8 +153,19 @@ public class Game {
 
 		}
 	}
+	
+	public void addDamage(Player p, double i){
+		double d = getDamage(p);
+		double nd = d + (i*10);
+		damage.put(p, nd);
+		updateTabAll();
+	}
 
-
+	public double getDamage(Player p){
+		double i = damage.get(p);
+		return i;
+	}
+	
 	boolean started = false;
 
 
@@ -184,6 +197,7 @@ public class Game {
 		}
 		else{
 			players.put(p, lives);
+			damage.put(p, 0D);
 			msgAll(p.getName() + " has " + lives + " lives left");
 		}
 		updateTabAll();
@@ -260,17 +274,21 @@ public class Game {
 		}
 	}
 
-	@SuppressWarnings("deprecation")
 	public void updateTab(Player p){
 		final ScoreboardManager m = Bukkit.getScoreboardManager();
 		final Scoreboard board = m.getNewScoreboard();
 		final Objective o = board.registerNewObjective("title", "dummy");
 		o.setDisplaySlot(DisplaySlot.SIDEBAR);
-		o.setDisplayName("SuperCraftBros");
+		o.setDisplayName(ChatColor.GOLD + "SuperCraftBros");
 		for(Player pl: players.keySet()){
-			Score score = o.getScore(pl);
-			score.setScore(players.get(pl));
-			pl.setScoreboard(board);
+			if(SettingsManager.getConfig().getBoolean("usepercents")){
+				Score score = o.getScore(ChatColor.YELLOW + pl.getName() + " [" + Math.round(damage.get(pl)) + "]");
+				score.setScore(players.get(pl));
+			}else{
+				Score score = o.getScore(ChatColor.YELLOW + pl.getName());
+				score.setScore(players.get(pl));
+			}
+			p.setScoreboard(board);
 		}
 	}
 

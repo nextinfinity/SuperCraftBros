@@ -18,9 +18,9 @@ public class EnableCommand implements SubCommand{
 				FileConfiguration system = SettingsManager.getInstance().getSystemConfig();
 				int i = Integer.parseInt(args[0]);
 				try{
-					if(spawns.contains("spawns." + i + ".1.x")){
-						if(system.contains("system.lobby.spawn.x")){
-							if(spawns.contains("spawns." + i + ".lobby.world")){
+					if(spawns.isSet("spawns." + i + ".1.x")){
+						if(system.isSet("system.lobby.spawn.x")){
+							if(spawns.isSet("spawns." + i + ".lobby.world")){
 								GameManager.getInstance().getGame(i).enable();
 								system.set("system.arenas." + i + ".enabled", true);
 								Message.send(player, ChatColor.GREEN + "Arena " + i + " enabled!");

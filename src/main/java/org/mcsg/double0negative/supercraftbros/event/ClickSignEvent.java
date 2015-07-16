@@ -1,5 +1,6 @@
 package org.mcsg.double0negative.supercraftbros.event;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
@@ -10,6 +11,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.mcsg.double0negative.supercraftbros.Game;
 import org.mcsg.double0negative.supercraftbros.GameManager;
+import org.mcsg.double0negative.supercraftbros.Message;
 
 public class ClickSignEvent implements Listener{
 
@@ -26,8 +28,12 @@ public class ClickSignEvent implements Listener{
         if(lines[0].equalsIgnoreCase("[class]")){
         	String cl = lines[1];
         	Game g = GameManager.getInstance().getGame(GameManager.getInstance().getPlayerGameId(e.getPlayer()));
-        	g.setPlayerClass(e.getPlayer(), GameManager.getInstance().classList.get(cl.toLowerCase()).newInstance(e.getPlayer()));
-        	g.getPlayerClass(e.getPlayer()).PlayerSpawn();
+        	try{
+        		g.setPlayerClass(e.getPlayer(), GameManager.getInstance().classList.get(cl.toLowerCase()).newInstance(e.getPlayer()));
+        		g.getPlayerClass(e.getPlayer()).PlayerSpawn();
+        	}catch(NullPointerException ex){
+        		Message.send(e.getPlayer(), ChatColor.RED + "That class doesn't exist!");
+        	}
         }
         else if(lines[0].equalsIgnoreCase("[join]")){
         	int game = Integer.parseInt(lines[1]);

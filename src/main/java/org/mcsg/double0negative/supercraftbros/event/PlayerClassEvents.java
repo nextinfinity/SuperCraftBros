@@ -38,7 +38,6 @@ public class PlayerClassEvents implements Listener{
 
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void blockFire(BlockIgniteEvent e){
-		System.out.println("lighing");
 		final Block b = e.getBlock();
 		Bukkit.getScheduler().scheduleSyncDelayedTask(GameManager.getInstance().getPlugin(), new Runnable(){
 			@SuppressWarnings("deprecation")
