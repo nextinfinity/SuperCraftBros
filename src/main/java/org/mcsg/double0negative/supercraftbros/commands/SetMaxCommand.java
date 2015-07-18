@@ -12,6 +12,7 @@ public class SetMaxCommand implements SubCommand{
 		int no = Integer.parseInt(args[0]);
 		int i = Integer.parseInt(args[1]);
 		c.set("system.arenas." + no + ".max", i);
+		SettingsManager.getInstance().saveSystemConfig();
 		Message.send(player, "Maximum amount for arena " + no + " set to " + i + "!");
 		return true;
 	}

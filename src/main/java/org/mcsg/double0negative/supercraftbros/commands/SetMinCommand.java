@@ -12,6 +12,7 @@ public class SetMinCommand implements SubCommand{
 		int no = Integer.parseInt(args[0]);
 		int i = Integer.parseInt(args[1]);
 		c.set("system.arenas." + no + ".min", i);
+		SettingsManager.getInstance().saveSystemConfig();
 		Message.send(player, "Minimum amount for arena " + no + " set to " + i + "!");
 		return true;
 	}

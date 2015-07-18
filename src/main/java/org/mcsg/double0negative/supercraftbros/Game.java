@@ -118,19 +118,38 @@ public class Game {
 				Sign s = (Sign) b.getState();
 				int i1 = players.size();
 				int i2 = sys.getInt("system.arenas." + gameID + ".max");
-				if(i1 < i2){
+				if(state == State.LOBBY){
+					if(players != null){
 					try{
 						s.setLine(3, ChatColor.GREEN + "" + i1 + " / " + i2);
+						s.update();
 					}catch(Exception e){
 						SuperCraftBros.joinSigns.remove(loc);
 					}
+					}else{
+					try{
+						s.setLine(3, ChatColor.GREEN + "0 / " + i2);
+						s.update();
+					}catch(Exception e){
+						SuperCraftBros.joinSigns.remove(loc);
+					}	
+					}
+				}else if(state == State.INGAME){
+					try{
+						s.setLine(3, ChatColor.YELLOW + "IN-GAME");
+						s.update();
+					}catch(Exception e){
+						SuperCraftBros.joinSigns.remove(loc);
+					}	
 				}else{
 					try{
-						s.setLine(3, ChatColor.YELLOW + "" + i1 + " / " + i2);
+						s.setLine(3, ChatColor.RED + "DISABLED");
+						s.update();
 					}catch(Exception e){
 						SuperCraftBros.joinSigns.remove(loc);
 					}	
 				}
+				GameManager.getInstance().saveSigns();
 			}
 		}
 	}
@@ -295,6 +314,7 @@ public class Game {
 		pClasses.clear();
 		inactive.clear();
 		state = State.LOBBY;
+		updateSigns();
 	}
 
 
@@ -403,6 +423,7 @@ public class Game {
 		final Scoreboard board = m.getNewScoreboard();
 		p.setScoreboard(board);
 		msgAll(ChatColor.RED + p.getName() + " left the game!");
+		updateSigns();
 	}
 
 	public void msgAll(String msg){

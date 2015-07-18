@@ -107,7 +107,7 @@ public class SettingsManager {
 	}
 	
 	public void reloadSigns() {
-		spawns = YamlConfiguration.loadConfiguration(f3);
+		signs = YamlConfiguration.loadConfiguration(f3);
 	}
 
 	public void reloadSystem() {
@@ -136,7 +136,7 @@ public class SettingsManager {
 	
 	public void saveSigns() {
 		try {
-			spawns.save(f3);
+			signs.save(f3);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

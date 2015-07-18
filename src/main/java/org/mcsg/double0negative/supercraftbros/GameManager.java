@@ -23,6 +23,8 @@ import org.mcsg.double0negative.supercraftbros.classes.WitchClass;
 import org.mcsg.double0negative.supercraftbros.classes.WitherClass;
 import org.mcsg.double0negative.supercraftbros.classes.ZombieClass;
 
+import sun.util.logging.resources.logging;
+
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import com.sk89q.worldedit.bukkit.selections.Selection;
 
@@ -90,6 +92,7 @@ public class GameManager {
     
     public void loadSigns(){
     	FileConfiguration s = SettingsManager.getInstance().getSigns();
+    	try{
     	for(String string : s.getStringList("signs")){
     		String[] l = string.split(",");
     		World world = Bukkit.getWorld(l[0]);
@@ -100,11 +103,13 @@ public class GameManager {
     		Location loc = new Location(world, x, y, z);
     		SuperCraftBros.joinSigns.put(loc, id);
     	}
+    	}catch(NullPointerException e){
+    		System.out.println("No signs in config!");
+    	}
     }
     
     public void saveSigns(){
     	FileConfiguration s = SettingsManager.getInstance().getSigns();
-    	s.set("signs", null);
     	List<String> signList = new ArrayList<String>();
     	for(Location loc : SuperCraftBros.joinSigns.keySet()){
     		String world = loc.getWorld().getName();
