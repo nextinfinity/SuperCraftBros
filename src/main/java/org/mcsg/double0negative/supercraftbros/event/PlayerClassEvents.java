@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Fireball;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -16,6 +17,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
@@ -35,6 +37,12 @@ public class PlayerClassEvents implements Listener{
 
 
 
+	@EventHandler(priority = EventPriority.LOWEST)
+	public void enderEyeThrow(ProjectileLaunchEvent e){
+		if(e.getEntity().getType() == EntityType.ENDER_SIGNAL){
+			e.setCancelled(true);
+		}
+	}
 
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void blockFire(BlockIgniteEvent e){
@@ -71,7 +79,6 @@ public class PlayerClassEvents implements Listener{
 	@EventHandler
 	public void onMove(PlayerMoveEvent e){
 		Player p = e.getPlayer();
-
 		int id = gm.getPlayerGameId(p);
 		if(id != -1){
 			Game g = gm.getGame(id);
@@ -88,8 +95,7 @@ public class PlayerClassEvents implements Listener{
 			if(game != -1){
 				Game g = gm.getGame(game);
 				if(g.getState() == Game.State.INGAME){
-
-				g.getPlayerClass(p).PlayerDamaged();
+					g.getPlayerClass(p).PlayerDamaged();
 				}
 			}
 		}
@@ -123,7 +129,10 @@ public class PlayerClassEvents implements Listener{
 		Location l = e.getLocation();
 		if(e.getEntity() instanceof Fireball){
 			e.setCancelled(true);
-			l.getWorld().createExplosion(l, 4, false);
+			double x = l.getX();
+			double y = l.getY();
+			double z = l.getZ();
+			l.getWorld().createExplosion(x, y, z, 4, false, false);
 		}
 	}
 
