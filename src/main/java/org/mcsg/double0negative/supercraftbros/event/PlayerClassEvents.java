@@ -119,13 +119,11 @@ public class PlayerClassEvents implements Listener{
 
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onEntityExplode(EntityExplodeEvent e){
-
 		e.blockList().clear();
 		Location l = e.getLocation();
 		if(e.getEntity() instanceof Fireball){
-			System.out.println("cancel");
 			e.setCancelled(true);
-			l.getWorld().createExplosion(l, 4);
+			l.getWorld().createExplosion(l, 4, false);
 		}
 	}
 
