@@ -7,6 +7,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.mcsg.double0negative.supercraftbros.Game;
 import org.mcsg.double0negative.supercraftbros.GameManager;
 import org.mcsg.double0negative.supercraftbros.SettingsManager;
@@ -65,14 +66,13 @@ public class PlayerDamage implements Listener{
 	}
 	
 	@EventHandler
-	public void PlayerDamaged(EntityDeathEvent e){
-		if(e.getEntity() instanceof Player){
-			Player p = (Player)e.getEntity();
-			int i = GameManager.getInstance().getPlayerGameId(p);
-			if(i != -1){
-				e.getDrops().clear();
-				
-			}
+	public void PlayerDamaged(PlayerDeathEvent e){
+		Player p = (Player)e.getEntity();
+		int i = GameManager.getInstance().getPlayerGameId(p);
+		if(i != -1){
+			e.getDrops().clear();
+			GameManager.getInstance().getGame(i).killPlayer(p, e.getDeathMessage());
+			e.setDeathMessage(null);
 		}
 	}
 }

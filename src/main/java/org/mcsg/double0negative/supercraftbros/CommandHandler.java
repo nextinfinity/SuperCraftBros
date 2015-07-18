@@ -18,6 +18,8 @@ import org.mcsg.double0negative.supercraftbros.commands.JoinCommand;
 import org.mcsg.double0negative.supercraftbros.commands.LeaveCommand;
 import org.mcsg.double0negative.supercraftbros.commands.SetLobbyGameSpawn;
 import org.mcsg.double0negative.supercraftbros.commands.SetLobbySpawnCommand;
+import org.mcsg.double0negative.supercraftbros.commands.SetMaxCommand;
+import org.mcsg.double0negative.supercraftbros.commands.SetMinCommand;
 import org.mcsg.double0negative.supercraftbros.commands.SetSpawnCommand;
 import org.mcsg.double0negative.supercraftbros.commands.StartCommand;
 import org.mcsg.double0negative.supercraftbros.commands.SubCommand;
@@ -44,6 +46,8 @@ public class CommandHandler implements CommandExecutor
 		commands.put("enable", new EnableCommand());
 		commands.put("setlobbyspawn", new SetLobbySpawnCommand());
 		commands.put("setlobby", new SetLobbyGameSpawn());
+		commands.put("setmin", new SetMinCommand());
+		commands.put("setmax", new SetMaxCommand());
 		commands.put("setspawn", new SetSpawnCommand());
 		commands.put("leave", new LeaveCommand());
 		commands.put("start", new StartCommand());

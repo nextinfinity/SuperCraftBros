@@ -237,7 +237,8 @@ public class GameManager {
         c.set("system.arenas." + no + ".y2", min.getBlockY());
         c.set("system.arenas." + no + ".z2", min.getBlockZ());
         c.set("system.arenas." + no + ".enabled", false);
-
+        c.set("system.arenas." + no + ".min", 3);
+        c.set("system.arenas." + no + ".max", 4);
         SettingsManager.getInstance().saveSystemConfig();
         hotAddArena(no);
         Message.send(pl, ChatColor.GREEN + "Arena ID " + no + " Succesfully added");

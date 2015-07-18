@@ -4,7 +4,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Fireball;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -17,7 +16,6 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
@@ -33,15 +31,6 @@ public class PlayerClassEvents implements Listener{
 
 	public PlayerClassEvents(){
 		gm = GameManager.getInstance();
-	}
-
-
-
-	@EventHandler(priority = EventPriority.LOWEST)
-	public void enderEyeThrow(ProjectileLaunchEvent e){
-		if(e.getEntity().getType() == EntityType.ENDER_SIGNAL){
-			e.setCancelled(true);
-		}
 	}
 
 	@EventHandler(priority = EventPriority.LOWEST)
@@ -66,6 +55,9 @@ public class PlayerClassEvents implements Listener{
 			if(g.getState() == Game.State.INGAME){
 				if(e.getPlayer().getItemInHand().getType() == Material.DIAMOND_AXE){
 					g.getPlayerClass(p).Smash();
+				}
+				else if(p.getItemInHand().getType() == Material.EYE_OF_ENDER){
+					e.setCancelled(true);
 				}
 				else{
 					g.getPlayerClass(p).PlayerInteract(e.getAction());
@@ -144,10 +136,6 @@ public class PlayerClassEvents implements Listener{
 			int id = gm.getPlayerGameId(p);
 			if(id != -1){
 				gm.getPlayerClass(p).PlayerDeath();
-
-				gm.getGame(id).killPlayer(p, e.getDeathMessage());
-				e.setDeathMessage(null);
-
 			}
 		}
 	}
