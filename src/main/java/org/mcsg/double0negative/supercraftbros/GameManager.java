@@ -2,8 +2,12 @@ package org.mcsg.double0negative.supercraftbros;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
@@ -42,6 +46,7 @@ public class GameManager {
     public void setup(SuperCraftBros plugin) {
         p = plugin;
         LoadGames();
+        loadSigns();
         
         classList.put("blaze", new BlazeClass(null));
         classList.put("cactus", new CactusClass(null));
@@ -82,6 +87,36 @@ public class GameManager {
             a++;
         }
     }
+    
+    public void loadSigns(){
+    	FileConfiguration s = SettingsManager.getInstance().getSigns();
+    	for(String string : s.getStringList("signs")){
+    		String[] l = string.split(",");
+    		World world = Bukkit.getWorld(l[0]);
+    		int x = Integer.parseInt(l[1]);
+    		int y = Integer.parseInt(l[2]);
+    		int z = Integer.parseInt(l[3]);
+    		int id = Integer.parseInt(l[4]);
+    		Location loc = new Location(world, x, y, z);
+    		SuperCraftBros.joinSigns.put(loc, id);
+    	}
+    }
+    
+    public void saveSigns(){
+    	FileConfiguration s = SettingsManager.getInstance().getSigns();
+    	s.set("signs", null);
+    	List<String> signList = new ArrayList<String>();
+    	for(Location loc : SuperCraftBros.joinSigns.keySet()){
+    		String world = loc.getWorld().getName();
+    		int x = loc.getBlockX();
+    		int y = loc.getBlockY();
+    		int z = loc.getBlockZ();
+    		int id = SuperCraftBros.joinSigns.get(loc);
+    		signList.add(world + "," + x + "," + y + "," + z + "," + id);
+    	}
+    	s.set("signs", signList);
+    }
+    
 
     public int getBlockGameId(Location v) {
         for (Game g: games) {

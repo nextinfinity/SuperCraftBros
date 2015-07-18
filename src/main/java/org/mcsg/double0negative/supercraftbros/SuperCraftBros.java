@@ -1,6 +1,9 @@
 package org.mcsg.double0negative.supercraftbros;
 
+import java.util.HashMap;
+
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
@@ -19,6 +22,8 @@ import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 
 public class SuperCraftBros extends JavaPlugin{
 
+	public static HashMap<Location, Integer> joinSigns = new HashMap<Location, Integer>();
+	
 	@SuppressWarnings("deprecation")
 	public void onEnable(){
 		SettingsManager.getInstance().setup(this);
@@ -53,7 +58,7 @@ public class SuperCraftBros extends JavaPlugin{
 		for(Game g:GameManager.getInstance().getGames()){
 			g.disable();
 		}
-
+		GameManager.getInstance().saveSigns();
 	}
 
 

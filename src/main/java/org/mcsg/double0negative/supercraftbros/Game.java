@@ -46,7 +46,6 @@ public class Game {
 	private HashMap<Player, PlayerClass>pClasses = new HashMap<Player, PlayerClass>();
 	private ArrayList<Player>inactive = new ArrayList<Player>();
 	private ArrayList<Player>queue = new ArrayList<Player>();
-	public static HashMap<Location, Integer> joinSigns = new HashMap<Location, Integer>();
 
 
 	public Game(int a) {
@@ -113,8 +112,8 @@ public class Game {
 	
 	public void updateSigns(){
 		FileConfiguration sys = SettingsManager.getInstance().getSystemConfig();
-		for(Location loc : joinSigns.keySet()){
-			if(joinSigns.get(loc) == gameID){
+		for(Location loc : SuperCraftBros.joinSigns.keySet()){
+			if(SuperCraftBros.joinSigns.get(loc) == gameID){
 				Block b = loc.getBlock();
 				Sign s = (Sign) b.getState();
 				int i1 = players.size();
@@ -123,13 +122,13 @@ public class Game {
 					try{
 						s.setLine(3, ChatColor.GREEN + "" + i1 + " / " + i2);
 					}catch(Exception e){
-						joinSigns.remove(loc);
+						SuperCraftBros.joinSigns.remove(loc);
 					}
 				}else{
 					try{
 						s.setLine(3, ChatColor.YELLOW + "" + i1 + " / " + i2);
 					}catch(Exception e){
-						joinSigns.remove(loc);
+						SuperCraftBros.joinSigns.remove(loc);
 					}	
 				}
 			}
@@ -414,9 +413,7 @@ public class Game {
 
 
 	public void enable(){
-		if(state != State.DISABLED){
-			disable();
-		}
+		disable();
 		state = State.LOBBY;
 	}
 
@@ -426,8 +423,6 @@ public class Game {
 			Message.send(p, ChatColor.RED + "Game Disabled");
 		}
 		gameEnd();
-		state = State.DISABLED;
-
 	}
 
 

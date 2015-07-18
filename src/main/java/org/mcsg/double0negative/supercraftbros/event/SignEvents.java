@@ -14,6 +14,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.mcsg.double0negative.supercraftbros.Game;
 import org.mcsg.double0negative.supercraftbros.GameManager;
 import org.mcsg.double0negative.supercraftbros.Message;
+import org.mcsg.double0negative.supercraftbros.SuperCraftBros;
 
 public class SignEvents implements Listener{
 
@@ -53,7 +54,7 @@ public class SignEvents implements Listener{
 			if(ChatColor.stripColor(e.getLine(1)).equalsIgnoreCase("join")){
 				e.setLine(1, ChatColor.GOLD + "Join");
 				int gameint = Integer.parseInt(ChatColor.stripColor(e.getLine(2)));
-				Game.joinSigns.put(e.getBlock().getLocation(), gameint);
+				SuperCraftBros.joinSigns.put(e.getBlock().getLocation(), gameint);
 			}
 			if(ChatColor.stripColor(e.getLine(1)).equalsIgnoreCase("class")){
 				e.setLine(1, ChatColor.GOLD + "Class");
@@ -69,7 +70,7 @@ public class SignEvents implements Listener{
     	 Sign s = (Sign) b.getState();
     	 if(ChatColor.stripColor(s.getLine(0)).equalsIgnoreCase("[SCB]")){
     		 if(ChatColor.stripColor(s.getLine(1)).equalsIgnoreCase("join")){
-    			 Game.joinSigns.remove(e.getBlock().getLocation());
+    			 SuperCraftBros.joinSigns.remove(e.getBlock().getLocation());
     		 }
     	 }
       }
