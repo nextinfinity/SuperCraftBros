@@ -41,6 +41,9 @@ public class SignEvents implements Listener{
             	int game = Integer.parseInt(ChatColor.stripColor(s.getLine(2)));
             	p.chat("/scb join " + game);
             }
+            else if(ChatColor.stripColor(s.getLine(1)).equalsIgnoreCase("leave")){
+            	p.chat("/scb leave");
+            }
         }	
 	}
     
@@ -56,6 +59,9 @@ public class SignEvents implements Listener{
 			}
 			if(ChatColor.stripColor(e.getLine(1)).equalsIgnoreCase("class")){
 				e.setLine(1, ChatColor.GOLD + "Class");
+			}
+			if(ChatColor.stripColor(e.getLine(1)).equalsIgnoreCase("leave")){
+				e.setLine(1, ChatColor.GOLD + "Leave");
 			}
 			e.setLine(2, ChatColor.YELLOW + ChatColor.stripColor(e.getLine(2)));
 		}
