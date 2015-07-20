@@ -2,8 +2,12 @@ package org.mcsg.double0negative.supercraftbros;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
@@ -18,6 +22,8 @@ import org.mcsg.double0negative.supercraftbros.classes.SpiderClass;
 import org.mcsg.double0negative.supercraftbros.classes.WitchClass;
 import org.mcsg.double0negative.supercraftbros.classes.WitherClass;
 import org.mcsg.double0negative.supercraftbros.classes.ZombieClass;
+
+import sun.util.logging.resources.logging;
 
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import com.sk89q.worldedit.bukkit.selections.Selection;
@@ -42,6 +48,7 @@ public class GameManager {
     public void setup(SuperCraftBros plugin) {
         p = plugin;
         LoadGames();
+        loadSigns();
         
         classList.put("blaze", new BlazeClass(null));
         classList.put("cactus", new CactusClass(null));
@@ -82,6 +89,39 @@ public class GameManager {
             a++;
         }
     }
+    
+    public void loadSigns(){
+    	FileConfiguration s = SettingsManager.getInstance().getSigns();
+    	try{
+    	for(String string : s.getStringList("signs")){
+    		String[] l = string.split(",");
+    		World world = Bukkit.getWorld(l[0]);
+    		int x = Integer.parseInt(l[1]);
+    		int y = Integer.parseInt(l[2]);
+    		int z = Integer.parseInt(l[3]);
+    		int id = Integer.parseInt(l[4]);
+    		Location loc = new Location(world, x, y, z);
+    		SuperCraftBros.joinSigns.put(loc, id);
+    	}
+    	}catch(NullPointerException e){
+    		System.out.println("No signs in config!");
+    	}
+    }
+    
+    public void saveSigns(){
+    	FileConfiguration s = SettingsManager.getInstance().getSigns();
+    	List<String> signList = new ArrayList<String>();
+    	for(Location loc : SuperCraftBros.joinSigns.keySet()){
+    		String world = loc.getWorld().getName();
+    		int x = loc.getBlockX();
+    		int y = loc.getBlockY();
+    		int z = loc.getBlockZ();
+    		int id = SuperCraftBros.joinSigns.get(loc);
+    		signList.add(world + "," + x + "," + y + "," + z + "," + id);
+    	}
+    	s.set("signs", signList);
+    }
+    
 
     public int getBlockGameId(Location v) {
         for (Game g: games) {
@@ -237,7 +277,8 @@ public class GameManager {
         c.set("system.arenas." + no + ".y2", min.getBlockY());
         c.set("system.arenas." + no + ".z2", min.getBlockZ());
         c.set("system.arenas." + no + ".enabled", false);
-
+        c.set("system.arenas." + no + ".min", 3);
+        c.set("system.arenas." + no + ".max", 4);
         SettingsManager.getInstance().saveSystemConfig();
         hotAddArena(no);
         Message.send(pl, ChatColor.GREEN + "Arena ID " + no + " Succesfully added");

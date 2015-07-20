@@ -87,10 +87,7 @@ public class WitchClass extends PlayerClassBase{
 				sugar++;
 			}
 			if(player.getItemInHand().getType() == Material.SUGAR && ( a == Action.RIGHT_CLICK_AIR || a == Action.RIGHT_CLICK_BLOCK)){
-				System.out.println(player.getVelocity());
 				player.setVelocity(player.getLocation().getDirection().multiply(4));
-				System.out.println(player.getVelocity());
-
 				sugar++;
 			}
 		}

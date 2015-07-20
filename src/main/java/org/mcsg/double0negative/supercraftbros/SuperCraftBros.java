@@ -1,13 +1,16 @@
 package org.mcsg.double0negative.supercraftbros;
 
+import java.util.HashMap;
+
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffectType;
 import org.mcsg.double0negative.supercraftbros.event.BreakBlock;
-import org.mcsg.double0negative.supercraftbros.event.ClickSignEvent;
+import org.mcsg.double0negative.supercraftbros.event.SignEvents;
 import org.mcsg.double0negative.supercraftbros.event.InventoryEvents;
 import org.mcsg.double0negative.supercraftbros.event.PlayerClassEvents;
 import org.mcsg.double0negative.supercraftbros.event.PlayerDamage;
@@ -19,13 +22,15 @@ import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 
 public class SuperCraftBros extends JavaPlugin{
 
+	public static HashMap<Location, Integer> joinSigns = new HashMap<Location, Integer>();
+	
 	@SuppressWarnings("deprecation")
 	public void onEnable(){
 		SettingsManager.getInstance().setup(this);
 		GameManager.getInstance().setup(this);
 		
 		this.getServer().getPluginManager().registerEvents(new BreakBlock(), this);
-		this.getServer().getPluginManager().registerEvents(new ClickSignEvent(), this);
+		this.getServer().getPluginManager().registerEvents(new SignEvents(), this);
 		this.getServer().getPluginManager().registerEvents(new PlayerClassEvents(), this);
 		this.getServer().getPluginManager().registerEvents(new PlayerDamage(), this);
 		this.getServer().getPluginManager().registerEvents(new PlayerJoin(), this);
@@ -53,7 +58,7 @@ public class SuperCraftBros extends JavaPlugin{
 		for(Game g:GameManager.getInstance().getGames()){
 			g.disable();
 		}
-
+		GameManager.getInstance().saveSigns();
 	}
 
 

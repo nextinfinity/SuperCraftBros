@@ -33,9 +33,6 @@ public class PlayerClassEvents implements Listener{
 		gm = GameManager.getInstance();
 	}
 
-
-
-
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void blockFire(BlockIgniteEvent e){
 		final Block b = e.getBlock();
@@ -59,6 +56,9 @@ public class PlayerClassEvents implements Listener{
 				if(e.getPlayer().getItemInHand().getType() == Material.DIAMOND_AXE){
 					g.getPlayerClass(p).Smash();
 				}
+				else if(p.getItemInHand().getType() == Material.EYE_OF_ENDER){
+					e.setCancelled(true);
+				}
 				else{
 					g.getPlayerClass(p).PlayerInteract(e.getAction());
 				}
@@ -71,7 +71,6 @@ public class PlayerClassEvents implements Listener{
 	@EventHandler
 	public void onMove(PlayerMoveEvent e){
 		Player p = e.getPlayer();
-
 		int id = gm.getPlayerGameId(p);
 		if(id != -1){
 			Game g = gm.getGame(id);
@@ -88,8 +87,7 @@ public class PlayerClassEvents implements Listener{
 			if(game != -1){
 				Game g = gm.getGame(game);
 				if(g.getState() == Game.State.INGAME){
-
-				g.getPlayerClass(p).PlayerDamaged();
+					g.getPlayerClass(p).PlayerDamaged();
 				}
 			}
 		}
@@ -123,7 +121,10 @@ public class PlayerClassEvents implements Listener{
 		Location l = e.getLocation();
 		if(e.getEntity() instanceof Fireball){
 			e.setCancelled(true);
-			l.getWorld().createExplosion(l, 4, false);
+			double x = l.getX();
+			double y = l.getY();
+			double z = l.getZ();
+			l.getWorld().createExplosion(x, y, z, 4, false, false);
 		}
 	}
 
@@ -135,10 +136,6 @@ public class PlayerClassEvents implements Listener{
 			int id = gm.getPlayerGameId(p);
 			if(id != -1){
 				gm.getPlayerClass(p).PlayerDeath();
-
-				gm.getGame(id).killPlayer(p, e.getDeathMessage());
-				e.setDeathMessage(null);
-
 			}
 		}
 	}

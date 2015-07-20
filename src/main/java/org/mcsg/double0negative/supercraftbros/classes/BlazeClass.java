@@ -95,7 +95,7 @@ public class BlazeClass extends PlayerClassBase {
 					if(b < 20){
 					  Entity tnt1 = l2.getWorld().spawn(l3.add(i1[b],b,i1[b]), TNTPrimed.class);
 				        ((TNTPrimed)tnt1).setFuseTicks(5);
-		        		l.getWorld().createExplosion(l3.getX(), l3.getY(), l3.getZ(), 2, false, true);
+		        		l.getWorld().createExplosion(l3.getX(), l3.getY(), l3.getZ(), 2, false, false);
 
 					}
 				}

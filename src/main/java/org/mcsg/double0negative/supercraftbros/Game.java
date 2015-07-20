@@ -9,6 +9,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.block.Block;
+import org.bukkit.block.Sign;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -81,7 +83,8 @@ public class Game {
 
 
 	public void addPlayer(Player p){
-		if(state == State.LOBBY && players.size() < 10){
+		int max = SettingsManager.getInstance().getSystemConfig().getInt("system.arenas." + gameID + ".max");
+		if(state == State.LOBBY && players.size() < max){
 			p.teleport(SettingsManager.getInstance().getGameLobbySpawn(gameID));
 
 			players.put(p , 3);
@@ -92,11 +95,12 @@ public class Game {
 			Message.send(p, ChatColor.YELLOW + "" + ChatColor.BOLD + "Joined arena " + gameID + ". Select a class!");
 			msgAll(ChatColor.GREEN + p.getName()+ " joined the game!");
 			updateTabAll();
+			updateSigns();
 		}
 		else if(state == State.INGAME){
 			Message.send(p, ChatColor.RED + "Game already started!");
 		}
-		else if(players.size() >= 10){
+		else if(players.size() >= max){
 			Message.send(p, ChatColor.RED + "Game Full!");
 		}
 		else{
@@ -104,6 +108,50 @@ public class Game {
 		}
 
 
+	}
+	
+	public void updateSigns(){
+		FileConfiguration sys = SettingsManager.getInstance().getSystemConfig();
+		for(Location loc : SuperCraftBros.joinSigns.keySet()){
+			if(SuperCraftBros.joinSigns.get(loc) == gameID){
+				Block b = loc.getBlock();
+				Sign s = (Sign) b.getState();
+				int i1 = players.size();
+				int i2 = sys.getInt("system.arenas." + gameID + ".max");
+				if(state == State.LOBBY){
+					if(players != null){
+					try{
+						s.setLine(3, ChatColor.GREEN + "" + i1 + " / " + i2);
+						s.update();
+					}catch(Exception e){
+						SuperCraftBros.joinSigns.remove(loc);
+					}
+					}else{
+					try{
+						s.setLine(3, ChatColor.GREEN + "0 / " + i2);
+						s.update();
+					}catch(Exception e){
+						SuperCraftBros.joinSigns.remove(loc);
+					}	
+					}
+				}else if(state == State.INGAME){
+					try{
+						s.setLine(3, ChatColor.YELLOW + "IN-GAME");
+						s.update();
+					}catch(Exception e){
+						SuperCraftBros.joinSigns.remove(loc);
+					}	
+				}else{
+					try{
+						s.setLine(3, ChatColor.RED + "DISABLED");
+						s.update();
+					}catch(Exception e){
+						SuperCraftBros.joinSigns.remove(loc);
+					}	
+				}
+				GameManager.getInstance().saveSigns();
+			}
+		}
 	}
 
 	public void startGame(){
@@ -170,14 +218,15 @@ public class Game {
 
 
 	public void setPlayerClass(Player player, PlayerClass playerClass){
+		int min = SettingsManager.getInstance().getSystemConfig().getInt("system.arenas." + gameID + ".min");
 		if(player.hasPermission("scb.class."+playerClass.getName())){
 			clearPotions(player);
 			Message.send(player, ChatColor.GREEN + "You choose " + playerClass.getName() + "!");
 			//int prev = pClasses.keySet().size();
 			pClasses.put(player, playerClass);
 			updateTabAll();
-			if(!started && pClasses.keySet().size()>= 4 && players.size() >= 4 ){
-				countdown(60);
+			if(!started && pClasses.keySet().size()>= min && players.size() >= min ){
+				countdown(SettingsManager.getConfig().getInt("countdown"));
 				started = true;
 			}
 		}
@@ -265,6 +314,7 @@ public class Game {
 		pClasses.clear();
 		inactive.clear();
 		state = State.LOBBY;
+		updateSigns();
 	}
 
 
@@ -373,6 +423,7 @@ public class Game {
 		final Scoreboard board = m.getNewScoreboard();
 		p.setScoreboard(board);
 		msgAll(ChatColor.RED + p.getName() + " left the game!");
+		updateSigns();
 	}
 
 	public void msgAll(String msg){
@@ -383,9 +434,7 @@ public class Game {
 
 
 	public void enable(){
-		if(state != State.DISABLED){
-			disable();
-		}
+		disable();
 		state = State.LOBBY;
 	}
 
@@ -395,8 +444,6 @@ public class Game {
 			Message.send(p, ChatColor.RED + "Game Disabled");
 		}
 		gameEnd();
-		state = State.DISABLED;
-
 	}
 
 
