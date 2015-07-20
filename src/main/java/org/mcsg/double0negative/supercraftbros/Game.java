@@ -219,7 +219,7 @@ public class Game {
 
 	public void setPlayerClass(Player player, PlayerClass playerClass){
 		int min = SettingsManager.getInstance().getSystemConfig().getInt("system.arenas." + gameID + ".min");
-		if(player.hasPermission("scb.class."+playerClass.getName())){
+		if(player.hasPermission("scb.class." + playerClass.getName()) || player.hasPermission("scb.class.*")){
 			clearPotions(player);
 			Message.send(player, ChatColor.GREEN + "You choose " + playerClass.getName() + "!");
 			//int prev = pClasses.keySet().size();
