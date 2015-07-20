@@ -30,12 +30,15 @@ public class SignEvents implements Listener{
         	if(ChatColor.stripColor(s.getLine(1)).equalsIgnoreCase("class")){
             	String cl = ChatColor.stripColor(s.getLine(2));
             	Game g = GameManager.getInstance().getGame(GameManager.getInstance().getPlayerGameId(e.getPlayer()));
-            	try{
-            		g.setPlayerClass(e.getPlayer(), GameManager.getInstance().classList.get(cl.toLowerCase()).newInstance(e.getPlayer()));
-            		g.getPlayerClass(e.getPlayer()).PlayerSpawn();
-            	}catch(NullPointerException ex){
-            		Message.send(e.getPlayer(), ChatColor.RED + "That class doesn't exist!");
-            	}
+            	int id = GameManager.getInstance().getPlayerGameId(p);
+        		if(id != -1){
+        			try{
+        				g.setPlayerClass(e.getPlayer(), GameManager.getInstance().classList.get(cl.toLowerCase()).newInstance(e.getPlayer()));
+        				g.getPlayerClass(e.getPlayer()).PlayerSpawn();
+        			}catch(NullPointerException ex){
+        				Message.send(e.getPlayer(), ChatColor.RED + "That class doesn't exist!");
+        			}
+        		}	
             }
             else if(ChatColor.stripColor(s.getLine(1)).equalsIgnoreCase("join")){
             	int game = Integer.parseInt(ChatColor.stripColor(s.getLine(2)));
