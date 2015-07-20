@@ -149,9 +149,9 @@ public class Game {
 						SuperCraftBros.joinSigns.remove(loc);
 					}	
 				}
-				GameManager.getInstance().saveSigns();
 			}
 		}
+		GameManager.getInstance().saveSigns();
 	}
 
 	public void startGame(){
@@ -161,6 +161,7 @@ public class Game {
 		}
 		inactive.clear();
 		state = State.INGAME;
+		updateSigns();
 
 		for(Player p: players.keySet().toArray(new Player[0])){
 			if(pClasses.containsKey(p)){
