@@ -120,6 +120,7 @@ public class GameManager {
     		signList.add(world + "," + x + "," + y + "," + z + "," + id);
     	}
     	s.set("signs", signList);
+    	SettingsManager.getInstance().saveSigns();
     }
     
 
