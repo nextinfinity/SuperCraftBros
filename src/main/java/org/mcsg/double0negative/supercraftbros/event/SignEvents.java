@@ -19,7 +19,7 @@ import org.mcsg.double0negative.supercraftbros.SuperCraftBros;
 
 public class SignEvents implements Listener{
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void clickHandler(PlayerInteractEvent e){
     	Player p = e.getPlayer();
         if(!(e.getAction()==Action.RIGHT_CLICK_BLOCK || e.getAction()==Action.LEFT_CLICK_BLOCK)) return;        
