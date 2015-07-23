@@ -24,11 +24,13 @@ public class SettingsManager {
 	private FileConfiguration spawns;
 	private FileConfiguration system;
 	private FileConfiguration signs;
+	private FileConfiguration classes;
 
 
 	private File f;
 	private File f2;
 	private File f3;
+	private File f4;
 
 	private SettingsManager() {
 
@@ -47,11 +49,13 @@ public class SettingsManager {
 		f = new File(p.getDataFolder(), "spawns.yml");
 		f2 = new File(p.getDataFolder(), "system.yml");
 		f3 = new File(p.getDataFolder(), "signs.yml");
+		f4 = new File(p.getDataFolder(), "classes.yml");
 		
 		try {
 			if (!f.exists()) f.createNewFile();
 			if (!f2.exists()) f2.createNewFile();
 			if (!f3.exists()) f3.createNewFile();
+			if (!f4.exists()) f4.createNewFile();
 		} 
 		catch (Exception e) {
 			e.printStackTrace();
@@ -65,6 +69,9 @@ public class SettingsManager {
 		
 		reloadSigns();
 		saveSigns();
+		
+		reloadClasses();
+		saveClasses();
 		
 	}
 
@@ -86,6 +93,10 @@ public class SettingsManager {
 	
 	public FileConfiguration getSigns() {
 		return signs;
+	}
+	
+	public FileConfiguration getClasses() {
+		return classes;
 	}
 
 
@@ -113,6 +124,10 @@ public class SettingsManager {
 	public void reloadSystem() {
 		system = YamlConfiguration.loadConfiguration(f2);
 	}
+	
+	public void reloadClasses() {
+		classes = YamlConfiguration.loadConfiguration(f4);
+	}
 
 
 
@@ -137,6 +152,15 @@ public class SettingsManager {
 	public void saveSigns() {
 		try {
 			signs.save(f3);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void saveClasses() {
+		try {
+			classes.save(f4);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

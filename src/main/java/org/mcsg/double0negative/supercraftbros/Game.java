@@ -21,7 +21,6 @@ import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Score;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.ScoreboardManager;
-import org.mcsg.double0negative.supercraftbros.classes.PlayerClass;
 
 public class Game {
 
@@ -43,7 +42,7 @@ public class Game {
 
 	private HashMap<Player, Integer>players = new HashMap<Player, Integer>();
 	private HashMap<Player, Double>damage = new HashMap<Player, Double>();
-	private HashMap<Player, PlayerClass>pClasses = new HashMap<Player, PlayerClass>();
+	private HashMap<Player, String>pClasses = new HashMap<Player, String>();
 	private ArrayList<Player>inactive = new ArrayList<Player>();
 	private ArrayList<Player>queue = new ArrayList<Player>();
 
@@ -218,11 +217,11 @@ public class Game {
 	boolean started = false;
 
 
-	public void setPlayerClass(Player player, PlayerClass playerClass){
+	public void setPlayerClass(Player player, String playerClass){
 		int min = SettingsManager.getInstance().getSystemConfig().getInt("system.arenas." + gameID + ".min");
-		if(player.hasPermission("scb.class." + playerClass.getName()) || player.hasPermission("scb.class.*")){
+		if(player.hasPermission("scb.class." + playerClass) || player.hasPermission("scb.class.*")){
 			clearPotions(player);
-			Message.send(player, ChatColor.GREEN + "You choose " + playerClass.getName() + "!");
+			Message.send(player, ChatColor.GREEN + "You choose " + playerClass.toUpperCase() + "!");
 			//int prev = pClasses.keySet().size();
 			pClasses.put(player, playerClass);
 			updateTabAll();
@@ -349,7 +348,7 @@ public class Game {
 			Random r = new Random();
 			Location l = SettingsManager.getInstance().getSpawnPoint(gameID, r.nextInt(spawnCount)+1);
 			p.teleport(getSafePoint(l));
-			getPlayerClass(p).PlayerSpawn();
+			p.getInventory().setContents(GameManager.getInstance().classList.get(pClasses.get(p)).getContents());
 		}
 
 	}
@@ -453,8 +452,8 @@ public class Game {
 	}
 
 
-	public PlayerClass getPlayerClass(Player p) {
-		return pClasses.get(p);
+	public String getPlayerClass(Player p) {
+		return pClasses.get(p).toUpperCase();
 	}
 
 	public Set<Player> getActivePlayers(){

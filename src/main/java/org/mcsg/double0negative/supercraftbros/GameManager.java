@@ -7,23 +7,17 @@ import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.plugin.Plugin;
-import org.mcsg.double0negative.supercraftbros.classes.BlazeClass;
-import org.mcsg.double0negative.supercraftbros.classes.CactusClass;
-import org.mcsg.double0negative.supercraftbros.classes.CreeperClass;
-import org.mcsg.double0negative.supercraftbros.classes.EndermanClass;
-import org.mcsg.double0negative.supercraftbros.classes.GhastClass;
-import org.mcsg.double0negative.supercraftbros.classes.PlayerClass;
-import org.mcsg.double0negative.supercraftbros.classes.SkeletonClass;
-import org.mcsg.double0negative.supercraftbros.classes.SpiderClass;
-import org.mcsg.double0negative.supercraftbros.classes.WitchClass;
-import org.mcsg.double0negative.supercraftbros.classes.WitherClass;
-import org.mcsg.double0negative.supercraftbros.classes.ZombieClass;
-
-import sun.util.logging.resources.logging;
+import org.mcsg.double0negative.supercraftbros.util.Colorizer;
 
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import com.sk89q.worldedit.bukkit.selections.Selection;
@@ -34,7 +28,7 @@ public class GameManager {
 	
     static GameManager instance = new GameManager();
     private ArrayList < Game > games = new ArrayList < Game > ();
-    public HashMap<String, PlayerClass>classList = new HashMap<String, PlayerClass>();
+    public HashMap<String, Inventory>classList = new HashMap<String, Inventory>();
     
     
     private GameManager() {
@@ -49,18 +43,7 @@ public class GameManager {
         p = plugin;
         LoadGames();
         loadSigns();
-        
-        classList.put("blaze", new BlazeClass(null));
-        classList.put("cactus", new CactusClass(null));
-        classList.put("creeper", new CreeperClass(null));
-        classList.put("enderman", new  EndermanClass(null));
-        classList.put("skeleton", new SkeletonClass(null));
-        classList.put("wither", new WitherClass(null));
-        classList.put("spider", new SpiderClass(null));
-        classList.put("zombie", new ZombieClass(null));
-        classList.put("witch", new WitchClass(null));
-        classList.put("ghast", new GhastClass(null));
-
+        loadClasses();
     }
 
     public Plugin getPlugin() {
@@ -88,6 +71,20 @@ public class GameManager {
             }
             a++;
         }
+    }
+    
+    public void loadClasses(){
+    	int i = 1;
+    	while(i > 0){
+    		if(SettingsManager.getInstance().getClasses().contains("classes.class" + i)){
+    			String key = ("classes.class" + i);
+    			PlayerInventory inv = getInventory(key);
+    			classList.put(key, inv);
+    			i = i+1;
+    		}else{
+    			i = -1;
+    		}
+    	}
     }
     
     public void loadSigns(){
@@ -123,6 +120,109 @@ public class GameManager {
     	SettingsManager.getInstance().saveSigns();
     }
     
+    @SuppressWarnings("deprecation")
+	public PlayerInventory getInventory(String id){
+    	FileConfiguration c = SettingsManager.getInstance().getClasses();
+    	PlayerInventory inventory = (PlayerInventory) Bukkit.getServer().createInventory(null, InventoryType.PLAYER);
+    	int x = 1;
+    	while(x > 0){
+    		if(c.contains(id + ".items." + x)){
+    			try{
+    				Material m = Material.getMaterial(c.getInt(id + ".items." + x + ".id"));
+    				int amount = c.getInt(id + ".items." + x + ".amount");
+    				ItemStack is = new ItemStack(m, amount);
+    				int y = 1;
+    				while(y > 0){
+    					if(c.contains(id + ".items." + x + ".enchantment1")){
+    						String s = c.getString(id + ".items." + x + ".enchantment1");
+    						String[] values = s.split(",");
+    						String e = values[0];
+    						Enchantment enchant = Enchantment.getByName(e);
+    						int level = Integer.parseInt(values[1]);
+    						is.addUnsafeEnchantment(enchant, level);
+    						y = y+1;
+    					}else{
+    						y = -1;
+    					}
+    				}
+    			}catch(Exception e){
+    				System.out.println("Error adding item " + x + " for class " + c.getString(id + ".name") + ", please check the yml file.");
+    			}
+    			x = x+1;
+    		}else{
+    			x = -1;
+    		}
+    	}
+    	if(c.contains(id + ".helmet")){
+    		Material m = Material.getMaterial(c.getInt(id + ".helmet.id"));
+			ItemStack is = new ItemStack(m, 1);
+			if(m == Material.LEATHER_HELMET && c.contains(id + ".helmet.color")){
+				String color = c.getString(id + ".helmet.color");
+				String[] rgb = color.split(",");
+				int r = Integer.parseInt(rgb[0]);
+				int g = Integer.parseInt(rgb[1]);
+				int b = Integer.parseInt(rgb[2]);
+				is = Colorizer.setColor(is, r, g, b);
+			}
+			try{
+				inventory.setBoots(is);
+			}catch(Exception e){
+				System.out.println("Error setting helmet for class " + c.getString(id + ".name") + ", please check the yml file.");
+			}
+    	}
+    	if(c.contains(id + ".chestplate")){
+    		Material m = Material.getMaterial(c.getInt(id + ".chestplate.id"));
+			ItemStack is = new ItemStack(m, 1);
+			if(m == Material.LEATHER_CHESTPLATE && c.contains(id + ".chestplate.color")){
+				String color = c.getString(id + ".helmet.color");
+				String[] rgb = color.split(",");
+				int r = Integer.parseInt(rgb[0]);
+				int g = Integer.parseInt(rgb[1]);
+				int b = Integer.parseInt(rgb[2]);
+				is = Colorizer.setColor(is, r, g, b);
+			}
+			try{
+				inventory.setBoots(is);
+			}catch(Exception e){
+				System.out.println("Error setting chestplate for class " + c.getString(id + ".name") + ", please check the yml file.");
+			}
+    	}
+    	if(c.contains(id + ".leggings")){
+    		Material m = Material.getMaterial(c.getInt(id + ".leggings.id"));
+			ItemStack is = new ItemStack(m, 1);
+			if(m == Material.LEATHER_LEGGINGS && c.contains(id + ".leggings.color")){
+				String color = c.getString(id + ".helmet.color");
+				String[] rgb = color.split(",");
+				int r = Integer.parseInt(rgb[0]);
+				int g = Integer.parseInt(rgb[1]);
+				int b = Integer.parseInt(rgb[2]);
+				is = Colorizer.setColor(is, r, g, b);
+			}
+			try{
+				inventory.setBoots(is);
+			}catch(Exception e){
+				System.out.println("Error setting leggings for class " + c.getString(id + ".name") + ", please check the yml file.");
+			}
+    	}
+    	if(c.contains(id + ".boots")){
+    		Material m = Material.getMaterial(c.getInt(id + ".boots.id"));
+			ItemStack is = new ItemStack(m, 1);
+			if(m == Material.LEATHER_BOOTS && c.contains(id + ".boots.color")){
+				String color = c.getString(id + ".helmet.color");
+				String[] rgb = color.split(",");
+				int r = Integer.parseInt(rgb[0]);
+				int g = Integer.parseInt(rgb[1]);
+				int b = Integer.parseInt(rgb[2]);
+				is = Colorizer.setColor(is, r, g, b);
+			}
+			try{
+				inventory.setBoots(is);
+			}catch(Exception e){
+				System.out.println("Error setting boots for class " + c.getString(id + ".name") + ", please check the yml file.");
+			}
+    	}
+    	return inventory;
+    }
 
     public int getBlockGameId(Location v) {
         for (Game g: games) {
@@ -222,7 +322,7 @@ public class GameManager {
         getGame(g).addPlayer(p);
     }
     
-    public PlayerClass getPlayerClass(Player p){
+    public String getPlayerClass(Player p){
     	Game g = getGame(getPlayerGameId(p));
     	return g.getPlayerClass(p);
     }

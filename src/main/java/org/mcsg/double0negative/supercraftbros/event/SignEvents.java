@@ -15,6 +15,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.mcsg.double0negative.supercraftbros.Game;
 import org.mcsg.double0negative.supercraftbros.GameManager;
 import org.mcsg.double0negative.supercraftbros.Message;
+import org.mcsg.double0negative.supercraftbros.SettingsManager;
 import org.mcsg.double0negative.supercraftbros.SuperCraftBros;
 
 public class SignEvents implements Listener{
@@ -32,10 +33,10 @@ public class SignEvents implements Listener{
             	Game g = GameManager.getInstance().getGame(GameManager.getInstance().getPlayerGameId(e.getPlayer()));
             	int id = GameManager.getInstance().getPlayerGameId(p);
         		if(id != -1){
-        			try{
-        				g.setPlayerClass(e.getPlayer(), GameManager.getInstance().classList.get(cl.toLowerCase()).newInstance(e.getPlayer()));
-        				g.getPlayerClass(e.getPlayer()).PlayerSpawn();
-        			}catch(NullPointerException ex){
+        			if(GameManager.getInstance().classList.keySet().contains(cl.toLowerCase())){
+        				g.setPlayerClass(e.getPlayer(), cl.toLowerCase());
+        				e.getPlayer().getInventory().setContents(GameManager.getInstance().classList.get(cl.toLowerCase()).getContents());
+        			}else{
         				Message.send(e.getPlayer(), ChatColor.RED + "That class doesn't exist!");
         			}
         		}	
