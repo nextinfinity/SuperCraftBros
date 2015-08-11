@@ -35,7 +35,7 @@ public class SignEvents implements Listener{
         		if(id != -1){
         			if(GameManager.getInstance().classList.keySet().contains(cl.toLowerCase())){
         				g.setPlayerClass(e.getPlayer(), cl.toLowerCase());
-        				e.getPlayer().getInventory().setContents(GameManager.getInstance().classList.get(cl.toLowerCase()).getContents());
+        				g.setInventory(p);
         			}else{
         				Message.send(e.getPlayer(), ChatColor.RED + "That class doesn't exist!");
         			}

@@ -15,6 +15,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
@@ -83,7 +84,8 @@ public class Game {
 
 	public void addPlayer(Player p){
 		int max = SettingsManager.getInstance().getSystemConfig().getInt("system.arenas." + gameID + ".max");
-		if(state == State.LOBBY && players.size() < max){
+		int game = GameManager.getInstance().getPlayerGameId(Bukkit.getPlayerExact(p.getName()));
+		if(state == State.LOBBY && players.size() < max && game == -1){
 			p.teleport(SettingsManager.getInstance().getGameLobbySpawn(gameID));
 
 			players.put(p , 3);
@@ -101,6 +103,9 @@ public class Game {
 		}
 		else if(players.size() >= max){
 			Message.send(p, ChatColor.RED + "Game Full!");
+		}
+		else if(game != -1){
+			Message.send(p, ChatColor.RED + "Already in game!");
 		}
 		else{
 			Message.send(p, ChatColor.RED + "Arena is disabled!");
@@ -348,11 +353,25 @@ public class Game {
 			Random r = new Random();
 			Location l = SettingsManager.getInstance().getSpawnPoint(gameID, r.nextInt(spawnCount)+1);
 			p.teleport(getSafePoint(l));
-			p.getInventory().setContents(GameManager.getInstance().classList.get(pClasses.get(p)).getContents());
+			setInventory(p);
 		}
 
 	}
 
+	public void setInventory(Player p){
+		p.getInventory().clear();
+		for(ItemStack i : GameManager.getInstance().classList.get(pClasses.get(p))){
+			p.getInventory().addItem(i);
+		}
+		p.getInventory().setHelmet(GameManager.getInstance().classHelmet.get(pClasses.get(p)));
+		p.getInventory().setChestplate(GameManager.getInstance().classChest.get(pClasses.get(p)));
+		p.getInventory().setLeggings(GameManager.getInstance().classLeg.get(pClasses.get(p)));
+		p.getInventory().setBoots(GameManager.getInstance().classBoots.get(pClasses.get(p)));
+		for(PotionEffect e : GameManager.getInstance().classEffects.get(pClasses.get(p))){
+			p.addPotionEffect(e);
+		}
+	}
+	
 	@SuppressWarnings("deprecation")
 	public Location getSafePoint(Location l){
 		if(isInVoid(l)){

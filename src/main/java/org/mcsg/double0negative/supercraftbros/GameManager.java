@@ -15,8 +15,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.mcsg.double0negative.supercraftbros.util.Colorizer;
 
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
@@ -28,7 +29,12 @@ public class GameManager {
 	
     static GameManager instance = new GameManager();
     private ArrayList < Game > games = new ArrayList < Game > ();
-    public HashMap<String, Inventory>classList = new HashMap<String, Inventory>();
+    public HashMap<String, ArrayList<ItemStack>>classList = new HashMap<String, ArrayList<ItemStack>>();
+    public HashMap<String, ArrayList<PotionEffect>>classEffects = new HashMap<String, ArrayList<PotionEffect>>();
+    public HashMap<String, ItemStack>classHelmet = new HashMap<String, ItemStack>();
+    public HashMap<String, ItemStack>classChest = new HashMap<String, ItemStack>();
+    public HashMap<String, ItemStack>classLeg = new HashMap<String, ItemStack>();
+    public HashMap<String, ItemStack>classBoots = new HashMap<String, ItemStack>();
     
     
     private GameManager() {
@@ -78,8 +84,19 @@ public class GameManager {
     	while(i > 0){
     		if(SettingsManager.getInstance().getClasses().contains("classes.class" + i)){
     			String key = ("classes.class" + i);
-    			PlayerInventory inv = getInventory(key);
-    			classList.put(key, inv);
+    			String name = SettingsManager.getInstance().getClasses().getString(key + ".name").toLowerCase();
+    			ArrayList<ItemStack> inv = getInventory(key);
+    			classList.put(name, inv);
+    			ItemStack i1 = getHelmet(key);
+    			classHelmet.put(name, i1);
+    			ItemStack i2 = getChestplate(key);
+    			classChest.put(name, i2);
+    			ItemStack i3 = getLeggings(key);
+    			classLeg.put(name, i3);
+    			ItemStack i4 = getBoots(key);
+    			classBoots.put(name, i4);
+    			ArrayList<PotionEffect> effects = getEffects(key);
+    			classEffects.put(name, effects);
     			i = i+1;
     		}else{
     			i = -1;
@@ -121,20 +138,20 @@ public class GameManager {
     }
     
     @SuppressWarnings("deprecation")
-	public PlayerInventory getInventory(String id){
+	public ArrayList<ItemStack> getInventory(String id){
     	FileConfiguration c = SettingsManager.getInstance().getClasses();
-    	PlayerInventory inventory = (PlayerInventory) Bukkit.getServer().createInventory(null, InventoryType.PLAYER);
+    	ArrayList<ItemStack> inv = new ArrayList<ItemStack>();
     	int x = 1;
     	while(x > 0){
-    		if(c.contains(id + ".items." + x)){
+    		if(c.contains(id + ".items.item" + x)){
     			try{
-    				Material m = Material.getMaterial(c.getInt(id + ".items." + x + ".id"));
-    				int amount = c.getInt(id + ".items." + x + ".amount");
+    				Material m = Material.getMaterial(c.getInt(id + ".items.item" + x + ".id"));
+    				int amount = c.getInt(id + ".items.item" + x + ".amount");
     				ItemStack is = new ItemStack(m, amount);
     				int y = 1;
     				while(y > 0){
-    					if(c.contains(id + ".items." + x + ".enchantment1")){
-    						String s = c.getString(id + ".items." + x + ".enchantment1");
+    					if(c.contains(id + ".items.item" + x + ".enchantment" + y)){
+    						String s = c.getString(id + ".items.item" + x + ".enchantment" + y);
     						String[] values = s.split(",");
     						String e = values[0];
     						Enchantment enchant = Enchantment.getByName(e);
@@ -145,6 +162,7 @@ public class GameManager {
     						y = -1;
     					}
     				}
+    				inv.add(is);
     			}catch(Exception e){
     				System.out.println("Error adding item " + x + " for class " + c.getString(id + ".name") + ", please check the yml file.");
     			}
@@ -153,77 +171,100 @@ public class GameManager {
     			x = -1;
     		}
     	}
+    	return inv;
+    }
+    public ItemStack getHelmet(String id){
+    	FileConfiguration c = SettingsManager.getInstance().getClasses();
     	if(c.contains(id + ".helmet")){
     		Material m = Material.getMaterial(c.getInt(id + ".helmet.id"));
-			ItemStack is = new ItemStack(m, 1);
-			if(m == Material.LEATHER_HELMET && c.contains(id + ".helmet.color")){
-				String color = c.getString(id + ".helmet.color");
-				String[] rgb = color.split(",");
-				int r = Integer.parseInt(rgb[0]);
-				int g = Integer.parseInt(rgb[1]);
-				int b = Integer.parseInt(rgb[2]);
-				is = Colorizer.setColor(is, r, g, b);
-			}
-			try{
-				inventory.setBoots(is);
-			}catch(Exception e){
-				System.out.println("Error setting helmet for class " + c.getString(id + ".name") + ", please check the yml file.");
-			}
-    	}
+    		ItemStack is = new ItemStack(m, 1);
+    		if(m == Material.LEATHER_HELMET && c.contains(id + ".helmet.color")){
+    			String color = c.getString(id + ".helmet.color");
+    			String[] rgb = color.split(",");
+    			int r = Integer.parseInt(rgb[0]);
+    			int g = Integer.parseInt(rgb[1]);
+    			int b = Integer.parseInt(rgb[2]);
+    			is = Colorizer.setColor(is, r, g, b);
+    		}
+    		return is;
+    	}else{
+			return new ItemStack(Material.AIR);
+		}
+    }
+    public ItemStack getChestplate(String id){
+    	FileConfiguration c = SettingsManager.getInstance().getClasses();
     	if(c.contains(id + ".chestplate")){
     		Material m = Material.getMaterial(c.getInt(id + ".chestplate.id"));
-			ItemStack is = new ItemStack(m, 1);
-			if(m == Material.LEATHER_CHESTPLATE && c.contains(id + ".chestplate.color")){
-				String color = c.getString(id + ".helmet.color");
-				String[] rgb = color.split(",");
-				int r = Integer.parseInt(rgb[0]);
-				int g = Integer.parseInt(rgb[1]);
-				int b = Integer.parseInt(rgb[2]);
-				is = Colorizer.setColor(is, r, g, b);
-			}
-			try{
-				inventory.setBoots(is);
-			}catch(Exception e){
-				System.out.println("Error setting chestplate for class " + c.getString(id + ".name") + ", please check the yml file.");
-			}
-    	}
-    	if(c.contains(id + ".leggings")){
-    		Material m = Material.getMaterial(c.getInt(id + ".leggings.id"));
+    		ItemStack is = new ItemStack(m, 1);
+    		if(m == Material.LEATHER_CHESTPLATE && c.contains(id + ".chestplate.color")){
+    			String color = c.getString(id + ".chestplate.color");
+    			String[] rgb = color.split(",");
+    			int r = Integer.parseInt(rgb[0]);
+    			int g = Integer.parseInt(rgb[1]);
+    			int b = Integer.parseInt(rgb[2]);
+    			is = Colorizer.setColor(is, r, g, b);
+    		}
+    		return is;
+    	}else{
+			return new ItemStack(Material.AIR);
+		}
+    }	
+	public ItemStack getLeggings(String id){
+		FileConfiguration c = SettingsManager.getInstance().getClasses();
+		if(c.contains(id + ".leggings")){
+			Material m = Material.getMaterial(c.getInt(id + ".leggings.id"));
 			ItemStack is = new ItemStack(m, 1);
 			if(m == Material.LEATHER_LEGGINGS && c.contains(id + ".leggings.color")){
-				String color = c.getString(id + ".helmet.color");
+				String color = c.getString(id + ".leggings.color");
 				String[] rgb = color.split(",");
 				int r = Integer.parseInt(rgb[0]);
 				int g = Integer.parseInt(rgb[1]);
 				int b = Integer.parseInt(rgb[2]);
 				is = Colorizer.setColor(is, r, g, b);
 			}
-			try{
-				inventory.setBoots(is);
-			}catch(Exception e){
-				System.out.println("Error setting leggings for class " + c.getString(id + ".name") + ", please check the yml file.");
-			}
-    	}
-    	if(c.contains(id + ".boots")){
-    		Material m = Material.getMaterial(c.getInt(id + ".boots.id"));
+			return is;
+		}else{
+			return new ItemStack(Material.AIR);
+		}
+	}
+	public ItemStack getBoots(String id){
+		FileConfiguration c = SettingsManager.getInstance().getClasses();
+		if(c.contains(id + ".boots")){
+			Material m = Material.getMaterial(c.getInt(id + ".boots.id"));
 			ItemStack is = new ItemStack(m, 1);
 			if(m == Material.LEATHER_BOOTS && c.contains(id + ".boots.color")){
-				String color = c.getString(id + ".helmet.color");
+				String color = c.getString(id + ".boots.color");
 				String[] rgb = color.split(",");
 				int r = Integer.parseInt(rgb[0]);
 				int g = Integer.parseInt(rgb[1]);
 				int b = Integer.parseInt(rgb[2]);
 				is = Colorizer.setColor(is, r, g, b);
 			}
-			try{
-				inventory.setBoots(is);
-			}catch(Exception e){
-				System.out.println("Error setting boots for class " + c.getString(id + ".name") + ", please check the yml file.");
-			}
-    	}
-    	return inventory;
-    }
-
+			return is;
+		}else{
+			return new ItemStack(Material.AIR);
+		}
+	}
+	
+	public ArrayList<PotionEffect> getEffects(String id){
+		FileConfiguration c = SettingsManager.getInstance().getClasses();
+		ArrayList<PotionEffect> effects = new ArrayList<PotionEffect>();
+		int x = 1;
+		while(x > 0){
+    		if(c.contains(id + ".enchantments." + x)){
+    			String effect = c.getString(id + ".enchantments." + x + ".type");
+    			int level = c.getInt(id + ".enchantments." + x + ".level");
+    			PotionEffectType e = PotionEffectType.getByName(effect);
+    			PotionEffect p = new PotionEffect(e, Integer.MAX_VALUE, level);
+    			effects.add(p);
+    			x = x+1;
+    		}else{
+    			x = -1;
+    		}
+		}
+		return effects;
+	}	
+	
     public int getBlockGameId(Location v) {
         for (Game g: games) {
             if (g.isBlockInArena(v)) {
