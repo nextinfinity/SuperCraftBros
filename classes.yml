@@ -1,0 +1,264 @@
+classes:
+  1:
+    name: Blaze
+    items:
+      1:
+        id: 261
+        amount: 1
+        enchantments:
+          1: ARROW_FIRE,1
+          2: ARROW_KNOCKBACK,1
+          3: ARROW_INFINITE,1
+          4: DURABILITY,2
+      2:
+        id: 369
+        amount: 1
+        enchantments:
+          1: FIRE_ASPECT,1
+          2: KNOCKBACK,1
+      3:
+        id: 262
+        amount: 1
+    helmet:
+      id: 298
+      color: 255,144,0
+    chestplate:
+      id: 299
+      color: 255,144,0
+    leggings:
+      id: 300
+      color: 255,144,0
+    boots:
+      id: 301
+      color: 255,144,0
+    effects:
+      1: JUMP,4
+  2:
+    name: Zombie 
+    items:
+      1:
+        id: 256
+        amount: 1
+        enchantments:
+          1: ARROW_KNOCKBACK,1
+          2: DAMAGE_ALL,1
+    helmet:
+      id: 298
+      color: 0,100,0
+    chestplate:
+      id: 299
+      color: 0,100,0
+    leggings:
+      id: 300
+      color: 0,100,0
+    boots:
+      id: 301
+      color: 0,100,0
+    effects:
+      1: JUMP,2
+  3:
+    name: Cactus
+    items:
+      1:
+        id: 268
+        amount: 1
+        enchantments:
+          1: KNOCKBACK,1
+          2: DAMAGE_ALL,2
+    helmet:
+      id: 298
+      color: 50,150,50
+    chestplate:
+      id: 299
+      color: 50,150,50
+    leggings:
+      id: 300
+      color: 50,150,50
+    boots:
+      id: 301
+      color: 50,150,250
+    effects:
+      1: JUMP,2
+  4:
+    name: Creeper
+    items:
+      1:
+        id: 289
+        amount: 1
+        enchantments:
+          1: KNOCKBACK,1
+      2:
+        id: 46
+        amount: 10
+    helmet:
+      id: 298
+      color: 0,200,0
+    chestplate:
+      id: 299
+      color: 0,200,0
+    leggings:
+      id: 300
+      color: 0,200,0
+    boots:
+      id: 301
+      color: 0,0,0
+    effects:
+      1: JUMP,2
+  5:
+    name: Enderman
+    items:
+      1:
+        id: 381
+        amount: 1
+        enchantments:
+          1: KNOCKBACK,1
+          2: DAMAGE_ALL,2
+      2:
+        id: 368
+        amount: 20
+    helmet:
+      id: 298
+      color: 37,6,39
+    chestplate:
+      id: 299
+      color: 37,6,39
+    leggings:
+      id: 300
+      color: 37,6,39
+    boots:
+      id: 301
+      color: 37,6,39
+    effects:
+      1: JUMP,2
+  6:
+    name: Ghast
+    items:
+      1:
+        id: 370
+        amount: 1
+        enchantments:
+          1: KNOCKBACK,2
+          2: DAMAGE_ALL,2
+      2:
+        id: 385
+        amount: 1
+    helmet:
+      id: 298
+      color: 250,0,0
+    chestplate:
+      id: 299
+      color: 250,250,250
+    leggings:
+      id: 300
+      color: 250,250,250
+    boots:
+      id: 301
+      color: 250,250,250
+    effects:
+      1: JUMP,4
+  7:
+    name: Skeleton
+    items:
+      1:
+        id: 261
+        amount: 1
+        enchantments:
+          1: ARROW_KNOCKBACK,2
+          2: ARROW_INFINITE,1
+      2:
+        id: 262
+        amount: 1
+    helmet:
+      id: 298
+      color: 250,250,250
+    chestplate:
+      id: 299
+      color: 250,250,250
+    leggings:
+      id: 300
+      color: 250,250,250
+    boots:
+      id: 301
+      color: 250,250,250
+    effects:
+      1: JUMP,2
+  8:
+    name: Spider
+    items:
+      1:
+        id: 375
+        amount: 1
+        enchantments:
+          1: KNOCKBACK,2
+          2: DAMAGE_ALL,1
+    helmet:
+      id: 298
+      color: 75,8,15
+    chestplate:
+      id: 299
+      color: 0,0,0
+    leggings:
+      id: 300
+      color: 0,0,0
+    boots:
+      id: 301
+      color: 0,0,0
+    effects:
+      1: JUMP,4
+      2: SPEED,2
+  9:
+    name: Witch
+    items:
+      1:
+        id: 388
+        amount: 1
+        enchantments:
+          1: KNOCKBACK,5
+      2:
+        id: 373
+        id-modifier: 16420
+        amount: 5
+      3:
+        id: 353
+        amount: 1
+    helmet:
+      id: 298
+      color: 148,52,169
+    chestplate:
+      id: 299
+      color: 148,52,169
+    leggings:
+      id: 300
+      color: 148,52,169
+    boots:
+      id: 301
+      color: 9,141,40
+    effects:
+      1: JUMP,4
+      2: NIGHT_VISION,4
+  10:
+    name: Wither
+    items:
+      1:
+        id: 261
+        amount: 1
+        enchantments:
+          1: ARROW_INFINITE,1
+          2: ARROW_KNOCKBACK,2
+      2:
+        id: 262
+        amount: 1
+    helmet:
+      id: 298
+      color: 50,50,50
+    chestplate:
+      id: 299
+      color: 50,50,50
+    leggings:
+      id: 300
+      color: 50,50,50
+    boots:
+      id: 301
+      color: 50,50,50
+    effects:
+      1: JUMP,4

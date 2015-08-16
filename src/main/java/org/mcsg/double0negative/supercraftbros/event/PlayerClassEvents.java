@@ -1,5 +1,6 @@
 package org.mcsg.double0negative.supercraftbros.event;
 
+import java.util.HashMap;
 import java.util.Set;
 
 import org.bukkit.Bukkit;
@@ -13,13 +14,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockIgniteEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
-import org.bukkit.event.entity.EntityShootBowEvent;
-import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
@@ -35,6 +36,8 @@ import net.minecraft.server.v1_8_R3.Packet;
 public class PlayerClassEvents implements Listener{
 
 	GameManager gm;
+	
+	HashMap<Player, Boolean> sugar = new HashMap<Player, Boolean>();
 	
 	protected boolean smash = false;
 
@@ -57,10 +60,22 @@ public class PlayerClassEvents implements Listener{
 			}
 		}, 60);
 	}
-
+	
+	
+	@EventHandler
+	public void onHunger(FoodLevelChangeEvent event){
+		if (event.getEntity() instanceof Player){
+			Player p = (Player)event.getEntity();
+			int id = gm.getPlayerGameId(p);
+			if(id != -1){
+				event.setCancelled(true);
+				p.setFoodLevel(20);
+			}	
+		}
+	}
 	@EventHandler
 	public void onInteract(PlayerInteractEvent e){
-		Player p = e.getPlayer();
+		final Player p = e.getPlayer();
 
 		int id = gm.getPlayerGameId(p);
 		if(id != -1){
@@ -72,8 +87,28 @@ public class PlayerClassEvents implements Listener{
 				else if(p.getItemInHand().getType() == Material.EYE_OF_ENDER){
 					e.setCancelled(true);
 				}
-				else{
-				//	g.getPlayerClass(p).PlayerInteract(e.getAction());
+				else if(p.getItemInHand().getType() == Material.FIREBALL){
+                    Fireball f = p.launchProjectile(Fireball.class);
+                    f.setVelocity(f.getVelocity().multiply(10));
+				}else if(sugar.get(p)){
+                    if(p.getItemInHand().getType() == Material.SUGAR && (e.getAction() == Action.LEFT_CLICK_AIR || e.getAction() == Action.LEFT_CLICK_BLOCK)){
+                        p.setVelocity(new Vector(0, 2, 0));
+                        sugar.put(p, false);
+                        Bukkit.getScheduler().scheduleSyncDelayedTask(GameManager.getInstance().getPlugin(), new Runnable(){
+                			public void run(){
+                				sugar.put(p, true);
+                			}
+                		}, 100);
+                    }
+                    if(p.getItemInHand().getType() == Material.SUGAR && (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK)){
+                        p.setVelocity(p.getLocation().getDirection().multiply(4));
+                        sugar.put(p, false);
+                        Bukkit.getScheduler().scheduleSyncDelayedTask(GameManager.getInstance().getPlugin(), new Runnable(){
+                			public void run(){
+                				sugar.put(p, true);
+                			}
+                		}, 100);
+                    }
 				}
 			}
 		}
@@ -231,30 +266,6 @@ public class PlayerClassEvents implements Listener{
 		}
 	}
 
-	@EventHandler
-	public void onEntityDeath(PlayerDeathEvent e){
-		if(e.getEntity() instanceof Player){
-			Player p = (Player)e.getEntity();
-
-			int id = gm.getPlayerGameId(p);
-			if(id != -1){
-			//	gm.getPlayerClass(p).PlayerDeath();
-			}
-		}
-	}
-
-	@EventHandler
-	public void onEntityDeath(EntityShootBowEvent e){
-		if(e.getEntity() instanceof Player){
-			Player p = (Player)e.getEntity();
-			int game = GameManager.getInstance().getPlayerGameId(p);
-			if(game != -1){
-			//	gm.getGame(game).getPlayerClass(p).PlayerShootArrow(e.getProjectile());
-			}
-
-		}
-	}
-
 
 	@EventHandler
 	public void onEntityRespawn(PlayerRespawnEvent e){
@@ -264,7 +275,6 @@ public class PlayerClassEvents implements Listener{
 				int id = gm.getPlayerGameId(p);
 				if(id != -1){
 					gm.getGame(id).spawnPlayer(p);
-				//	gm.getPlayerClass(p).PlayerSpawn();
 				}
 				else{
 					p.teleport(SettingsManager.getInstance().getLobbySpawn());
@@ -278,7 +288,9 @@ public class PlayerClassEvents implements Listener{
 		int id = gm.getPlayerGameId(e.getPlayer());
 		if(id != -1){
 			if(gm.getGame(id).getState() == State.INGAME){
-			//	gm.getPlayerClass(e.getPlayer()).PlayerPlaceBlock(e.getBlock());
+			  if(e.getBlockPlaced().getType() == Material.TNT){
+				  
+			  }
 		}
 	}
 }

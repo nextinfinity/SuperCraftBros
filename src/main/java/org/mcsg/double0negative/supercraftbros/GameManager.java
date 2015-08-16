@@ -82,8 +82,8 @@ public class GameManager {
     public void loadClasses(){
     	int i = 1;
     	while(i > 0){
-    		if(SettingsManager.getInstance().getClasses().contains("classes.class" + i)){
-    			String key = ("classes.class" + i);
+    		if(SettingsManager.getInstance().getClasses().contains("classes." + i)){
+    			String key = ("classes." + i);
     			String name = SettingsManager.getInstance().getClasses().getString(key + ".name").toLowerCase();
     			ArrayList<ItemStack> inv = getInventory(key);
     			classList.put(name, inv);
@@ -143,15 +143,19 @@ public class GameManager {
     	ArrayList<ItemStack> inv = new ArrayList<ItemStack>();
     	int x = 1;
     	while(x > 0){
-    		if(c.contains(id + ".items.item" + x)){
+    		if(c.contains(id + ".items." + x)){
     			try{
-    				Material m = Material.getMaterial(c.getInt(id + ".items.item" + x + ".id"));
-    				int amount = c.getInt(id + ".items.item" + x + ".amount");
+    				Material m = Material.getMaterial(c.getInt(id + ".items." + x + ".id"));
+    				int amount = c.getInt(id + ".items." + x + ".amount");
     				ItemStack is = new ItemStack(m, amount);
+    				if(c.contains(id + ".items." + x + ".id-modifier")){
+    					int idm = c.getInt(id + ".items." + x + ".id-modifier");
+    					is.setDurability((short)idm);
+    				}
     				int y = 1;
     				while(y > 0){
-    					if(c.contains(id + ".items.item" + x + ".enchantment" + y)){
-    						String s = c.getString(id + ".items.item" + x + ".enchantment" + y);
+    					if(c.contains(id + ".items." + x + ".enchantments." + y)){
+    						String s = c.getString(id + ".items." + x + ".enchantments." + y);
     						String[] values = s.split(",");
     						String e = values[0];
     						Enchantment enchant = Enchantment.getByName(e);
@@ -251,9 +255,11 @@ public class GameManager {
 		ArrayList<PotionEffect> effects = new ArrayList<PotionEffect>();
 		int x = 1;
 		while(x > 0){
-    		if(c.contains(id + ".enchantments." + x)){
-    			String effect = c.getString(id + ".enchantments." + x + ".type");
-    			int level = c.getInt(id + ".enchantments." + x + ".level");
+    		if(c.contains(id + ".effects." + x)){
+    			String s = c.getString(id + ".effects." + x);
+    			String[] values = s.split(",");
+    			String effect = values[0];
+    			int level = Integer.parseInt(values[1]);
     			PotionEffectType e = PotionEffectType.getByName(effect);
     			PotionEffect p = new PotionEffect(e, Integer.MAX_VALUE, level);
     			effects.add(p);

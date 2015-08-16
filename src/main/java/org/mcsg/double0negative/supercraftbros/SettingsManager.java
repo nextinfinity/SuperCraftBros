@@ -55,7 +55,7 @@ public class SettingsManager {
 			if (!f.exists()) f.createNewFile();
 			if (!f2.exists()) f2.createNewFile();
 			if (!f3.exists()) f3.createNewFile();
-			if (!f4.exists()) f4.createNewFile();
+			if (!f4.exists()) p.saveResource("classes.yml", false);
 		} 
 		catch (Exception e) {
 			e.printStackTrace();
