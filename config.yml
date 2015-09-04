@@ -1,4 +1,7 @@
 #Support for percents is in beta and thus may not work fully
-usepercents: false
+use-percents: false
 #Default seconds for countdown
 countdown: 60
+#Only teleport players who are in an arena when they join
+#This feature is mainly for servers that want this plugin in a single world
+use-arena-teleport: false

@@ -19,7 +19,7 @@ public class PlayerJoin implements Listener{
 		Bukkit.getScheduler().scheduleSyncDelayedTask(GameManager.getInstance().getPlugin(), new Runnable(){
 			@SuppressWarnings("deprecation")
 			public void run(){
-				if(SettingsManager.getConfig().getBoolean("use-lobby-teleport")){
+				if(SettingsManager.getConfig().getBoolean("use-arena-teleport")){
 					Location l =  p.getLocation();
 			        int game =  GameManager.getInstance().getBlockGameId(l);
 			        if(game != -1){

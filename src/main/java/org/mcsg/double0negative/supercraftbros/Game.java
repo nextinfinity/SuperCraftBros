@@ -338,7 +338,7 @@ public class Game {
 		o.setDisplaySlot(DisplaySlot.SIDEBAR);
 		o.setDisplayName(ChatColor.GOLD + "SuperCraftBros");
 		for(Player pl: players.keySet()){
-			if(SettingsManager.getConfig().getBoolean("usepercents")){
+			if(SettingsManager.getConfig().getBoolean("use-percents")){
 				Score score = o.getScore(ChatColor.YELLOW + pl.getName() + " [" + Math.round(damage.get(pl)) + "]");
 				score.setScore(players.get(pl));
 			}else{

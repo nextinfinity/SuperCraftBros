@@ -32,7 +32,7 @@ public class PlayerDamage implements Listener{
 					else if(e.getCause() == DamageCause.VOID){
 						e.setDamage(40);
 					}
-					else if(SettingsManager.getConfig().getBoolean("usepercents")){
+					else if(SettingsManager.getConfig().getBoolean("use-percents")){
 						g.addDamage(p, e.getDamage());
 						e.setDamage(0);
 					}
@@ -46,7 +46,7 @@ public class PlayerDamage implements Listener{
 		try{
 			if(e.getEntity() instanceof Player){
 				Player p = (Player)e.getEntity();
-				if(SettingsManager.getConfig().getBoolean("usepercents")){
+				if(SettingsManager.getConfig().getBoolean("use-percents")){
 					int i = GameManager.getInstance().getPlayerGameId(p);
 					if(i != -1){
 						Game g = GameManager.getInstance().getGame(i);
