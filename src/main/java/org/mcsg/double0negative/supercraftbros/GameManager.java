@@ -126,12 +126,14 @@ public class GameManager {
     	FileConfiguration s = SettingsManager.getInstance().getSigns();
     	List<String> signList = new ArrayList<String>();
     	for(Location loc : SuperCraftBros.joinSigns.keySet()){
-    		String world = loc.getWorld().getName();
-    		int x = loc.getBlockX();
-    		int y = loc.getBlockY();
-    		int z = loc.getBlockZ();
-    		int id = SuperCraftBros.joinSigns.get(loc);
-    		signList.add(world + "," + x + "," + y + "," + z + "," + id);
+    		if(loc.getBlock().getType() == Material.SIGN || loc.getBlock().getType() == Material.SIGN_POST){
+    			String world = loc.getWorld().getName();
+    			int x = loc.getBlockX();
+    			int y = loc.getBlockY();
+    			int z = loc.getBlockZ();
+    			int id = SuperCraftBros.joinSigns.get(loc);
+    			signList.add(world + "," + x + "," + y + "," + z + "," + id);
+    		}
     	}
     	s.set("signs", signList);
     	SettingsManager.getInstance().saveSigns();

@@ -174,10 +174,15 @@ public class SettingsManager {
 
 
 	public Location getLobbySpawn() {
+		try{
 		return new Location(Bukkit.getWorld(system.getString("system.lobby.spawn.world")),
 				system.getInt("system.lobby.spawn.x"),
 				system.getInt("system.lobby.spawn.y"),
 				system.getInt("system.lobby.spawn.z"));
+		}catch(IllegalArgumentException e){
+			System.out.println("Error getting lobby spawn");
+			return null;
+		}
 	}
 	
 	public Location getGameLobbySpawn(int gameid) {

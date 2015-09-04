@@ -22,6 +22,7 @@ import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Score;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.ScoreboardManager;
+import org.bukkit.util.Vector;
 
 public class Game {
 
@@ -272,6 +273,7 @@ public class Game {
 		p.setAllowFlight(false);
 		p.setFlying(false);
 		clearPotions(p);
+		p.setVelocity(new Vector(0, 0, 0));
 		p.teleport(SettingsManager.getInstance().getLobbySpawn());
 		final ScoreboardManager m = Bukkit.getScoreboardManager();
 		final Scoreboard board = m.getNewScoreboard();

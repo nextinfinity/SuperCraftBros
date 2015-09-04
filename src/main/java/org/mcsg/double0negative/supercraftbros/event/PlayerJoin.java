@@ -1,6 +1,7 @@
 package org.mcsg.double0negative.supercraftbros.event;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -18,7 +19,15 @@ public class PlayerJoin implements Listener{
 		Bukkit.getScheduler().scheduleSyncDelayedTask(GameManager.getInstance().getPlugin(), new Runnable(){
 			@SuppressWarnings("deprecation")
 			public void run(){
-				p.teleport(SettingsManager.getInstance().getLobbySpawn());
+				if(SettingsManager.getConfig().getBoolean("use-lobby-teleport")){
+					Location l =  p.getLocation();
+			        int game =  GameManager.getInstance().getBlockGameId(l);
+			        if(game != -1){
+			        	p.teleport(SettingsManager.getInstance().getLobbySpawn());
+			        }
+				}else{
+					p.teleport(SettingsManager.getInstance().getLobbySpawn());
+				}	
 				p.getInventory().clear();
 				p.getInventory().setArmorContents(new ItemStack[4]);
 				p.updateInventory();

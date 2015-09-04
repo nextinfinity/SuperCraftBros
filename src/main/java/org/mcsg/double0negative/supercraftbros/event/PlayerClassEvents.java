@@ -110,6 +110,8 @@ public class PlayerClassEvents implements Listener{
                 		}, 100);
                     }
 				}
+			}else{
+				e.setCancelled(true);
 			}
 		}
 

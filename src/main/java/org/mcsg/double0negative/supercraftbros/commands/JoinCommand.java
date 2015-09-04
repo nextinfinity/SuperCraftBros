@@ -11,12 +11,16 @@ public class JoinCommand implements SubCommand{
 	
 	public boolean onCommand(Player player, String[] args) {
 		Player p = player;
-		int i = Integer.parseInt(args[0]);
-		FileConfiguration c = SettingsManager.getInstance().getSystemConfig();
-		if(c.getBoolean("system.arenas." + i + ".enabled")){
-			GameManager.getInstance().addPlayer(p, i);
+		if(args[0] != null){
+			int i = Integer.parseInt(args[0]);
+			FileConfiguration c = SettingsManager.getInstance().getSystemConfig();
+			if(c.getBoolean("system.arenas." + i + ".enabled")){
+				GameManager.getInstance().addPlayer(p, i);
+			}else{
+				Message.send(p, ChatColor.RED + "Arena is disabled!");
+			}
 		}else{
-			Message.send(p, ChatColor.RED + "Arena is disabled!");
+			Message.send(p, "/scb join <arena>");
 		}
 		return true;
 	}

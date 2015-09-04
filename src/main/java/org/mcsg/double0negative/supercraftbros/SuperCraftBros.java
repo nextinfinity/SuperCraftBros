@@ -9,6 +9,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.util.Vector;
 import org.mcsg.double0negative.supercraftbros.event.BreakBlock;
 import org.mcsg.double0negative.supercraftbros.event.SignEvents;
 import org.mcsg.double0negative.supercraftbros.event.InventoryEvents;
@@ -41,6 +42,7 @@ public class SuperCraftBros extends JavaPlugin{
 		this.getCommand("scb").setExecutor(new CommandHandler(this));
 		
 		for(Player p:Bukkit.getOnlinePlayers()){
+			p.setVelocity(new Vector(0, 0, 0));
 			p.teleport(SettingsManager.getInstance().getLobbySpawn());
 			p.getInventory().clear();
 			p.getInventory().setArmorContents(new ItemStack[4]);
