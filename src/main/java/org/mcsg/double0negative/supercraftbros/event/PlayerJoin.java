@@ -17,26 +17,30 @@ public class PlayerJoin implements Listener{
 	public void join(PlayerJoinEvent e){
 	final Player p = e.getPlayer();
 		Bukkit.getScheduler().scheduleSyncDelayedTask(GameManager.getInstance().getPlugin(), new Runnable(){
-			@SuppressWarnings("deprecation")
 			public void run(){
 				if(SettingsManager.getConfig().getBoolean("use-arena-teleport")){
 					Location l =  p.getLocation();
 			        int game =  GameManager.getInstance().getBlockGameId(l);
 			        if(game != -1){
-			        	p.teleport(SettingsManager.getInstance().getLobbySpawn());
+			        	clearPlayer(p);
 			        }
 				}else{
-					p.teleport(SettingsManager.getInstance().getLobbySpawn());
+					clearPlayer(p);
 				}	
-				p.getInventory().clear();
-				p.getInventory().setArmorContents(new ItemStack[4]);
-				p.updateInventory();
-				for(PotionEffectType e: PotionEffectType.values()){
-					if(e != null && p.hasPotionEffect(e))
-						p.removePotionEffect(e);
-				}
+				
 			}
 		}, 2);
 	}
 
+	@SuppressWarnings("deprecation")
+	void clearPlayer(Player p){
+		p.teleport(SettingsManager.getInstance().getLobbySpawn());
+		p.getInventory().clear();
+		p.getInventory().setArmorContents(new ItemStack[4]);
+		p.updateInventory();
+		for(PotionEffectType e: PotionEffectType.values()){
+			if(e != null && p.hasPotionEffect(e))
+				p.removePotionEffect(e);
+		}
+	}
 }
