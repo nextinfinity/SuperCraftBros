@@ -1,3 +1,11 @@
+/*
+ * Copyright (c) 2016, Justin W. Flory and others
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 package org.mcsg.double0negative.supercraftbros.event;
 
 import org.bukkit.entity.Player;
@@ -6,7 +14,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
-import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.mcsg.double0negative.supercraftbros.Game;
 import org.mcsg.double0negative.supercraftbros.GameManager;
@@ -67,7 +74,7 @@ public class PlayerDamage implements Listener{
 	
 	@EventHandler
 	public void PlayerDamaged(PlayerDeathEvent e){
-		Player p = (Player)e.getEntity();
+		Player p = e.getEntity();
 		int i = GameManager.getInstance().getPlayerGameId(p);
 		if(i != -1){
 			e.getDrops().clear();

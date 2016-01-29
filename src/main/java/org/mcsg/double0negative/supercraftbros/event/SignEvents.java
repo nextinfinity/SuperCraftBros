@@ -1,3 +1,11 @@
+/*
+ * Copyright (c) 2016, Justin W. Flory and others
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 package org.mcsg.double0negative.supercraftbros.event;
 
 import org.bukkit.ChatColor;
@@ -15,7 +23,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.mcsg.double0negative.supercraftbros.Game;
 import org.mcsg.double0negative.supercraftbros.GameManager;
 import org.mcsg.double0negative.supercraftbros.Message;
-import org.mcsg.double0negative.supercraftbros.SettingsManager;
 import org.mcsg.double0negative.supercraftbros.SuperCraftBros;
 
 public class SignEvents implements Listener{
