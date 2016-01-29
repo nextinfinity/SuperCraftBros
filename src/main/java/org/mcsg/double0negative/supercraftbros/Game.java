@@ -1,9 +1,12 @@
-package org.mcsg.double0negative.supercraftbros;
+/*
+ * Copyright (c) 2016, Justin W. Flory and others
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Random;
-import java.util.Set;
+package org.mcsg.double0negative.supercraftbros;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -14,15 +17,15 @@ import org.bukkit.block.Sign;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.scoreboard.DisplaySlot;
-import org.bukkit.scoreboard.Objective;
-import org.bukkit.scoreboard.Score;
-import org.bukkit.scoreboard.Scoreboard;
-import org.bukkit.scoreboard.ScoreboardManager;
+import org.bukkit.scoreboard.*;
 import org.bukkit.util.Vector;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Random;
+import java.util.Set;
 
 public class Game {
 
@@ -188,7 +191,7 @@ public class Game {
 		Bukkit.getScheduler().cancelTask(tid);
 
 		if (state == State.LOBBY) {
-			tid = Bukkit.getScheduler().scheduleSyncRepeatingTask((Plugin) GameManager.getInstance().getPlugin(), new Runnable() {
+			tid = Bukkit.getScheduler().scheduleSyncRepeatingTask(GameManager.getInstance().getPlugin(), new Runnable() {
 				public void run() {
 					if (count > 0) {
 						if (count % 10 == 0) {

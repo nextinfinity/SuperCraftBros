@@ -1,8 +1,14 @@
+/*
+ * Copyright (c) 2016, Justin W. Flory and others
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 package org.mcsg.double0negative.supercraftbros.event;
 
-import java.util.HashMap;
-import java.util.Set;
-
+import net.minecraft.server.v1_8_R3.Packet;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -27,11 +33,12 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.mcsg.double0negative.supercraftbros.Game;
+import org.mcsg.double0negative.supercraftbros.Game.State;
 import org.mcsg.double0negative.supercraftbros.GameManager;
 import org.mcsg.double0negative.supercraftbros.SettingsManager;
-import org.mcsg.double0negative.supercraftbros.Game.State;
 
-import net.minecraft.server.v1_8_R3.Packet;
+import java.util.HashMap;
+import java.util.Set;
 
 public class PlayerClassEvents implements Listener{
 

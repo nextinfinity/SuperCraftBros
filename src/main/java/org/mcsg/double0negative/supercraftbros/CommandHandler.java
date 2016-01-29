@@ -1,8 +1,12 @@
-package org.mcsg.double0negative.supercraftbros;
+/*
+ * Copyright (c) 2016, Justin W. Flory and others
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Vector;
+package org.mcsg.double0negative.supercraftbros;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -10,19 +14,11 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
-import org.mcsg.double0negative.supercraftbros.commands.CreateArenaCommand;
-import org.mcsg.double0negative.supercraftbros.commands.DisableCommand;
-import org.mcsg.double0negative.supercraftbros.commands.EnableCommand;
-import org.mcsg.double0negative.supercraftbros.commands.HelpCommand;
-import org.mcsg.double0negative.supercraftbros.commands.JoinCommand;
-import org.mcsg.double0negative.supercraftbros.commands.LeaveCommand;
-import org.mcsg.double0negative.supercraftbros.commands.SetLobbyGameSpawn;
-import org.mcsg.double0negative.supercraftbros.commands.SetLobbySpawnCommand;
-import org.mcsg.double0negative.supercraftbros.commands.SetMaxCommand;
-import org.mcsg.double0negative.supercraftbros.commands.SetMinCommand;
-import org.mcsg.double0negative.supercraftbros.commands.SetSpawnCommand;
-import org.mcsg.double0negative.supercraftbros.commands.StartCommand;
-import org.mcsg.double0negative.supercraftbros.commands.SubCommand;
+import org.mcsg.double0negative.supercraftbros.commands.*;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Vector;
 
 
 public class CommandHandler implements CommandExecutor
@@ -84,7 +80,7 @@ public class CommandHandler implements CommandExecutor
 				Vector<String> l  = new Vector<String>();
 				l.addAll(Arrays.asList(args));
 				l.remove(0);
-				args = (String[]) l.toArray(new String[0]);
+				args = l.toArray(new String[0]);
 				if(!commands.containsKey(sub)){
 					Message.send(player, ChatColor.RED+"Command dosent exist.");
 					Message.send(player, ChatColor.GOLD +"Type /scb help for help" );

@@ -1,11 +1,12 @@
-package org.mcsg.double0negative.supercraftbros;
+/*
+ * Copyright (c) 2016, Justin W. Flory and others
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+package org.mcsg.double0negative.supercraftbros;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -14,6 +15,8 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
+
+import java.io.*;
 
 public class SettingsManager {
 
