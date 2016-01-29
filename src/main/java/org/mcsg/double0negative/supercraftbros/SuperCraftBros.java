@@ -21,15 +21,30 @@ import org.mcsg.double0negative.supercraftbros.event.*;
 
 import java.util.HashMap;
 
-public class SuperCraftBros extends JavaPlugin{
+/**
+ * Main class for SuperCraftBros project.
+ *
+ * This plugin intends to emulate the classic console title, Super Smash BrothersⒸ title in a Spigot server. Players are placed
+ * head-to-head in arenas with a variety of custom classes to choose from at their disposal. Last man standing wins. All players
+ * have a fixed number of lives.
+ *
+ * @author Drew             <Double0negative>
+ * @author Ian Ryan         <nextinfinity>
+ * @author Justin W. Flory  <jflory7>
+ * @version 1.0
+ */
+public class SuperCraftBros extends JavaPlugin {
 
 	public static HashMap<Location, Integer> joinSigns = new HashMap<Location, Integer>();
-	
-	@SuppressWarnings("deprecation")
-	public void onEnable(){
+
+    /**
+     * Behavior implemented on plugin start-up.
+     */
+	public void onEnable() {
 		SettingsManager.getInstance().setup(this);
 		GameManager.getInstance().setup(this);
-		
+
+		// Register all event listeners
 		this.getServer().getPluginManager().registerEvents(new BreakBlock(), this);
 		this.getServer().getPluginManager().registerEvents(new SignEvents(), this);
 		this.getServer().getPluginManager().registerEvents(new PlayerClassEvents(), this);
@@ -39,31 +54,38 @@ public class SuperCraftBros extends JavaPlugin{
 		this.getServer().getPluginManager().registerEvents(new PlayerTeleport(), this);
 		this.getServer().getPluginManager().registerEvents(new InventoryEvents(), this);
 
+        // Register command executor
 		this.getCommand("scb").setExecutor(new CommandHandler(this));
-		
-		for(Player p:Bukkit.getOnlinePlayers()){
+
+        // Checks that all online players meet the requirements for a new SCB lobby and game
+		for(Player p : Bukkit.getOnlinePlayers()) {
 			p.setVelocity(new Vector(0, 0, 0));
 			p.teleport(SettingsManager.getInstance().getLobbySpawn());
 			p.getInventory().clear();
 			p.getInventory().setArmorContents(new ItemStack[4]);
 			p.updateInventory();
-			for(PotionEffectType e: PotionEffectType.values()){
-				if(e != null && p.hasPotionEffect(e))
+			for (PotionEffectType e : PotionEffectType.values()){
+				if (e != null && p.hasPotionEffect(e))
 					p.removePotionEffect(e);
 			}
 		}
-
 	}
 
-
-	public void onDisable(){
-		for(Game g:GameManager.getInstance().getGames()){
+    /**
+     * Behavior implemented on plugin shut-down.
+     */
+	public void onDisable() {
+		for(Game g:GameManager.getInstance().getGames()) {
 			g.disable();
 		}
 		GameManager.getInstance().saveSigns();
 	}
 
-
+    /**
+     * Listener to detect WorldEdit plugin used on the server.
+     *
+     * @return a WorldEditPlugin instance
+     */
 	public WorldEditPlugin getWorldEdit() {
 		Plugin worldEdit = getServer().getPluginManager().getPlugin("WorldEdit");
 		if (worldEdit instanceof WorldEditPlugin) {
