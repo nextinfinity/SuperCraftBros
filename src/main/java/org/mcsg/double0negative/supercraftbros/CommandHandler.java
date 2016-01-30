@@ -16,6 +16,7 @@ import org.mcsg.double0negative.supercraftbros.commands.EnableCommand;
 import org.mcsg.double0negative.supercraftbros.commands.HelpCommand;
 import org.mcsg.double0negative.supercraftbros.commands.JoinCommand;
 import org.mcsg.double0negative.supercraftbros.commands.LeaveCommand;
+import org.mcsg.double0negative.supercraftbros.commands.ReloadCommand;
 import org.mcsg.double0negative.supercraftbros.commands.SetLobbyGameSpawn;
 import org.mcsg.double0negative.supercraftbros.commands.SetLobbySpawnCommand;
 import org.mcsg.double0negative.supercraftbros.commands.SetMaxCommand;
@@ -52,6 +53,7 @@ public class CommandHandler implements CommandExecutor
 		commands.put("leave", new LeaveCommand());
 		commands.put("start", new StartCommand());
 		commands.put("help", new HelpCommand());
+		commands.put("reload", new ReloadCommand());
 
 	}
 

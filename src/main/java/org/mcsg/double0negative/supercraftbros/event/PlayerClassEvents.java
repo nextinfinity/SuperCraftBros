@@ -66,8 +66,8 @@ public class PlayerClassEvents implements Listener{
 	public void onHunger(FoodLevelChangeEvent event){
 		if (event.getEntity() instanceof Player){
 			Player p = (Player)event.getEntity();
-			int id = gm.getPlayerGameId(p);
-			if(id != -1){
+			String id = gm.getPlayerGameId(p);
+			if(!(id == null)){
 				event.setCancelled(true);
 				p.setFoodLevel(20);
 			}	
@@ -77,10 +77,13 @@ public class PlayerClassEvents implements Listener{
 	public void onInteract(PlayerInteractEvent e){
 		final Player p = e.getPlayer();
 
-		int id = gm.getPlayerGameId(p);
-		if(id != -1){
+		String id = gm.getPlayerGameId(p);
+		if(!(id == null)){
 			Game g = gm.getGame(id);
 			if(g.getState() == Game.State.INGAME){
+				if(sugar.get(p) == null){
+					sugar.put(p, true);
+				}
 				if(e.getPlayer().getItemInHand().getType() == Material.DIAMOND_AXE){
 					Smash(p);
 				}
@@ -129,8 +132,8 @@ public class PlayerClassEvents implements Listener{
 	}
 
 	public void explodePlayers(Player p){
-		int i = GameManager.getInstance().getPlayerGameId(p);
-		if(i != -1){
+		String i = GameManager.getInstance().getPlayerGameId(p);
+		if(!(i == null)){
 			Set<Player>pls = GameManager.getInstance().getGame(i).getActivePlayers();
 
 			Location l = p.getLocation();
@@ -180,8 +183,8 @@ public class PlayerClassEvents implements Listener{
 	@EventHandler
 	public void onMove(PlayerMoveEvent e){
 		Player p = e.getPlayer();
-		int id = gm.getPlayerGameId(p);
-		if(id != -1){
+		String id = gm.getPlayerGameId(p);
+		if(!(id == null)){
 			Game g = gm.getGame(id);
 			if(g.getState() == Game.State.INGAME){
 				if(p.isFlying()){
@@ -219,8 +222,8 @@ public class PlayerClassEvents implements Listener{
 	public void onEntityDamaged(EntityDamageEvent e){
 		if(e.getEntity() instanceof Player){
 			Player p = (Player)e.getEntity();
-			int game = GameManager.getInstance().getPlayerGameId(p);
-			if(game != -1){
+			String game = GameManager.getInstance().getPlayerGameId(p);
+			if(!(game == null)){
 				Game g = gm.getGame(game);
 				if(g.getState() == Game.State.INGAME){
 					if(smash){
@@ -243,7 +246,7 @@ public class PlayerClassEvents implements Listener{
 				attacker = (Player)e.getDamager();
 			}
 			if(victim != null && attacker != null){
-				if(gm.getPlayerGameId(victim) != -1 && gm.getPlayerGameId(attacker) != -1){
+				if(!(gm.getPlayerGameId(victim) == null) && !(gm.getPlayerGameId(attacker) == null)){
 					if(smash){
 						victim.setHealth(20);
 					}
@@ -274,8 +277,8 @@ public class PlayerClassEvents implements Listener{
 		final Player p = e.getPlayer();
 		Bukkit.getScheduler().scheduleSyncDelayedTask(GameManager.getInstance().getPlugin(), new Runnable(){
 			public void run(){
-				int id = gm.getPlayerGameId(p);
-				if(id != -1){
+				String id = gm.getPlayerGameId(p);
+				if(!(id == null)){
 					gm.getGame(id).spawnPlayer(p);
 				}
 				else{
@@ -287,8 +290,8 @@ public class PlayerClassEvents implements Listener{
 
 	@EventHandler
 	public void onPlayerPlaceBlock(BlockPlaceEvent e){
-		int id = gm.getPlayerGameId(e.getPlayer());
-		if(id != -1){
+		String id = gm.getPlayerGameId(e.getPlayer());
+		if(!(id == null)){
 			if(gm.getGame(id).getState() == State.INGAME){
 			  if(e.getBlockPlaced().getType() == Material.TNT){
 				  

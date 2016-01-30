@@ -104,7 +104,7 @@ public class SettingsManager {
 		// p.saveConfig();
 	}
 
-	public static World getGameWorld(int game) {
+	public static World getGameWorld(String game) {
 		if (SettingsManager.getInstance().getSystemConfig().getString("system.arenas." + game + ".world") == null) {
 			//LobbyManager.getInstance().error(true);
 			return null;
@@ -168,7 +168,7 @@ public class SettingsManager {
 	}
 
 
-	public int getSpawnCount(int gameid) {
+	public int getSpawnCount(String gameid) {
 		return spawns.getInt("spawns." + gameid + ".count");
 	}
 
@@ -185,14 +185,14 @@ public class SettingsManager {
 		}
 	}
 	
-	public Location getGameLobbySpawn(int gameid) {
+	public Location getGameLobbySpawn(String gameid) {
 		return new Location(getGameWorld(gameid),
 				spawns.getInt("spawns." + gameid + ".lobby.x"),
 				spawns.getInt("spawns." + gameid + ".lobby.y"),
 				spawns.getInt("spawns." + gameid + ".lobby.z"));
 	}
 	
-	public void setGameLobbySpawn(int gameid, Location l) {
+	public void setGameLobbySpawn(String gameid, Location l) {
 		spawns.set("spawns." + gameid + ".lobby.world", l.getWorld().getName());
 		spawns.set("spawns." + gameid + ".lobby.x", l.getBlockX());
 		spawns.set("spawns." + gameid + ".lobby.y", l.getBlockY());
@@ -201,7 +201,7 @@ public class SettingsManager {
 	}
 
 
-	public Location getSpawnPoint(int gameid, int spawnid) {
+	public Location getSpawnPoint(String gameid, int spawnid) {
 		return new Location(getGameWorld(gameid),
 				spawns.getInt("spawns." + gameid + "." + spawnid + ".x"),
 				spawns.getInt("spawns." + gameid + "." + spawnid + ".y"),
@@ -217,7 +217,7 @@ public class SettingsManager {
 	}
 
 
-	public void setSpawn(int gameid, int spawnid, Vector v) {
+	public void setSpawn(String gameid, int spawnid, Vector v) {
 		spawns.set("spawns." + gameid + "." + spawnid + ".x", v.getBlockX());
 		spawns.set("spawns." + gameid + "." + spawnid + ".y", v.getBlockY());
 		spawns.set("spawns." + gameid + "." + spawnid + ".z", v.getBlockZ());

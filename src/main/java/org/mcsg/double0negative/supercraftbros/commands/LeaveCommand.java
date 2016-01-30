@@ -7,8 +7,8 @@ public class LeaveCommand implements SubCommand{
 
 	
 	public boolean onCommand(Player player, String[] args) {
-		int game = GameManager.getInstance().getPlayerGameId(player);
-		if(game != -1){
+		String game = GameManager.getInstance().getPlayerGameId(player);
+		if(!(game == null)){
 			GameManager.getInstance().getGame(game).removePlayer(player, false);
 		}
 		return true;

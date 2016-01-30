@@ -11,8 +11,8 @@ public class InventoryEvents implements Listener {
 	
 	@EventHandler
 	public void itemDrop(PlayerDropItemEvent e){
-		int game = GameManager.getInstance().getPlayerGameId(e.getPlayer());
-    	if(game != -1){
+		String game = GameManager.getInstance().getPlayerGameId(e.getPlayer());
+    	if(!(game == null)){
     		e.setCancelled(true);
     		
     	}
@@ -22,8 +22,8 @@ public class InventoryEvents implements Listener {
 	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void itemDrop(InventoryClickEvent e){
-		int game = GameManager.getInstance().getPlayerGameId(Bukkit.getPlayerExact(e.getWhoClicked().getName()));
-    	if(game != -1){
+		String game = GameManager.getInstance().getPlayerGameId(Bukkit.getPlayerExact(e.getWhoClicked().getName()));
+    	if(!(game == null)){
     		e.setCancelled(true);
     	}
     	

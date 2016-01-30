@@ -35,12 +35,14 @@ public class Game {
 
 
 
-	private int gameID;
+	private String gameID;
 	private int spawnCount;
 	private Arena arena;
 	private State state;
-
-
+	
+	boolean started = false;
+	int count = 20;
+	int tid = 0;
 
 	private HashMap<Player, Integer>players = new HashMap<Player, Integer>();
 	private HashMap<Player, Double>damage = new HashMap<Player, Double>();
@@ -49,12 +51,9 @@ public class Game {
 	private ArrayList<Player>queue = new ArrayList<Player>();
 
 
-	public Game(int a) {
+	public Game(String a) {
 		this.gameID = a;
 		init();
-
-
-
 	}
 
 
@@ -85,8 +84,8 @@ public class Game {
 
 	public void addPlayer(Player p){
 		int max = SettingsManager.getInstance().getSystemConfig().getInt("system.arenas." + gameID + ".max");
-		int game = GameManager.getInstance().getPlayerGameId(Bukkit.getPlayerExact(p.getName()));
-		if(state == State.LOBBY && players.size() < max && game == -1){
+		String game = GameManager.getInstance().getPlayerGameId(Bukkit.getPlayerExact(p.getName()));
+		if(state == State.LOBBY && players.size() < max && game == null){
 			p.teleport(SettingsManager.getInstance().getGameLobbySpawn(gameID));
 
 			players.put(p , 3);
@@ -105,7 +104,7 @@ public class Game {
 		else if(players.size() >= max){
 			Message.send(p, ChatColor.RED + "Game Full!");
 		}
-		else if(game != -1){
+		else if(!(game == null)){
 			Message.send(p, ChatColor.RED + "Already in game!");
 		}
 		else{
@@ -180,9 +179,6 @@ public class Game {
 		}
 	}
 
-
-	int count = 20;
-	int tid = 0;
 	public void countdown(int time) {
 		count = time;
 		Bukkit.getScheduler().cancelTask(tid);
@@ -219,8 +215,6 @@ public class Game {
 		double i = damage.get(p);
 		return i;
 	}
-	
-	boolean started = false;
 
 
 	public void setPlayerClass(Player player, String playerClass){
@@ -401,7 +395,7 @@ public class Game {
 		return true;
 	}
 	
-	public int getID() {
+	public String getID() {
 		return gameID;
 	}
 
@@ -453,7 +447,6 @@ public class Game {
 		}
 	}
 
-
 	public void enable(){
 		disable();
 		state = State.LOBBY;
@@ -471,7 +464,6 @@ public class Game {
 	public State getState() {
 		return state;
 	}
-
 
 	public String getPlayerClass(Player p) {
 		return pClasses.get(p).toUpperCase();

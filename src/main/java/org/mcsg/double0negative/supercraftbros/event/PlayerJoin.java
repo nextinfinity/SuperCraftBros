@@ -20,8 +20,8 @@ public class PlayerJoin implements Listener{
 			public void run(){
 				if(SettingsManager.getConfig().getBoolean("use-arena-teleport")){
 					Location l =  p.getLocation();
-			        int game =  GameManager.getInstance().getBlockGameId(l);
-			        if(game != -1){
+			        String game =  GameManager.getInstance().getBlockGameId(l);
+			        if(!(game == null)){
 			        	clearPlayer(p);
 			        }
 				}else{

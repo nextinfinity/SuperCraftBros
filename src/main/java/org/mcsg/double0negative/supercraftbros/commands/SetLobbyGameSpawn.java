@@ -10,16 +10,13 @@ public class SetLobbyGameSpawn implements SubCommand{
 	
 	public boolean onCommand(Player player, String[] args) {
 		if(player.hasPermission("scb.admin")){
-			
 			if(args.length == 1){
-				int i = Integer.parseInt(args[0]);
+				String i = args[0].toLowerCase();
 				SettingsManager.getInstance().setGameLobbySpawn(i, player.getLocation());
 				Message.send(player, ChatColor.GREEN + "Lobby for arena "+ i +" set!");
 			}else{
 				Message.send(player, ChatColor.RED + "/scb setlobby <arena>");
 			}
-			
-			
 		}else{
 			Message.send(player, ChatColor.RED + "You don't have permission for that!");
 		}

@@ -9,7 +9,9 @@ public class CreateArenaCommand implements SubCommand {
 
 	public boolean onCommand(Player player, String[] args) {
 		if(player.hasPermission("scb.admin")){
-			GameManager.getInstance().createArenaFromSelection(player);
+			if(args.length >= 1){
+				GameManager.getInstance().createArenaFromSelection(player, args[0].toLowerCase());
+			}
 		}else{
 			Message.send(player, ChatColor.RED + "You don't have permission for that!");
 		}

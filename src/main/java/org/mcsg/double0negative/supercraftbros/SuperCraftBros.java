@@ -23,7 +23,7 @@ import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 
 public class SuperCraftBros extends JavaPlugin{
 
-	public static HashMap<Location, Integer> joinSigns = new HashMap<Location, Integer>();
+	public static HashMap<Location, String> joinSigns = new HashMap<Location, String>();
 	
 	@SuppressWarnings("deprecation")
 	public void onEnable(){
