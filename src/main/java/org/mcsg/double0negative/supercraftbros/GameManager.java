@@ -70,11 +70,15 @@ public class GameManager {
 	public void LoadGames() {
 		FileConfiguration c = SettingsManager.getInstance().getSystemConfig();
 		games.clear();
-		for(String a : c.getConfigurationSection("system.arenas").getKeys(false)){
-			if (c.isSet("system.arenas." + a + ".x1")) {
-				System.out.println("Loading Arena: " + a);
-				games.add(new Game(a));
+		if(c.contains("system.arenas")){
+			for(String a : c.getConfigurationSection("system.arenas").getKeys(false)){
+				if (c.isSet("system.arenas." + a + ".x1")) {
+					System.out.println("Loading Arena: " + a);
+					games.add(new Game(a));
+				}
 			}
+		}else{
+			System.out.println("No games in config!");
 		}
 	}
 	
@@ -85,22 +89,27 @@ public class GameManager {
 		classLeg.clear();
 		classBoots.clear();
 		classEffects.clear();
-		for(String i : SettingsManager.getInstance().getClasses().getConfigurationSection("classes").getKeys(false)){
-			String key = ("classes." + i);
-			String name = i.toLowerCase();
-			ArrayList<ItemStack> inv = getInventory(key);
-			classList.put(name, inv);
-			ItemStack i1 = getHelmet(key);
-			classHelmet.put(name, i1);
-			ItemStack i2 = getChestplate(key);
-			classChest.put(name, i2);
-			ItemStack i3 = getLeggings(key);
-			classLeg.put(name, i3);
-			ItemStack i4 = getBoots(key);
-			classBoots.put(name, i4);
-			ArrayList<PotionEffect> effects = getEffects(key);
-			classEffects.put(name, effects);
-			i = i+1;
+		FileConfiguration c = SettingsManager.getInstance().getClasses();
+		if(c.contains("classes")){
+			for(String i : c.getConfigurationSection("classes").getKeys(false)){
+				String key = ("classes." + i);
+				String name = i.toLowerCase();
+				ArrayList<ItemStack> inv = getInventory(key);
+				classList.put(name, inv);
+				ItemStack i1 = getHelmet(key);
+				classHelmet.put(name, i1);
+				ItemStack i2 = getChestplate(key);
+				classChest.put(name, i2);
+				ItemStack i3 = getLeggings(key);
+				classLeg.put(name, i3);
+				ItemStack i4 = getBoots(key);
+				classBoots.put(name, i4);
+				ArrayList<PotionEffect> effects = getEffects(key);
+				classEffects.put(name, effects);
+				i = i+1;
+			}
+		}else{
+			System.out.println("No classes in config!");
 		}
 	}
 	
