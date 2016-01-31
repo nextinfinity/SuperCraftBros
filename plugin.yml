@@ -7,3 +7,4 @@ commands:
     description: Super Craft Bros
     usage: /scb (command) (args)
     aliases: [scb]
+softdepend: [Vault]

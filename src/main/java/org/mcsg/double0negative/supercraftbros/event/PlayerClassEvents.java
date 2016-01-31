@@ -76,7 +76,6 @@ public class PlayerClassEvents implements Listener{
 	@EventHandler
 	public void onInteract(PlayerInteractEvent e){
 		final Player p = e.getPlayer();
-
 		String id = gm.getPlayerGameId(p);
 		if(!(id == null)){
 			Game g = gm.getGame(id);

@@ -15,8 +15,10 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitScheduler;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Score;
@@ -24,16 +26,13 @@ import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.ScoreboardManager;
 import org.bukkit.util.Vector;
 
-public class Game {
+import net.milkbowl.vault.economy.Economy;
 
+public class Game {
 
 	public enum State{
 		INGAME, LOBBY, DISABLED, WAITING
 	}
-
-	//209.188.0.154
-
-
 
 	private String gameID;
 	private int spawnCount;
@@ -49,13 +48,14 @@ public class Game {
 	private HashMap<Player, String>pClasses = new HashMap<Player, String>();
 	private ArrayList<Player>inactive = new ArrayList<Player>();
 	private ArrayList<Player>queue = new ArrayList<Player>();
-
+	
+	private BukkitScheduler respawnClock = Bukkit.getScheduler();
+	private HashMap<Player, Integer> playerTask = new HashMap<Player, Integer>();
 
 	public Game(String a) {
 		this.gameID = a;
 		init();
 	}
-
 
 	public void init(){
 		FileConfiguration s = SettingsManager.getInstance().getSystemConfig();
@@ -77,10 +77,7 @@ public class Game {
 		state = State.LOBBY;
 
 		spawnCount = SettingsManager.getInstance().getSpawnCount(gameID);
-
-
 	}
-
 
 	public void addPlayer(Player p){
 		int max = SettingsManager.getInstance().getSystemConfig().getInt("system.arenas." + gameID + ".max");
@@ -97,6 +94,7 @@ public class Game {
 			msgAll(ChatColor.GREEN + p.getName()+ " joined the game!");
 			updateTabAll();
 			updateSigns();
+			playerTask.put(p, -1);
 		}
 		else if(state == State.INGAME){
 			Message.send(p, ChatColor.RED + "Game already started!");
@@ -110,8 +108,6 @@ public class Game {
 		else{
 			Message.send(p, ChatColor.RED + "Arena is disabled!");
 		}
-
-
 	}
 	
 	public void updateSigns(){
@@ -175,14 +171,12 @@ public class Game {
 				removePlayer(p, false);
 				Message.send(p, ChatColor.RED + "You didn't pick a class!");
 			}
-
 		}
 	}
 
 	public void countdown(int time) {
 		count = time;
 		Bukkit.getScheduler().cancelTask(tid);
-
 		if (state == State.LOBBY) {
 			tid = Bukkit.getScheduler().scheduleSyncRepeatingTask((Plugin) GameManager.getInstance().getPlugin(), new Runnable() {
 				public void run() {
@@ -200,7 +194,6 @@ public class Game {
 					}
 				}
 			}, 0, 20);
-
 		}
 	}
 	
@@ -235,22 +228,26 @@ public class Game {
 		}
 	}
 
-	public void killPlayer(Player p, String msg){
+	public void killPlayer(final Player p, String msg){
 		clearPotions(p);
-
 		msgAll(ChatColor.GOLD + msg);
 		int lives = players.get(p)-1;
 		if(lives <= 0){
 			playerEliminate(p);
-
 		}
 		else{
 			players.put(p, lives);
 			damage.put(p, 0D);
 			msgAll(p.getName() + " has " + lives + " lives left");
+			int i = respawnClock.scheduleSyncDelayedTask(GameManager.getInstance().getPlugin(), new Runnable(){
+				public void run(){
+					playerEliminate(p);
+					Message.send(p, "You were eliminated for waiting too long before respawning!");
+				}
+			}, 200);
+			playerTask.put(p, i);
 		}
 		updateTabAll();
-
 	}
 
 	@SuppressWarnings("deprecation")
@@ -272,11 +269,16 @@ public class Game {
 		final ScoreboardManager m = Bukkit.getScoreboardManager();
 		final Scoreboard board = m.getNewScoreboard();
 		p.setScoreboard(board);
-
 		if(players.keySet().size() <= 1 && state == State.INGAME){
 			Player pl = null;
 			for(Player pl2 : players.keySet()){
 				pl = pl2;
+			}
+			if(!(Bukkit.getPluginManager().getPlugin("Vault") == null)){
+				RegisteredServiceProvider<Economy> economyProvider = Bukkit.getServer().getServicesManager().getRegistration(net.milkbowl.vault.economy.Economy.class);
+		        if (economyProvider != null) {
+		            economyProvider.getProvider().depositPlayer(pl, SettingsManager.getConfig().getInt("winning-economy"));
+		        }
 			}
 			Bukkit.broadcastMessage(ChatColor.BLUE + pl.getName() + " won Super Craft Bros on arena " + gameID);
 			gameEnd();
@@ -350,8 +352,10 @@ public class Game {
 			Location l = SettingsManager.getInstance().getSpawnPoint(gameID, r.nextInt(spawnCount)+1);
 			p.teleport(getSafePoint(l));
 			setInventory(p);
+			if(playerTask.get(p) != -1){
+				respawnClock.cancelTask(playerTask.get(p));
+			}
 		}
-
 	}
 
 	public void setInventory(Player p){
