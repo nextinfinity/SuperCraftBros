@@ -33,7 +33,7 @@ public class CommandHandler implements CommandExecutor
 		commands.put("delete", new DeleteArenaCommand());
 		commands.put("disable", new DisableCommand());
 		commands.put("enable", new EnableCommand());
-		commands.put("setlobbyspawn", new SetLobbySpawnCommand());
+		commands.put("setgloballobby", new SetLobbySpawnCommand());
 		commands.put("setlobby", new SetLobbyGameSpawn());
 		commands.put("setmin", new SetMinCommand());
 		commands.put("setmax", new SetMaxCommand());

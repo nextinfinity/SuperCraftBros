@@ -113,7 +113,7 @@ public class Game {
 	public void updateSigns(){
 		FileConfiguration sys = SettingsManager.getInstance().getSystemConfig();
 		for(Location loc : SuperCraftBros.joinSigns.keySet()){
-			if(SuperCraftBros.joinSigns.get(loc) == gameID){
+			if(SuperCraftBros.joinSigns.get(loc).equalsIgnoreCase(gameID)){
 				Block b = loc.getBlock();
 				Sign s = (Sign) b.getState();
 				int i1 = players.size();

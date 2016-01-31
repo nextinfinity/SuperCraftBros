@@ -17,6 +17,7 @@ public class DeleteArenaCommand implements SubCommand{
 				String name = args[0].toLowerCase();
 				if(c.contains("system.arenas." + name)){
 					c.set("system.arenas." + name, null);
+					SettingsManager.getInstance().getSpawns().set("spawns." + name, null);
 					GameManager.getInstance().hotRemoveArena(name);
 					SettingsManager.getInstance().saveSystemConfig();
 				}

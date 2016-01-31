@@ -57,7 +57,7 @@ public class SignEvents implements Listener{
 			e.setLine(0, ChatColor.GOLD + "[" + ChatColor.YELLOW + "SCB" + ChatColor.GOLD + "]");
 			if(ChatColor.stripColor(e.getLine(1)).equalsIgnoreCase("join")){
 				e.setLine(1, ChatColor.GOLD + "Join");
-				String gameint = ChatColor.stripColor(e.getLine(2).toLowerCase());
+				String gameint = ChatColor.stripColor(e.getLine(2)).toLowerCase();
 				SuperCraftBros.joinSigns.put(e.getBlock().getLocation(), gameint);
 				GameManager.getInstance().getGame(gameint).updateSigns();
 			}
