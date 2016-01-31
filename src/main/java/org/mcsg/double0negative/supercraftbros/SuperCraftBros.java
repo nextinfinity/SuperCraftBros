@@ -35,7 +35,7 @@ import java.util.HashMap;
  */
 public class SuperCraftBros extends JavaPlugin {
 
-	public static HashMap<Location, Integer> joinSigns = new HashMap<Location, Integer>();
+	public static HashMap<Location, String> joinSigns = new HashMap<Location, String>();
 
     /**
      * Behavior implemented on plugin start-up.

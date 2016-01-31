@@ -20,7 +20,7 @@ public class JoinCommand implements SubCommand{
 	public boolean onCommand(Player player, String[] args) {
 		Player p = player;
 		if(args[0] != null){
-			int i = Integer.parseInt(args[0]);
+			String i = args[0].toLowerCase();
 			FileConfiguration c = SettingsManager.getInstance().getSystemConfig();
 			if(c.getBoolean("system.arenas." + i + ".enabled")){
 				GameManager.getInstance().addPlayer(p, i);

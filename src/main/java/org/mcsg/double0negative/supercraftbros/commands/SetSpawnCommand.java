@@ -20,7 +20,7 @@ import java.util.HashMap;
 
 public class SetSpawnCommand implements SubCommand{
 
-    HashMap<Integer, Integer>next = new HashMap<Integer,Integer>();
+    HashMap<String, Integer>next = new HashMap<String,Integer>();
 
  
 
@@ -31,7 +31,6 @@ public class SetSpawnCommand implements SubCommand{
     }
     
     public boolean onCommand(Player player, String[] args) {
-        
         if(!player.hasPermission("scb.admin")){
     		Message.send(player, ChatColor.RED + "You don't have permission for that!");
             return true;
@@ -39,9 +38,9 @@ public class SetSpawnCommand implements SubCommand{
         loadNextSpawn();
         System.out.println("settings spawn");
         Location l =  player.getLocation();
-        int game =  GameManager.getInstance().getBlockGameId(l);
+        String game =  GameManager.getInstance().getBlockGameId(l);
         System.out.println(game+" "+next.size());
-        if(game == -1){
+        if(!(game == null)){
             Message.send(player, ChatColor.RED+"Must be in an arena!");
         }
         int i = 0;

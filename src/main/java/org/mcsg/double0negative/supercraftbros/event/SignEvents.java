@@ -38,8 +38,8 @@ public class SignEvents implements Listener{
         	if(ChatColor.stripColor(s.getLine(1)).equalsIgnoreCase("class")){
             	String cl = ChatColor.stripColor(s.getLine(2));
             	Game g = GameManager.getInstance().getGame(GameManager.getInstance().getPlayerGameId(e.getPlayer()));
-            	int id = GameManager.getInstance().getPlayerGameId(p);
-        		if(id != -1){
+            	String id = GameManager.getInstance().getPlayerGameId(p);
+        		if(!(id == null)){
         			if(GameManager.getInstance().classList.keySet().contains(cl.toLowerCase())){
         				g.setPlayerClass(e.getPlayer(), cl.toLowerCase());
         				g.setInventory(p);
@@ -64,7 +64,7 @@ public class SignEvents implements Listener{
 			e.setLine(0, ChatColor.GOLD + "[" + ChatColor.YELLOW + "SCB" + ChatColor.GOLD + "]");
 			if(ChatColor.stripColor(e.getLine(1)).equalsIgnoreCase("join")){
 				e.setLine(1, ChatColor.GOLD + "Join");
-				int gameint = Integer.parseInt(ChatColor.stripColor(e.getLine(2)));
+				String gameint = ChatColor.stripColor(e.getLine(2).toLowerCase());
 				SuperCraftBros.joinSigns.put(e.getBlock().getLocation(), gameint);
 				GameManager.getInstance().getGame(gameint).updateSigns();
 			}

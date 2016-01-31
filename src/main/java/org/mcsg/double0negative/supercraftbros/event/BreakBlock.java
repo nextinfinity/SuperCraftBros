@@ -20,8 +20,8 @@ public class BreakBlock implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void clickHandler(BlockBreakEvent e){
-    	int game = GameManager.getInstance().getPlayerGameId(e.getPlayer());
-    	if(game != -1){
+    	String game = GameManager.getInstance().getPlayerGameId(e.getPlayer());
+    	if(!(game == null)){
     		e.setCancelled(true);
     		
     	}
@@ -30,8 +30,8 @@ public class BreakBlock implements Listener {
     }
     @EventHandler(priority = EventPriority.HIGHEST)
     public void clickHandler(BlockPlaceEvent e){
-    	int game = GameManager.getInstance().getPlayerGameId(e.getPlayer());
-    	if(game != -1){
+    	String game = GameManager.getInstance().getPlayerGameId(e.getPlayer());
+    	if(!(game == null)){
     		e.setCancelled(true);
     		
     	}

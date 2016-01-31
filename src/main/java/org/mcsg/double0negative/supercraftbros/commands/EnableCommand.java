@@ -20,18 +20,17 @@ public class EnableCommand implements SubCommand{
 	
 	public boolean onCommand(Player player, String[] args) {
 		if(player.hasPermission("scb.admin")){
-			
 			if(args.length == 1){
 				FileConfiguration spawns = SettingsManager.getInstance().getSpawns();
 				FileConfiguration system = SettingsManager.getInstance().getSystemConfig();
-				int i = Integer.parseInt(args[0]);
+				String game = args[0].toLowerCase();
 				try{
-					if(spawns.isSet("spawns." + i + ".1.x")){
+					if(spawns.isSet("spawns." + game + ".1.x")){
 						if(system.isSet("system.lobby.spawn.x")){
-							if(spawns.isSet("spawns." + i + ".lobby.world")){
-								GameManager.getInstance().getGame(i).enable();
-								system.set("system.arenas." + i + ".enabled", true);
-								Message.send(player, ChatColor.GREEN + "Arena " + i + " enabled!");
+							if(spawns.isSet("spawns." + game + ".lobby.world")){
+								GameManager.getInstance().getGame(game).enable();
+								system.set("system.arenas." + game + ".enabled", true);
+								Message.send(player, ChatColor.GREEN + "Arena " + game.toUpperCase() + " enabled!");
 							}else{
 								Message.send(player, ChatColor.RED  + "No game lobby set!");
 							}

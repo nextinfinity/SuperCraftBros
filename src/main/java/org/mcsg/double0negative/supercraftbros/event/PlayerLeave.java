@@ -19,8 +19,8 @@ public class PlayerLeave implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void leave(PlayerQuitEvent e){
-    	int game = GameManager.getInstance().getPlayerGameId(e.getPlayer());
-		if(game != -1){
+    	String game = GameManager.getInstance().getPlayerGameId(e.getPlayer());
+		if(!(game == null)){
 			GameManager.getInstance().getGame(game).removePlayer(e.getPlayer(), true);
 		}
     }

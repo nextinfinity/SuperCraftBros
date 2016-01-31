@@ -5,3 +5,6 @@ countdown: 60
 #Only teleport players who are in an arena when they join
 #This feature is mainly for servers that want this plugin in a single world
 use-arena-teleport: false
+#Amount to award players for winning
+#This will not trigger if Vault is not installed
+winning-economy: 1000
