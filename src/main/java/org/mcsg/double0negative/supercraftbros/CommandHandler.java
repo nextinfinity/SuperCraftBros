@@ -10,20 +10,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
-import org.mcsg.double0negative.supercraftbros.commands.CreateArenaCommand;
-import org.mcsg.double0negative.supercraftbros.commands.DisableCommand;
-import org.mcsg.double0negative.supercraftbros.commands.EnableCommand;
-import org.mcsg.double0negative.supercraftbros.commands.HelpCommand;
-import org.mcsg.double0negative.supercraftbros.commands.JoinCommand;
-import org.mcsg.double0negative.supercraftbros.commands.LeaveCommand;
-import org.mcsg.double0negative.supercraftbros.commands.ReloadCommand;
-import org.mcsg.double0negative.supercraftbros.commands.SetLobbyGameSpawn;
-import org.mcsg.double0negative.supercraftbros.commands.SetLobbySpawnCommand;
-import org.mcsg.double0negative.supercraftbros.commands.SetMaxCommand;
-import org.mcsg.double0negative.supercraftbros.commands.SetMinCommand;
-import org.mcsg.double0negative.supercraftbros.commands.SetSpawnCommand;
-import org.mcsg.double0negative.supercraftbros.commands.StartCommand;
-import org.mcsg.double0negative.supercraftbros.commands.SubCommand;
+import org.mcsg.double0negative.supercraftbros.commands.*;
 
 
 public class CommandHandler implements CommandExecutor
@@ -42,7 +29,8 @@ public class CommandHandler implements CommandExecutor
 	private void loadCommands()
 	{
 		commands.put("join", new JoinCommand());
-		commands.put("createarena", new CreateArenaCommand());
+		commands.put("create", new CreateArenaCommand());
+		commands.put("delete", new DeleteArenaCommand());
 		commands.put("disable", new DisableCommand());
 		commands.put("enable", new EnableCommand());
 		commands.put("setlobbyspawn", new SetLobbySpawnCommand());

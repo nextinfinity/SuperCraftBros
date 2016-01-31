@@ -11,11 +11,11 @@ public class SetMinCommand implements SubCommand{
 	
 	public boolean onCommand(Player player, String[] args) {
 		if(player.hasPermission("scb.admin")){
-			int no = Integer.parseInt(args[0]);
+			String no = args[0].toLowerCase();
 			int i = Integer.parseInt(args[1]);
 			c.set("system.arenas." + no + ".min", i);
 			SettingsManager.getInstance().saveSystemConfig();
-			Message.send(player, "Minimum amount for arena " + no + " set to " + i + "!");
+			Message.send(player, "Minimum amount for arena " + no.toUpperCase() + " set to " + i + "!");
 		}else{
 			Message.send(player, ChatColor.RED + "You don't have permission for that!");
 		}

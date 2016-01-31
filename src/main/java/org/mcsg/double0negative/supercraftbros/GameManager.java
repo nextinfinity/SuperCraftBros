@@ -87,7 +87,7 @@ public class GameManager {
 		classEffects.clear();
 		for(String i : SettingsManager.getInstance().getClasses().getConfigurationSection("classes").getKeys(false)){
 			String key = ("classes." + i);
-			String name = SettingsManager.getInstance().getClasses().getString(key + ".name").toLowerCase();
+			String name = i.toLowerCase();
 			ArrayList<ItemStack> inv = getInventory(key);
 			classList.put(name, inv);
 			ItemStack i1 = getHelmet(key);
@@ -153,14 +153,16 @@ public class GameManager {
 					int idm = c.getInt(id + ".items." + item + ".id-modifier");
 					is.setDurability((short)idm);
 				}
-				for(String e : c.getConfigurationSection(id + ".items." + item + ".enchantments").getKeys(false)){
-					Enchantment enchant = Enchantment.getByName(e);
-					int level = Integer.parseInt(c.getString(id + ".items." + item + ".enchantments." + e));
-					is.addUnsafeEnchantment(enchant, level);
+				if(c.contains(id + ".items." + item + ".enchantments")){
+					for(String e : c.getConfigurationSection(id + ".items." + item + ".enchantments").getKeys(false)){
+						Enchantment enchant = Enchantment.getByName(e);
+						int level = Integer.parseInt(c.getString(id + ".items." + item + ".enchantments." + e));
+						is.addUnsafeEnchantment(enchant, level);
+					}
 				}
 				inv.add(is);
 			}catch(Exception e){
-				System.out.println("Error adding item " + item + " for class " + c.getString(id + ".name") + ", please check the yml file.");
+				System.out.println("Error adding item " + item + " for class " + id + ", please check the yml file.");
 			}
 		}
 		return inv;
@@ -310,7 +312,7 @@ public class GameManager {
 	public Game getGame(String a) {
 		//int t = gamemap.get(a);
 		for (Game g: games) {
-			if (g.getID() == a) {
+			if (g.getID().equalsIgnoreCase(a)) {
 				return g;
 			}
 		}
@@ -408,9 +410,10 @@ public class GameManager {
 		c.set("system.arenas." + name + ".max", 4);
 		SettingsManager.getInstance().saveSystemConfig();
 		hotAddArena(name);
-		Message.send(pl, ChatColor.GREEN + "Arena " + name + " Succesfully added");
-
+		Message.send(pl, ChatColor.GREEN + "Arena " + name.toUpperCase() + " succesfully added");
 	}
+	
+	
 
 	private void hotAddArena(String no) {
 		Game game = new Game(no);

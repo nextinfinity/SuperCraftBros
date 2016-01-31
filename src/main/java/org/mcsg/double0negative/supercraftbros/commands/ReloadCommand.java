@@ -17,6 +17,7 @@ public class ReloadCommand implements SubCommand{
 			s.reloadSpawns();
 			s.reloadSystem();
 			GameManager.getInstance().setup();
+			Message.send(player, "SCB reloaded!");
 			return true;
 		}else{
 			Message.send(player, ChatColor.RED + "You don't have permission for that!");

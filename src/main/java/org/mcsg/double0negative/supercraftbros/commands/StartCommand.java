@@ -11,7 +11,7 @@ public class StartCommand implements SubCommand{
 	public boolean onCommand(Player player, String[] args) {
 		if(player.hasPermission("scb.start") || player.hasPermission("scb.admin")){
 			String game = GameManager.getInstance().getPlayerGameId(player);
-			if(!(game != null)){
+			if(!(game == null)){
 				GameManager.getInstance().getGame(game).countdown(10);
 			}
 		}else{

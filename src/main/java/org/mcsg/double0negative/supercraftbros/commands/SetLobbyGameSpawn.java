@@ -13,7 +13,7 @@ public class SetLobbyGameSpawn implements SubCommand{
 			if(args.length == 1){
 				String i = args[0].toLowerCase();
 				SettingsManager.getInstance().setGameLobbySpawn(i, player.getLocation());
-				Message.send(player, ChatColor.GREEN + "Lobby for arena "+ i +" set!");
+				Message.send(player, ChatColor.GREEN + "Lobby for arena "+ i.toUpperCase() +" set!");
 			}else{
 				Message.send(player, ChatColor.RED + "/scb setlobby <arena>");
 			}

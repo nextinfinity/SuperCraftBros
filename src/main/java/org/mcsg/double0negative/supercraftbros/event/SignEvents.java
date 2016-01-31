@@ -42,7 +42,7 @@ public class SignEvents implements Listener{
         		}	
             }
             else if(ChatColor.stripColor(s.getLine(1)).equalsIgnoreCase("join")){
-            	int game = Integer.parseInt(ChatColor.stripColor(s.getLine(2)));
+            	String game = ChatColor.stripColor(s.getLine(2)).toLowerCase();
             	p.chat("/scb join " + game);
             }
             else if(ChatColor.stripColor(s.getLine(1)).equalsIgnoreCase("leave")){

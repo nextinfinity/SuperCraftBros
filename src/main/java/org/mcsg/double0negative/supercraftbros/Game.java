@@ -280,7 +280,7 @@ public class Game {
 		            economyProvider.getProvider().depositPlayer(pl, SettingsManager.getConfig().getInt("winning-economy"));
 		        }
 			}
-			Bukkit.broadcastMessage(ChatColor.BLUE + pl.getName() + " won Super Craft Bros on arena " + gameID);
+			Bukkit.broadcastMessage(ChatColor.BLUE + pl.getName() + " won Super Craft Bros on arena " + gameID.toUpperCase());
 			gameEnd();
 		}
 		updateTabAll();

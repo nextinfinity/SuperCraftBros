@@ -32,7 +32,7 @@ public class SetSpawnCommand implements SubCommand{
         Location l =  player.getLocation();
         String game =  GameManager.getInstance().getBlockGameId(l);
         System.out.println(game+" "+next.size());
-        if(!(game == null)){
+        if(game == null){
             Message.send(player, ChatColor.RED+"Must be in an arena!");
         }
         int i = 0;
@@ -60,7 +60,7 @@ public class SetSpawnCommand implements SubCommand{
             return true;
         }
         SettingsManager.getInstance().setSpawn(game, i, l.toVector());
-        Message.send(player, ChatColor.GREEN+"Spawn "+i +" in arena "+game+" set!");
+        Message.send(player, ChatColor.GREEN+"Spawn "+i +" in arena "+game.toUpperCase()+" set!");
 
         return true;
     }
