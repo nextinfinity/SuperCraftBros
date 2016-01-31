@@ -59,7 +59,7 @@ public class CommandHandler implements CommandExecutor
 
 
 		if(cmd.equalsIgnoreCase("scb")){ 
-			if(player.hasPermission("scb.player")){
+			if(player.hasPermission("scb.player") || player.hasPermission("scb.admin")){
 				if(args == null || args.length < 1){
 					Message.send(player, ChatColor.GOLD +""+ ChatColor.BOLD +"Super Craft Bros Reloaded by NextInfinity");
 					Message.send(player, ChatColor.GOLD +""+ ChatColor.BOLD +"Original source by double0negative");
@@ -86,6 +86,8 @@ public class CommandHandler implements CommandExecutor
 				}catch(Exception e){e.printStackTrace(); Message.send(player, ChatColor.RED+"An error occured while executing the command. Check the      console");                Message.send(player, ChatColor.BLUE +"Type /scb help for help" );
 				}
 				return true;
+			}else{
+				Message.send(player, "You do not have permission to use SCB!");
 			}
 		}
 		return false;

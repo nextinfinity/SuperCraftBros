@@ -17,6 +17,7 @@ public class DisableCommand implements SubCommand{
 				GameManager.getInstance().getGame(game).disable();
 				FileConfiguration system = SettingsManager.getInstance().getSystemConfig();
 				system.set("system.arenas." + game + ".enabled", false);
+				SettingsManager.getInstance().saveSystemConfig();
 				Message.send(player, ChatColor.YELLOW + "Arena " + game.toUpperCase() + " disabled!");
 			}
 		}else{

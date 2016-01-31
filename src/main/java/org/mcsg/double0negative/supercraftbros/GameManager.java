@@ -180,7 +180,11 @@ public class GameManager {
 				int b = Integer.parseInt(rgb[2]);
 				is = Colorizer.setColor(is, r, g, b);
 			}
-			if(m == Material.SKULL && c.contains(id + ".helmet.player")){
+			if(c.contains(id + ".helmet.id-modifier")){
+				int idm = c.getInt(id + ".helmet.id-modifier");
+				is.setDurability((short)idm);
+			}
+			if(c.getInt(id + ".helmet.id") == 397 && c.getInt(id + ".helmet.id-modifier") == 3 && c.contains(id + ".helmet.player")){
 				String player = c.getString(id + ".helmet.player");
 				SkullMeta meta = (SkullMeta) is.getItemMeta();
 				meta.setOwner(player);
