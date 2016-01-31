@@ -38,6 +38,7 @@ public class PlayerClassEvents implements Listener{
 	GameManager gm;
 	
 	HashMap<Player, Boolean> sugar = new HashMap<Player, Boolean>();
+	HashMap<Player, Boolean> fire = new HashMap<Player, Boolean>();
 	
 	protected boolean smash = false;
 
@@ -85,13 +86,19 @@ public class PlayerClassEvents implements Listener{
 				}
 				if(e.getPlayer().getItemInHand().getType() == Material.DIAMOND_AXE){
 					Smash(p);
-				}
-				else if(p.getItemInHand().getType() == Material.EYE_OF_ENDER){
+				}else if(p.getItemInHand().getType() == Material.EYE_OF_ENDER){
 					e.setCancelled(true);
-				}
-				else if(p.getItemInHand().getType() == Material.FIREBALL){
-                    Fireball f = p.launchProjectile(Fireball.class);
-                    f.setVelocity(f.getVelocity().multiply(10));
+				}else if(fire.get(p)){
+					if(p.getItemInHand().getType() == Material.FIREBALL){
+						Fireball f = p.launchProjectile(Fireball.class);
+						f.setVelocity(f.getVelocity().multiply(10));
+						fire.put(p, false);
+                        Bukkit.getScheduler().scheduleSyncDelayedTask(GameManager.getInstance().getPlugin(), new Runnable(){
+                			public void run(){
+                				fire.put(p, true);
+                			}
+                		}, 600);
+					}
 				}else if(sugar.get(p)){
                     if(p.getItemInHand().getType() == Material.SUGAR && (e.getAction() == Action.LEFT_CLICK_AIR || e.getAction() == Action.LEFT_CLICK_BLOCK)){
                         p.setVelocity(new Vector(0, 2, 0));
