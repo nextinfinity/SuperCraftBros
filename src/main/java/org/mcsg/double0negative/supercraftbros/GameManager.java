@@ -186,6 +186,13 @@ public class GameManager {
 				meta.setOwner(player);
 				is.setItemMeta(meta);
 			}
+			if(c.contains(id + ".helmet.enchantments")){
+				for(String e : c.getConfigurationSection(id + ".helmet.enchantments").getKeys(false)){
+					Enchantment enchant = Enchantment.getByName(e);
+					int level = Integer.parseInt(c.getString(id + ".helmet.enchantments." + e));
+					is.addUnsafeEnchantment(enchant, level);
+				}
+			}
 			return is;
 		}else{
 			return new ItemStack(Material.AIR);
@@ -203,6 +210,13 @@ public class GameManager {
 				int g = Integer.parseInt(rgb[1]);
 				int b = Integer.parseInt(rgb[2]);
 				is = Colorizer.setColor(is, r, g, b);
+			}
+			if(c.contains(id + ".chestplate.enchantments")){
+				for(String e : c.getConfigurationSection(id + ".chestplate.enchantments").getKeys(false)){
+					Enchantment enchant = Enchantment.getByName(e);
+					int level = Integer.parseInt(c.getString(id + ".chestplate.enchantments." + e));
+					is.addUnsafeEnchantment(enchant, level);
+				}
 			}
 			return is;
 		}else{
@@ -222,6 +236,13 @@ public class GameManager {
 				int b = Integer.parseInt(rgb[2]);
 				is = Colorizer.setColor(is, r, g, b);
 			}
+			if(c.contains(id + ".leggings.enchantments")){
+				for(String e : c.getConfigurationSection(id + ".leggings.enchantments").getKeys(false)){
+					Enchantment enchant = Enchantment.getByName(e);
+					int level = Integer.parseInt(c.getString(id + ".leggings.enchantments." + e));
+					is.addUnsafeEnchantment(enchant, level);
+				}
+			}
 			return is;
 		}else{
 			return new ItemStack(Material.AIR);
@@ -239,6 +260,13 @@ public class GameManager {
 				int g = Integer.parseInt(rgb[1]);
 				int b = Integer.parseInt(rgb[2]);
 				is = Colorizer.setColor(is, r, g, b);
+			}
+			if(c.contains(id + ".boots.enchantments")){
+				for(String e : c.getConfigurationSection(id + ".boots.enchantments").getKeys(false)){
+					Enchantment enchant = Enchantment.getByName(e);
+					int level = Integer.parseInt(c.getString(id + ".boots.enchantments." + e));
+					is.addUnsafeEnchantment(enchant, level);
+				}
 			}
 			return is;
 		}else{
