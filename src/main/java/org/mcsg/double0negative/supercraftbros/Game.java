@@ -157,6 +157,7 @@ public class Game {
 	public void startGame(){
 		if(players.size() < 2){
 			msgAll("Not enough players");
+			started = false;
 			return;
 		}
 		inactive.clear();
@@ -431,6 +432,11 @@ public class Game {
 
 	@SuppressWarnings("deprecation")
 	public void removePlayer(Player p, boolean b) {
+		int min = SettingsManager.getInstance().getSystemConfig().getInt("system.arenas." + gameID + ".min");
+		if(started && state != State.INGAME && players.keySet().size() < min){
+			started = false;
+			Bukkit.getScheduler().cancelTask(tid);
+		}
 		players.remove(p);
 		p.getInventory().clear();
 		p.updateInventory();
