@@ -18,19 +18,18 @@ public class PlayerJoin implements Listener{
 	
 	@EventHandler
 	public void join(PlayerJoinEvent e){
-	final Player p = e.getPlayer();
+		final Player p = e.getPlayer();
 		Bukkit.getScheduler().scheduleSyncDelayedTask(GameManager.getInstance().getPlugin(), new Runnable(){
 			public void run(){
 				if(SettingsManager.getConfig().getBoolean("use-arena-teleport")){
 					Location l =  p.getLocation();
-			        String game =  GameManager.getInstance().getBlockGameId(l);
-			        if(!(game == null)){
-			        	clearPlayer(p);
-			        }
+					String game =  GameManager.getInstance().getBlockGameId(l);
+					if(!(game == null)){
+						clearPlayer(p);
+					}
 				}else{
 					clearPlayer(p);
-				}	
-				
+				}				
 			}
 		}, 2);
 	}

@@ -18,7 +18,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.mcsg.double0negative.supercraftbros.Game;
 import org.mcsg.double0negative.supercraftbros.GameManager;
 import org.mcsg.double0negative.supercraftbros.Message;
-import org.mcsg.double0negative.supercraftbros.SettingsManager;
 import org.mcsg.double0negative.supercraftbros.SuperCraftBros;
 
 public class SignEvents implements Listener{

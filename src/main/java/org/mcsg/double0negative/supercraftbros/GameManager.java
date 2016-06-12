@@ -15,8 +15,6 @@ import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryType;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.plugin.Plugin;
@@ -33,12 +31,12 @@ public class GameManager {
 	
 	static GameManager instance = new GameManager();
 	private ArrayList < Game > games = new ArrayList < Game > ();
-	public HashMap<String, ArrayList<ItemStack>>classList = new HashMap<String, ArrayList<ItemStack>>();
-	public HashMap<String, ArrayList<PotionEffect>>classEffects = new HashMap<String, ArrayList<PotionEffect>>();
-	public HashMap<String, ItemStack>classHelmet = new HashMap<String, ItemStack>();
-	public HashMap<String, ItemStack>classChest = new HashMap<String, ItemStack>();
-	public HashMap<String, ItemStack>classLeg = new HashMap<String, ItemStack>();
-	public HashMap<String, ItemStack>classBoots = new HashMap<String, ItemStack>();
+	public HashMap<String, ArrayList<ItemStack>> classList = new HashMap<String, ArrayList<ItemStack>>();
+	public HashMap<String, ArrayList<PotionEffect>> classEffects = new HashMap<String, ArrayList<PotionEffect>>();
+	public HashMap<String, ItemStack> classHelmet = new HashMap<String, ItemStack>();
+	public HashMap<String, ItemStack> classChest = new HashMap<String, ItemStack>();
+	public HashMap<String, ItemStack> classLeg = new HashMap<String, ItemStack>();
+	public HashMap<String, ItemStack> classBoots = new HashMap<String, ItemStack>();
 	
 	
 	private GameManager() {

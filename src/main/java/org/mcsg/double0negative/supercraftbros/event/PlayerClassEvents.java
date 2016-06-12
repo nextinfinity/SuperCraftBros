@@ -10,8 +10,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Fireball;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -33,8 +33,6 @@ import org.mcsg.double0negative.supercraftbros.Game;
 import org.mcsg.double0negative.supercraftbros.GameManager;
 import org.mcsg.double0negative.supercraftbros.SettingsManager;
 import org.mcsg.double0negative.supercraftbros.Game.State;
-
-import net.minecraft.server.v1_8_R3.Packet;
 
 public class PlayerClassEvents implements Listener{
 
@@ -143,8 +141,6 @@ public class PlayerClassEvents implements Listener{
 	public void explodePlayers(Player p){
 		String i = GameManager.getInstance().getPlayerGameId(p);
 		if(!(i == null)){
-			Set<Player>pls = GameManager.getInstance().getGame(i).getActivePlayers();
-
 			Location l = p.getLocation();
 			l = l.add(0, -1, 0);
 			for(int x = l.getBlockX() - 1; x<=l.getBlockX()+1; x++){
@@ -155,7 +151,6 @@ public class PlayerClassEvents implements Listener{
 			}
 			for(Entity pl:p.getWorld().getEntities()){
 				if(pl != p){
-					ItemStack s = p.getItemInHand();
 					Location l2 = pl.getLocation();
 					double d = pl.getLocation().distance(p.getLocation());
 					if(d < 5){
@@ -182,12 +177,12 @@ public class PlayerClassEvents implements Listener{
 		}
 	}
 	
-	@SuppressWarnings("rawtypes")
+	/*@SuppressWarnings("rawtypes")
 	public void SendPacketToAll(Packet p, Player player){
 		for(Player pl: GameManager.getInstance().getGame(GameManager.getInstance().getPlayerGameId(player)).getActivePlayers()){
 			((CraftPlayer)pl).getHandle().playerConnection.sendPacket(p);
 		}
-	}
+	}*/
 
 	@EventHandler
 	public void onMove(PlayerMoveEvent e){
@@ -269,8 +264,11 @@ public class PlayerClassEvents implements Listener{
 
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onEntityExplode(EntityExplodeEvent e){
-		e.blockList().clear();
 		Location l = e.getLocation();
+		String game =  GameManager.getInstance().getBlockGameId(l);
+		if(!(game == null)){
+			e.blockList().clear();
+		}
 		if(e.getEntity() instanceof Fireball){
 			e.setCancelled(true);
 			double x = l.getX();
@@ -303,7 +301,9 @@ public class PlayerClassEvents implements Listener{
 		if(!(id == null)){
 			if(gm.getGame(id).getState() == State.INGAME){
 			  if(e.getBlockPlaced().getType() == Material.TNT){
-				  
+				  Location l = e.getBlockPlaced().getLocation();
+				  l.getWorld().spawnEntity(l, EntityType.PRIMED_TNT);
+				  e.getBlockPlaced().setType(Material.AIR);;
 			  }
 		}
 	}

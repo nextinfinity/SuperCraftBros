@@ -46,11 +46,11 @@ public class Game {
 	int count = 20;
 	int tid = 0;
 
-	private HashMap<Player, Integer>players = new HashMap<Player, Integer>();
-	private HashMap<Player, Double>damage = new HashMap<Player, Double>();
-	private HashMap<Player, String>pClasses = new HashMap<Player, String>();
-	private ArrayList<Player>inactive = new ArrayList<Player>();
-	private ArrayList<Player>queue = new ArrayList<Player>();
+	private HashMap<Player, Integer> players = new HashMap<Player, Integer>();
+	private HashMap<Player, Double> damage = new HashMap<Player, Double>();
+	private HashMap<Player, String> pClasses = new HashMap<Player, String>();
+	private ArrayList<Player> inactive = new ArrayList<Player>();
+	private ArrayList<Player> queue = new ArrayList<Player>();
 	
 	private BukkitScheduler respawnClock = Bukkit.getScheduler();
 	private HashMap<Player, Integer> playerTask = new HashMap<Player, Integer>();
@@ -84,7 +84,7 @@ public class Game {
 
 	public void addPlayer(Player p){
 		int max = SettingsManager.getInstance().getSystemConfig().getInt("system.arenas." + gameID + ".max");
-		String game = GameManager.getInstance().getPlayerGameId(Bukkit.getPlayerExact(p.getName()));
+		String game = GameManager.getInstance().getPlayerGameId(p);
 		if(state == State.LOBBY && players.size() < max && game == null){
 			p.teleport(SettingsManager.getInstance().getGameLobbySpawn(gameID));
 
