@@ -85,6 +85,9 @@ public class PlayerClassEvents implements Listener{
 				if(sugar.get(p) == null){
 					sugar.put(p, true);
 				}
+				if(fire.get(p) == null){
+					fire.put(p, true);
+				}
 				if(e.getPlayer().getItemInHand().getType() == Material.DIAMOND_AXE){
 					Smash(p);
 				}else if(p.getItemInHand().getType() == Material.EYE_OF_ENDER){
