@@ -177,6 +177,7 @@ public class GameManager {
 		}
 		return inv;
 	}
+	@SuppressWarnings("deprecation")
 	public ItemStack getHelmet(String id){
 		FileConfiguration c = SettingsManager.getInstance().getClasses();
 		if(c.contains(id + ".helmet")){
@@ -212,6 +213,7 @@ public class GameManager {
 			return new ItemStack(Material.AIR);
 		}
 	}
+	@SuppressWarnings("deprecation")
 	public ItemStack getChestplate(String id){
 		FileConfiguration c = SettingsManager.getInstance().getClasses();
 		if(c.contains(id + ".chestplate")){
@@ -237,6 +239,7 @@ public class GameManager {
 			return new ItemStack(Material.AIR);
 		}
 	}	
+	@SuppressWarnings("deprecation")
 	public ItemStack getLeggings(String id){
 		FileConfiguration c = SettingsManager.getInstance().getClasses();
 		if(c.contains(id + ".leggings")){
@@ -262,6 +265,7 @@ public class GameManager {
 			return new ItemStack(Material.AIR);
 		}
 	}
+	@SuppressWarnings("deprecation")
 	public ItemStack getBoots(String id){
 		FileConfiguration c = SettingsManager.getInstance().getClasses();
 		if(c.contains(id + ".boots")){

@@ -34,7 +34,6 @@ public class PlayerJoin implements Listener{
 		}, 2);
 	}
 
-	@SuppressWarnings("deprecation")
 	void clearPlayer(Player p){
 		p.teleport(SettingsManager.getInstance().getLobbySpawn());
 		p.getInventory().clear();

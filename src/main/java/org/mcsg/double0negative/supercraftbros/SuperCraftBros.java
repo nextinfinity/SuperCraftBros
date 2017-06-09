@@ -28,7 +28,6 @@ public class SuperCraftBros extends JavaPlugin{
 
 	public static HashMap<Location, String> joinSigns = new HashMap<Location, String>();
 	
-	@SuppressWarnings("deprecation")
 	public void onEnable(){
 		SettingsManager.getInstance().setup(this);
 		GameManager.getInstance().setup(this);

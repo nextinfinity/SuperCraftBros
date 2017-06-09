@@ -4,8 +4,6 @@
 package org.mcsg.double0negative.supercraftbros.event;
 
 import java.util.HashMap;
-import java.util.Set;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -27,7 +25,6 @@ import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.mcsg.double0negative.supercraftbros.Game;
 import org.mcsg.double0negative.supercraftbros.GameManager;
@@ -75,6 +72,7 @@ public class PlayerClassEvents implements Listener{
 			}	
 		}
 	}
+	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onInteract(PlayerInteractEvent e){
 		final Player p = e.getPlayer();

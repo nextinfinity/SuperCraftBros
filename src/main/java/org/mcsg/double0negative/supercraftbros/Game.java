@@ -254,7 +254,6 @@ public class Game {
 		updateTabAll();
 	}
 
-	@SuppressWarnings("deprecation")
 	public void playerEliminate(Player p){
 		started = false;
 		msgAll(ChatColor.DARK_RED + p.getName() + " has been eliminated!");
@@ -298,7 +297,6 @@ public class Game {
 		}
 	}
 
-	@SuppressWarnings("deprecation")
 	public void gameEnd(){
 		/*for(Entity e:SettingsManager.getGameWorld(gameID).getEntities()){
 			if(arena.containsBlock(e.getLocation())){
@@ -433,7 +431,6 @@ public class Game {
 	}
 
 
-	@SuppressWarnings("deprecation")
 	public void removePlayer(Player p, boolean b) {
 		int min = SettingsManager.getInstance().getSystemConfig().getInt("system.arenas." + gameID + ".min");
 		if(started && state != State.INGAME && players.keySet().size() < min){
