@@ -321,7 +321,20 @@ public class GameManager {
 		}
 		return null;
 	}
-
+	
+	public boolean isPlaying(Player player){
+		for(Game g: games){
+			if(g.isPlaying(player)) return true;
+		}
+		return false;
+	}
+	
+	public boolean isSpectating(Player player){
+		for(Game g: games){
+			if(g.isSpectating(player)) return true;
+		}
+		return false;
+	}
 
 	public boolean isPlayerActive(Player player) {
 		for (Game g: games) {
@@ -335,10 +348,10 @@ public class GameManager {
 	public boolean isPlayerInactive(Player player) {
 		for (Game g: games) {
 			if (g.isPlayerActive(player)) {
-				return true;
+				return false;
 			}
 		}
-		return false;
+		return true;
 	}
 	
 
@@ -395,11 +408,28 @@ public class GameManager {
 
 	public void addPlayer(Player p, String g) {
 		Game game = getGame(g);
+		if(isPlayerActive(p)){
+			Message.send(p, ChatColor.RED + "You are already in a game!");
+			return;
+		}
 		if (game == null) {
 			Message.send(p, ChatColor.RED+ "Game does not exist!");
 			return;
 		}
 		getGame(g).addPlayer(p);
+	}
+	
+	public void addSpectator(Player p, String g) {
+		Game game = getGame(g);
+		if(isPlayerActive(p)){
+			Message.send(p, ChatColor.RED + "You are already in a game!");
+			return;
+		}
+		if (game == null) {
+			Message.send(p, ChatColor.RED+ "Game does not exist!");
+			return;
+		}
+		getGame(g).addSpectator(p);
 	}
 	
 	public String getPlayerClass(Player p){

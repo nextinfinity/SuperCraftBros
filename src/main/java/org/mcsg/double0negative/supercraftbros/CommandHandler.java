@@ -45,7 +45,7 @@ public class CommandHandler implements CommandExecutor
 		commands.put("start", new StartCommand());
 		commands.put("help", new HelpCommand());
 		commands.put("reload", new ReloadCommand());
-
+		commands.put("spectate", new SpectateCommand());
 	}
 
 	public boolean onCommand(CommandSender sender, Command cmd1, String commandLabel, String[] args){

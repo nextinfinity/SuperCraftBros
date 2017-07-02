@@ -47,9 +47,9 @@ public class Game {
 	int tid = 0;
 
 	private HashMap<Player, Integer> players = new HashMap<Player, Integer>();
+	private ArrayList<Player> spectators = new ArrayList<Player>();
 	private HashMap<Player, Double> damage = new HashMap<Player, Double>();
 	private HashMap<Player, String> pClasses = new HashMap<Player, String>();
-	private ArrayList<Player> inactive = new ArrayList<Player>();
 	private ArrayList<Player> queue = new ArrayList<Player>();
 	
 	private BukkitScheduler respawnClock = Bukkit.getScheduler();
@@ -87,6 +87,7 @@ public class Game {
 		String game = GameManager.getInstance().getPlayerGameId(p);
 		if(state == State.LOBBY && players.size() < max && game == null){
 			p.teleport(SettingsManager.getInstance().getGameLobbySpawn(gameID));
+			p.getInventory().clear();
 
 			players.put(p , 3);
 			damage.put(p, 0D);
@@ -111,6 +112,33 @@ public class Game {
 		else{
 			Message.send(p, ChatColor.RED + "Arena is disabled!");
 		}
+	}
+	
+	public void addSpectator(Player p){
+		if(state == State.INGAME){
+			spectators.add(p);
+			p.teleport(SettingsManager.getInstance().getSpawnPoint(gameID, 1));
+			p.getInventory().clear();
+			p.setGameMode(GameMode.SPECTATOR);
+			p.setHealth(20); p.setFoodLevel(20);
+			updateTab(p);
+			Message.send(p, ChatColor.YELLOW + "" + ChatColor.BOLD + "Spectating arena " + gameID + ". Type /scb spectate again to stop spectating!");
+		}
+		else if(state == State.LOBBY || state == State.WAITING){
+			Message.send(p, ChatColor.RED + "Game hasn't started!");
+		}
+		else{
+			Message.send(p, ChatColor.RED + "Arena is disabled!");
+		}
+	}
+	
+	public void removeSpectator(Player p){
+		p.teleport(SettingsManager.getInstance().getLobbySpawn());
+		p.setGameMode(GameMode.ADVENTURE);
+		final ScoreboardManager m = Bukkit.getScoreboardManager();
+		final Scoreboard board = m.getNewScoreboard();
+		p.setScoreboard(board);
+		spectators.remove(p);
 	}
 	
 	public void updateSigns(){
@@ -163,7 +191,6 @@ public class Game {
 			started = false;
 			return;
 		}
-		inactive.clear();
 		state = State.INGAME;
 		updateSigns();
 
@@ -260,7 +287,6 @@ public class Game {
 
 		players.remove(p);
 		//pClasses.remove(p);
-		inactive.add(p);
 		p.getInventory().clear();
 		p.getInventory().setArmorContents(new ItemStack[4]);
 		p.updateInventory();
@@ -268,10 +294,7 @@ public class Game {
 		p.setFlying(false);
 		clearPotions(p);
 		p.setVelocity(new Vector(0, 0, 0));
-		p.teleport(SettingsManager.getInstance().getLobbySpawn());
-		final ScoreboardManager m = Bukkit.getScoreboardManager();
-		final Scoreboard board = m.getNewScoreboard();
-		p.setScoreboard(board);
+		addSpectator(p);
 		if(players.keySet().size() <= 1 && state == State.INGAME){
 			Player pl = null;
 			for(Player pl2 : players.keySet()){
@@ -303,21 +326,27 @@ public class Game {
 				e.remove();
 			}
 		}*/
+		final ScoreboardManager m = Bukkit.getScoreboardManager();
+		final Scoreboard board = m.getNewScoreboard();
 		for(Player p:players.keySet()){
 			p.getInventory().clear();
 			p.getInventory().setArmorContents(new ItemStack[4]);
 			p.updateInventory();
 			p.teleport(SettingsManager.getInstance().getLobbySpawn());
-			final ScoreboardManager m = Bukkit.getScoreboardManager();
-			final Scoreboard board = m.getNewScoreboard();
 			p.setScoreboard(board);
 			clearPotions(p);
 			p.setFlying(false);
 			p.setAllowFlight(false);
 		}
+		for(Player p:spectators){
+			p.teleport(SettingsManager.getInstance().getLobbySpawn());
+			p.setScoreboard(board);
+			p.setFlying(false);
+			p.setAllowFlight(false);
+		}
 		players.clear();
 		pClasses.clear();
-		inactive.clear();
+		spectators.clear();
 		state = State.LOBBY;
 		updateSigns();
 	}
@@ -325,6 +354,9 @@ public class Game {
 
 	public void updateTabAll(){
 		for(Player p: players.keySet()){
+			updateTab(p);
+		}
+		for(Player p: spectators){
 			updateTab(p);
 		}
 	}
@@ -417,9 +449,16 @@ public class Game {
 
 
 	public boolean isPlayerActive(Player p) {
+		return (players.keySet().contains(p) || spectators.contains(p));
+	}
+	
+	public boolean isPlaying(Player p){
 		return players.keySet().contains(p);
 	}
 
+	public boolean isSpectating(Player p){
+		return spectators.contains(p);
+	}
 
 	public boolean isInQueue(Player p) {
 		return queue.contains(p);
@@ -442,7 +481,6 @@ public class Game {
 		p.updateInventory();
 		clearPotions(p);
 		playerEliminate(p);
-		inactive.remove(p);
 		p.teleport(SettingsManager.getInstance().getLobbySpawn());
 		final ScoreboardManager m = Bukkit.getScoreboardManager();
 		final Scoreboard board = m.getNewScoreboard();
@@ -455,6 +493,9 @@ public class Game {
 		for(Player p: players.keySet()){
 			Message.send(p, msg);
 		}
+		for(Player p: spectators){
+			Message.send(p, msg);
+		}
 	}
 
 	public void enable(){
@@ -463,11 +504,9 @@ public class Game {
 	}
 
 	public void disable() {
-		for(Player p: players.keySet().toArray(new Player[0])){
-			playerEliminate(p);
-			Message.send(p, ChatColor.RED + "Game Disabled");
-		}
+		msgAll(ChatColor.RED + "Game Disabled");
 		gameEnd();
+		state = State.DISABLED;
 	}
 
 
