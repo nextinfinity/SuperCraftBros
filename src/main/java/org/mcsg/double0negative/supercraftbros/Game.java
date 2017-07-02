@@ -122,7 +122,7 @@ public class Game {
 			p.setGameMode(GameMode.SPECTATOR);
 			p.setHealth(20); p.setFoodLevel(20);
 			updateTab(p);
-			Message.send(p, ChatColor.YELLOW + "" + ChatColor.BOLD + "Spectating arena " + gameID + ". Type /scb spectate again to stop spectating!");
+			Message.send(p, ChatColor.YELLOW + "" + ChatColor.BOLD + "Spectating arena " + gameID + ". Type /scb leave to stop spectating!");
 		}
 		else if(state == State.LOBBY || state == State.WAITING){
 			Message.send(p, ChatColor.RED + "Game hasn't started!");

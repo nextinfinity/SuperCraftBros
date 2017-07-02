@@ -11,7 +11,6 @@ public class SpectateCommand implements SubCommand{
 
 	public boolean onCommand(Player player, String[] args){
 		Player p = player;
-		if(GameManager.getInstance().isSpectating(p)) GameManager.getInstance().getGamePlayer(p).removeSpectator(p);
 		if(args[0] != null){
 			String i = args[0].toLowerCase();
 			FileConfiguration c = SettingsManager.getInstance().getSystemConfig();

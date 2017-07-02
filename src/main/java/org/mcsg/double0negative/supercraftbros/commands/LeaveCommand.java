@@ -4,15 +4,20 @@
 package org.mcsg.double0negative.supercraftbros.commands;
 
 import org.bukkit.entity.Player;
+import org.mcsg.double0negative.supercraftbros.Game;
 import org.mcsg.double0negative.supercraftbros.GameManager;
 
 public class LeaveCommand implements SubCommand{
 
 	
 	public boolean onCommand(Player player, String[] args) {
-		String game = GameManager.getInstance().getPlayerGameId(player);
+		Game game = GameManager.getInstance().getGamePlayer(player);
 		if(!(game == null)){
-			GameManager.getInstance().getGame(game).removePlayer(player, false);
+			if(game.isPlaying(player)){
+				game.removePlayer(player, false);
+			}else{
+				game.removeSpectator(player);
+			}
 		}
 		return true;
 	}
