@@ -82,7 +82,7 @@ public class SettingsManager {
 		p.getConfig().set(arg0, arg1);
 	}
 
-	public static FileConfiguration getConfig() {
+	public FileConfiguration getConfig() {
 		return p.getConfig();
 	}
 

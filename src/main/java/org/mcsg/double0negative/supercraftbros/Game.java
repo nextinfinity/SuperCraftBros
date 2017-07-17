@@ -41,6 +41,12 @@ public class Game {
 	private int spawnCount;
 	private Arena arena;
 	private State state;
+	private GameMode returnMode;
+	private boolean usePercents;
+	private int countdown;
+	private int ecoValue;
+	private int min;
+	private int max;
 	
 	boolean started = false;
 	int count = 20;
@@ -65,15 +71,24 @@ public class Game {
 		int x = s.getInt("system.arenas." + gameID + ".x1");
 		int y = s.getInt("system.arenas." + gameID + ".y1");
 		int z = s.getInt("system.arenas." + gameID + ".z1");
-		System.out.println(x + " " + y + " " + z);
 		int x1 = s.getInt("system.arenas." + gameID + ".x2");
 		int y1 = s.getInt("system.arenas." + gameID + ".y2");
 		int z1 = s.getInt("system.arenas." + gameID + ".z2");
-		System.out.println(x1 + " " + y1 + " " + z1);
 		Location max = new Location(SettingsManager.getGameWorld(gameID), Math.max(x, x1), Math.max(y, y1), Math.max(z, z1));
-		System.out.println(max.toString());
 		Location min = new Location(SettingsManager.getGameWorld(gameID), Math.min(x, x1), Math.min(y, y1), Math.min(z, z1));
-		System.out.println(min.toString());
+		
+		GameMode gm = GameMode.valueOf(SettingsManager.getInstance().getConfig().getString("return-gamemode"));
+		returnMode = gm != null ? gm : GameMode.ADVENTURE;
+		
+		Integer eco = SettingsManager.getInstance().getConfig().getInt("winning-economy");
+		ecoValue = eco != null ? eco : 1000;
+		Boolean percents = SettingsManager.getInstance().getConfig().getBoolean("use-percents");
+		usePercents = percents != null ? percents : false;
+		Integer count = SettingsManager.getInstance().getConfig().getInt("countdown");
+		countdown = count != null ? count : 60;
+		
+		this.max = SettingsManager.getInstance().getSystemConfig().getInt("system.arenas." + gameID + ".max");
+		this.min = SettingsManager.getInstance().getSystemConfig().getInt("system.arenas." + gameID + ".min");
 
 		arena = new Arena(min, max);
 
@@ -83,7 +98,6 @@ public class Game {
 	}
 
 	public void addPlayer(Player p){
-		int max = SettingsManager.getInstance().getSystemConfig().getInt("system.arenas." + gameID + ".max");
 		String game = GameManager.getInstance().getPlayerGameId(p);
 		if(state == State.LOBBY && players.size() < max && game == null){
 			p.teleport(SettingsManager.getInstance().getGameLobbySpawn(gameID));
@@ -134,7 +148,7 @@ public class Game {
 	
 	public void removeSpectator(Player p){
 		p.teleport(SettingsManager.getInstance().getLobbySpawn());
-		p.setGameMode(GameMode.ADVENTURE);
+		p.setGameMode(returnMode);
 		final ScoreboardManager m = Bukkit.getScoreboardManager();
 		final Scoreboard board = m.getNewScoreboard();
 		p.setScoreboard(board);
@@ -242,7 +256,6 @@ public class Game {
 
 
 	public void setPlayerClass(Player player, String playerClass){
-		int min = SettingsManager.getInstance().getSystemConfig().getInt("system.arenas." + gameID + ".min");
 		if(player.hasPermission("scb.class." + playerClass) || player.hasPermission("scb.class.*")){
 			clearPotions(player);
 			Message.send(player, ChatColor.GREEN + "You choose " + playerClass.toUpperCase() + "!");
@@ -250,7 +263,7 @@ public class Game {
 			pClasses.put(player, playerClass);
 			updateTabAll();
 			if(!started && pClasses.keySet().size()>= min && players.size() >= min ){
-				countdown(SettingsManager.getConfig().getInt("countdown"));
+				countdown(countdown);
 				started = true;
 			}
 		}
@@ -303,7 +316,7 @@ public class Game {
 			if(!(Bukkit.getPluginManager().getPlugin("Vault") == null)){
 				RegisteredServiceProvider<Economy> economyProvider = Bukkit.getServer().getServicesManager().getRegistration(net.milkbowl.vault.economy.Economy.class);
 		        if (economyProvider != null) {
-		            economyProvider.getProvider().depositPlayer(pl, SettingsManager.getConfig().getInt("winning-economy"));
+		            economyProvider.getProvider().depositPlayer(pl, ecoValue);
 		        }
 			}
 			Bukkit.broadcastMessage(ChatColor.BLUE + pl.getName() + " won Super Craft Bros on arena " + gameID.toUpperCase());
@@ -335,12 +348,14 @@ public class Game {
 			p.teleport(SettingsManager.getInstance().getLobbySpawn());
 			p.setScoreboard(board);
 			clearPotions(p);
+			p.setGameMode(returnMode);
 			p.setFlying(false);
 			p.setAllowFlight(false);
 		}
 		for(Player p:spectators){
 			p.teleport(SettingsManager.getInstance().getLobbySpawn());
 			p.setScoreboard(board);
+			p.setGameMode(returnMode);
 			p.setFlying(false);
 			p.setAllowFlight(false);
 		}
@@ -368,7 +383,7 @@ public class Game {
 		o.setDisplaySlot(DisplaySlot.SIDEBAR);
 		o.setDisplayName(ChatColor.GOLD + "SuperCraftBros");
 		for(Player pl: players.keySet()){
-			if(SettingsManager.getConfig().getBoolean("use-percents")){
+			if(usePercents){
 				Score score = o.getScore(ChatColor.YELLOW + pl.getName() + " [" + Math.round(damage.get(pl)) + "]");
 				score.setScore(players.get(pl));
 			}else{
@@ -471,7 +486,6 @@ public class Game {
 
 
 	public void removePlayer(Player p, boolean b) {
-		int min = SettingsManager.getInstance().getSystemConfig().getInt("system.arenas." + gameID + ".min");
 		if(started && state != State.INGAME && players.keySet().size() < min){
 			started = false;
 			Bukkit.getScheduler().cancelTask(tid);

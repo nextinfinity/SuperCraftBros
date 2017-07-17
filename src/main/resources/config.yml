@@ -8,3 +8,6 @@ use-arena-teleport: false
 #Amount to award players for winning
 #This will not trigger if Vault is not installed
 winning-economy: 1000
+#The gamemode to set players to after leaving a match
+#If not set this will default to adventure mode
+return-gamemode: ADVENTURE

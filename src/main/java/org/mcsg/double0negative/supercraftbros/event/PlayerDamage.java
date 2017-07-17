@@ -16,6 +16,12 @@ import org.mcsg.double0negative.supercraftbros.SettingsManager;
 
 public class PlayerDamage implements Listener{
 
+	private boolean usePercents;
+	
+	public PlayerDamage(){
+		Boolean percents = SettingsManager.getInstance().getConfig().getBoolean("use-percents");
+		usePercents = percents != null ? percents : false;
+	}
 
 	@EventHandler
 	public void PlayerDamaged(EntityDamageEvent e){
@@ -34,7 +40,7 @@ public class PlayerDamage implements Listener{
 					else if(e.getCause() == DamageCause.VOID){
 						e.setDamage(40);
 					}
-					else if(SettingsManager.getConfig().getBoolean("use-percents")){
+					else if(usePercents){
 						g.addDamage(p, e.getDamage());
 						e.setDamage(0);
 					}
@@ -48,7 +54,7 @@ public class PlayerDamage implements Listener{
 		try{
 			if(e.getEntity() instanceof Player){
 				Player p = (Player)e.getEntity();
-				if(SettingsManager.getConfig().getBoolean("use-percents")){
+				if(usePercents){
 					String i = GameManager.getInstance().getPlayerGameId(p);
 					if(!(i == null)){
 						Game g = GameManager.getInstance().getGame(i);

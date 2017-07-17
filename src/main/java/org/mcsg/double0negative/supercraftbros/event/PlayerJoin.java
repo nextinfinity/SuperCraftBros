@@ -16,12 +16,19 @@ import org.mcsg.double0negative.supercraftbros.SettingsManager;
 
 public class PlayerJoin implements Listener{
 	
+	private boolean arenaTeleport;
+	
+	public PlayerJoin(){
+		Boolean arenaTp = SettingsManager.getInstance().getConfig().getBoolean("use-arena-teleport");
+		arenaTeleport = arenaTp != null ? arenaTp : false;
+	}
+	
 	@EventHandler
 	public void join(PlayerJoinEvent e){
 		final Player p = e.getPlayer();
 		Bukkit.getScheduler().scheduleSyncDelayedTask(GameManager.getInstance().getPlugin(), new Runnable(){
 			public void run(){
-				if(SettingsManager.getConfig().getBoolean("use-arena-teleport")){
+				if(arenaTeleport){
 					Location l =  p.getLocation();
 					String game =  GameManager.getInstance().getBlockGameId(l);
 					if(!(game == null)){
