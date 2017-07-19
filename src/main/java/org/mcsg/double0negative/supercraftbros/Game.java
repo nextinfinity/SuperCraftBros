@@ -79,7 +79,6 @@ public class Game {
 		
 		GameMode gm = GameMode.valueOf(SettingsManager.getInstance().getConfig().getString("return-gamemode"));
 		returnMode = gm != null ? gm : GameMode.ADVENTURE;
-		
 		Integer eco = SettingsManager.getInstance().getConfig().getInt("winning-economy");
 		ecoValue = eco != null ? eco : 1000;
 		Boolean percents = SettingsManager.getInstance().getConfig().getBoolean("use-percents");
@@ -156,24 +155,22 @@ public class Game {
 	}
 	
 	public void updateSigns(){
-		FileConfiguration sys = SettingsManager.getInstance().getSystemConfig();
 		for(Location loc : SuperCraftBros.joinSigns.keySet()){
 			if(SuperCraftBros.joinSigns.get(loc).equalsIgnoreCase(gameID)){
 				Block b = loc.getBlock();
 				Sign s = (Sign) b.getState();
 				int i1 = players.size();
-				int i2 = sys.getInt("system.arenas." + gameID + ".max");
 				if(state == State.LOBBY){
 					if(players != null){
 					try{
-						s.setLine(3, ChatColor.GREEN + "" + i1 + " / " + i2);
+						s.setLine(3, ChatColor.GREEN + "" + i1 + " / " + max);
 						s.update();
 					}catch(Exception e){
 						SuperCraftBros.joinSigns.remove(loc);
 					}
 					}else{
 					try{
-						s.setLine(3, ChatColor.GREEN + "0 / " + i2);
+						s.setLine(3, ChatColor.GREEN + "0 / " + max);
 						s.update();
 					}catch(Exception e){
 						SuperCraftBros.joinSigns.remove(loc);

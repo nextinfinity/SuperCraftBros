@@ -1,7 +1,7 @@
 apply plugin: 'java'
 apply plugin: 'maven'
 group = 'org.mcsg.double0negative'
-version = '1.6.4'
+version = '1.6.5'
 defaultTasks "jar"
 
 repositories {         

@@ -3,7 +3,9 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 package org.mcsg.double0negative.supercraftbros.event;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.UUID;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -18,8 +20,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockIgniteEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -35,14 +35,10 @@ public class PlayerClassEvents implements Listener{
 
 	GameManager gm;
 	
-	HashMap<Player, Boolean> sugar = new HashMap<Player, Boolean>();
-	HashMap<Player, Boolean> fire = new HashMap<Player, Boolean>();
-	
-	protected boolean smash = false;
-
-	private boolean doublej = false;
-	protected boolean fsmash  = false;
-
+	ArrayList<UUID> fire = new ArrayList<UUID>();
+	ArrayList<UUID> sugar = new ArrayList<UUID>();
+	ArrayList<UUID> doublej = new ArrayList<UUID>();
+	ArrayList<UUID> fsmash = new ArrayList<UUID>();
 
 	public PlayerClassEvents(){
 		gm = GameManager.getInstance();
@@ -76,47 +72,42 @@ public class PlayerClassEvents implements Listener{
 	@EventHandler
 	public void onInteract(PlayerInteractEvent e){
 		final Player p = e.getPlayer();
+		final UUID pid = p.getUniqueId();
 		String id = gm.getPlayerGameId(p);
 		if(!(id == null)){
 			Game g = gm.getGame(id);
 			if(g.getState() == Game.State.INGAME){
-				if(sugar.get(p) == null){
-					sugar.put(p, true);
-				}
-				if(fire.get(p) == null){
-					fire.put(p, true);
-				}
 				if(e.getPlayer().getItemInHand().getType() == Material.DIAMOND_AXE){
 					Smash(p);
 				}else if(p.getItemInHand().getType() == Material.EYE_OF_ENDER){
 					e.setCancelled(true);
-				}else if(fire.get(p)){
+				}else if(!fire.contains(pid)){
 					if(p.getItemInHand().getType() == Material.FIREBALL){
 						Fireball f = p.launchProjectile(Fireball.class);
 						f.setVelocity(f.getVelocity().multiply(10));
-						fire.put(p, false);
+						fire.add(pid);
                         Bukkit.getScheduler().scheduleSyncDelayedTask(GameManager.getInstance().getPlugin(), new Runnable(){
                 			public void run(){
-                				fire.put(p, true);
+                				fire.remove(pid);
                 			}
                 		}, 600);
 					}
-				}else if(sugar.get(p)){
+				}else if(!sugar.contains(pid)){
                     if(p.getItemInHand().getType() == Material.SUGAR && (e.getAction() == Action.LEFT_CLICK_AIR || e.getAction() == Action.LEFT_CLICK_BLOCK)){
                         p.setVelocity(new Vector(0, 2, 0));
-                        sugar.put(p, false);
+                        sugar.add(pid);
                         Bukkit.getScheduler().scheduleSyncDelayedTask(GameManager.getInstance().getPlugin(), new Runnable(){
                 			public void run(){
-                				sugar.put(p, true);
+                				sugar.remove(pid);
                 			}
                 		}, 100);
                     }
                     if(p.getItemInHand().getType() == Material.SUGAR && (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK)){
                         p.setVelocity(p.getLocation().getDirection().multiply(4));
-                        sugar.put(p, false);
+                        sugar.add(pid);
                         Bukkit.getScheduler().scheduleSyncDelayedTask(GameManager.getInstance().getPlugin(), new Runnable(){
                 			public void run(){
-                				sugar.put(p, true);
+                				sugar.remove(pid);
                 			}
                 		}, 100);
                     }
@@ -167,8 +158,9 @@ public class PlayerClassEvents implements Listener{
 	@SuppressWarnings("deprecation")
 	public void explodeBlocks(Player p, Location l){
 		Location l2 = p.getLocation();
-		if(l.getBlock().getState().getTypeId() != 0){
-			final Entity e  = l.getWorld().spawnFallingBlock(l, l.getBlock().getState().getTypeId(), l.getBlock().getState().getData().getData());
+		Location l3 = l.add(0, 1, 0);
+		if(l.getBlock().getState().getTypeId() != 0 && l3.getBlock().getState().getTypeId() == 0){
+			final Entity e  = l.getWorld().spawnFallingBlock(l3, l.getBlock().getState().getTypeId(), l.getBlock().getState().getData().getData());
 			e.setVelocity(new Vector((getSide(l.getBlockX(), l2.getBlockX()) * 0.3),.1, (getSide(l.getBlockZ(), l2.getBlockZ()) * 0.3)));
 			Bukkit.getScheduler().scheduleSyncDelayedTask(GameManager.getInstance().getPlugin(), new Runnable(){
 				public void run(){
@@ -188,6 +180,7 @@ public class PlayerClassEvents implements Listener{
 	@EventHandler
 	public void onMove(PlayerMoveEvent e){
 		Player p = e.getPlayer();
+		UUID pid = p.getUniqueId();
 		String id = gm.getPlayerGameId(p);
 		if(!(id == null)){
 			Game g = gm.getGame(id);
@@ -198,20 +191,20 @@ public class PlayerClassEvents implements Listener{
 					Vector v = p.getLocation().getDirection().multiply(.5);
 					v.setY(.75);
 					p.setVelocity(v);
-					doublej = true;
+					doublej.add(pid);
 				}
 				if(isOnGround(p)){
 					p.setAllowFlight(true);
-					if(fsmash){
-						explodePlayers(p);
-						fsmash = false;
+					if(fsmash.contains(pid)){
+						if(p.isSneaking()) explodePlayers(p);
+						fsmash.remove(pid);
 					}
-					doublej = false;
+					doublej.remove(pid);
 
 				}
-				if(doublej && p.isSneaking()){
+				if(doublej.contains(pid) && p.isSneaking()){
 					p.setVelocity(new Vector(0, -1, 0));
-					fsmash = true;
+					fsmash.add(pid);
 				}
 			}	
 		}
@@ -222,46 +215,6 @@ public class PlayerClassEvents implements Listener{
 		if(i < u)return -1;
 		return 0;
 	}
-
-	@EventHandler
-	public void onEntityDamaged(EntityDamageEvent e){
-		if(e.getEntity() instanceof Player){
-			Player p = (Player)e.getEntity();
-			String game = GameManager.getInstance().getPlayerGameId(p);
-			if(!(game == null)){
-				Game g = gm.getGame(game);
-				if(g.getState() == Game.State.INGAME){
-					if(smash){
-						p.setHealth(20);
-					}
-				}
-			}
-		}
-	}
-
-	@EventHandler
-	public void onEntityDamaged(EntityDamageByEntityEvent e){
-		try{
-			Player victim = null;
-			Player attacker = null;
-			if(e.getEntity() instanceof Player){
-				victim = (Player)e.getEntity();
-			}
-			if(e.getDamager() instanceof Player){
-				attacker = (Player)e.getDamager();
-			}
-			if(victim != null && attacker != null){
-				if(!(gm.getPlayerGameId(victim) == null) && !(gm.getPlayerGameId(attacker) == null)){
-					if(smash){
-						victim.setHealth(20);
-					}
-				//	gm.getPlayerClass(attacker).PlayerAttack(victim);
-				}
-			}
-		}catch(Exception et){}
-
-	}
-
 
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onEntityExplode(EntityExplodeEvent e){
