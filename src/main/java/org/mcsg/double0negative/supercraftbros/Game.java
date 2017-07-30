@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.Set;
+import java.util.logging.Level;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -158,38 +159,28 @@ public class Game {
 		for(Location loc : SuperCraftBros.joinSigns.keySet()){
 			if(SuperCraftBros.joinSigns.get(loc).equalsIgnoreCase(gameID)){
 				Block b = loc.getBlock();
+				if(!(b.getState() instanceof Sign)){
+					SuperCraftBros.joinSigns.remove(loc);
+					String location = loc.getWorld().getName() + ": " + loc.getX() + "," + loc.getBlockY() + "," + loc.getZ();
+					Bukkit.getLogger().log(Level.INFO, "[SCB] No sign detected, removing entry at location " + location + " for arena " + gameID);
+					continue;
+				}
 				Sign s = (Sign) b.getState();
 				int i1 = players.size();
 				if(state == State.LOBBY){
 					if(players != null){
-					try{
 						s.setLine(3, ChatColor.GREEN + "" + i1 + " / " + max);
 						s.update();
-					}catch(Exception e){
-						SuperCraftBros.joinSigns.remove(loc);
-					}
 					}else{
-					try{
 						s.setLine(3, ChatColor.GREEN + "0 / " + max);
-						s.update();
-					}catch(Exception e){
-						SuperCraftBros.joinSigns.remove(loc);
-					}	
+						s.update();	
 					}
 				}else if(state == State.INGAME){
-					try{
-						s.setLine(3, ChatColor.YELLOW + "IN-GAME");
-						s.update();
-					}catch(Exception e){
-						SuperCraftBros.joinSigns.remove(loc);
-					}	
+					s.setLine(3, ChatColor.YELLOW + "IN-GAME");
+					s.update();
 				}else{
-					try{
-						s.setLine(3, ChatColor.RED + "DISABLED");
-						s.update();
-					}catch(Exception e){
-						SuperCraftBros.joinSigns.remove(loc);
-					}	
+					s.setLine(3, ChatColor.RED + "DISABLED");
+					s.update();	
 				}
 			}
 		}
@@ -271,7 +262,7 @@ public class Game {
 
 	public void killPlayer(final Player p, String msg){
 		clearPotions(p);
-		msgAll(ChatColor.GOLD + msg);
+		if(msg != null) msgAll(ChatColor.GOLD + msg);
 		int lives = players.get(p)-1;
 		if(lives <= 0){
 			playerEliminate(p);

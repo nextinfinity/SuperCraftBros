@@ -34,6 +34,7 @@ import org.mcsg.double0negative.supercraftbros.Game.State;
 public class PlayerClassEvents implements Listener{
 
 	GameManager gm;
+	private boolean arenaTeleport;
 	
 	ArrayList<UUID> fire = new ArrayList<UUID>();
 	ArrayList<UUID> sugar = new ArrayList<UUID>();
@@ -42,6 +43,8 @@ public class PlayerClassEvents implements Listener{
 
 	public PlayerClassEvents(){
 		gm = GameManager.getInstance();
+		Boolean arenaTp = SettingsManager.getInstance().getConfig().getBoolean("use-arena-teleport");
+		arenaTeleport = arenaTp != null ? arenaTp : false;
 	}
 
 	@EventHandler(priority = EventPriority.LOWEST)
@@ -242,7 +245,7 @@ public class PlayerClassEvents implements Listener{
 				if(!(id == null)){
 					gm.getGame(id).spawnPlayer(p);
 				}
-				else{
+				else if(!arenaTeleport){
 					p.teleport(SettingsManager.getInstance().getLobbySpawn());
 				}
 			}

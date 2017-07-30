@@ -5,6 +5,7 @@ package org.mcsg.double0negative.supercraftbros.event;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -73,7 +74,7 @@ public class PlayerDamage implements Listener{
 		}catch(Exception ex){}
 	}
 	
-	@EventHandler
+	@EventHandler(priority = EventPriority.LOWEST)
 	public void PlayerDamaged(PlayerDeathEvent e){
 		Player p = (Player)e.getEntity();
 		String i = GameManager.getInstance().getPlayerGameId(p);
