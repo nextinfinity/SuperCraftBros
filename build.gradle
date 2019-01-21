@@ -4,15 +4,15 @@ group = 'org.mcsg.double0negative'
 version = '1.6.6'
 defaultTasks "jar"
 
-repositories {         
+repositories {
     maven { url "https://hub.spigotmc.org/nexus/content/repositories/snapshots/" }
     maven { url "http://repo.maven.apache.org/maven2" }
+    maven { url "https://oss.sonatype.org/content/groups/public/" }
     maven { url "http://nexus.hc.to/content/repositories/pub_releases" }
     maven { url "http://maven.sk89q.com/repo/" }
-    mavenLocal()
 }
 dependencies {
-   compile(group: 'org.spigotmc', name: 'spigot', version:'1.11.2-R0.1-SNAPSHOT')
-   compile(group: 'net.milkbowl.vault', name: 'VaultAPI', version:'1.6')
-   compile(group: 'com.sk89q.worldedit', name: 'worldedit-bukkit', version:'6.1.5')
+    compile(group: 'org.spigotmc', name: 'spigot-api', version:'1.13.2-R0.1-SNAPSHOT')
+    compile(group: 'net.milkbowl.vault', name: 'VaultAPI', version:'1.6')
+    compile(group: 'com.sk89q.worldedit', name: 'worldedit-bukkit', version:'6.1.5')
 }
