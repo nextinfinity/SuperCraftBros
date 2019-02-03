@@ -1,6 +1,6 @@
 name: SuperCraftBros
 authors: [Double0negative, MCSG, NextInfinity, quinnshultz]
-version: 1.7.1
+version: 1.7.2
 main: org.mcsg.double0negative.supercraftbros.SuperCraftBros
 commands:
   scb:
