@@ -1,7 +1,7 @@
 apply plugin: 'java'
 apply plugin: 'maven'
 group = 'org.mcsg.double0negative'
-version = '1.6.6'
+version = '1.7.0'
 defaultTasks "jar"
 
 repositories {         
@@ -12,7 +12,7 @@ repositories {
     mavenLocal()
 }
 dependencies {
-   compile(group: 'org.spigotmc', name: 'spigot', version:'1.11.2-R0.1-SNAPSHOT')
+   compile(group: 'org.spigotmc', name: 'spigot', version:'1.12-R0.1-SNAPSHOT')
    compile(group: 'net.milkbowl.vault', name: 'VaultAPI', version:'1.6')
    compile(group: 'com.sk89q.worldedit', name: 'worldedit-bukkit', version:'6.1.5')
 }
