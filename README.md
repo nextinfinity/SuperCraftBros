@@ -16,4 +16,6 @@ For more information about this plugin and how to use it, please see our [wiki](
 
 *Maintainer*: @[nextinfinity](https://github.com/nextinfinity/)
 
+*Contributor*: @[quinnshultz](https://github.com/quinnshultz/)
+
 *Documentation*: @[jflory7](https://github.com/jflory7/)
