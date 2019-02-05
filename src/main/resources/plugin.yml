@@ -1,6 +1,7 @@
 name: SuperCraftBros
 authors: [Double0negative, MCSG, NextInfinity]
 version: @scbversion@
+api-version: 1.13
 main: net.nextinfinity.supercraftbros.SuperCraftBros
 depend: [FastAsyncWorldEdit, ItemNBTAPI]
 softdepend: [Vault]
