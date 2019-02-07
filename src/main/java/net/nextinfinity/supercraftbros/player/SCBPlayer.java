@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 public class SCBPlayer extends GamePlayerImpl {
 
 	private double damage;
+	private int lives;
 
 	public SCBPlayer(Player player, Game game) {
 		super(player, game);
@@ -25,5 +26,17 @@ public class SCBPlayer extends GamePlayerImpl {
 	public void heal() {
 		super.heal();
 		damage = 0;
+	}
+
+	public int getLives() {
+		return lives;
+	}
+
+	public void setLives(int lives) {
+		this.lives = lives;
+	}
+
+	public void kill() {
+		lives--;
 	}
 }
