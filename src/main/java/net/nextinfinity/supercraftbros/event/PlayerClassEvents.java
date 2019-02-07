@@ -60,14 +60,16 @@ public class PlayerClassEvents implements Listener {
 		if (player.isPlaying() && player.getArena().getState() == GameState.INGAME) {
 			if (bukkitPlayer.getInventory().getItemInMainHand().getType() == Material.ENDER_EYE) {
 				event.setCancelled(true);
-			} else if (!fire.contains(uuid)) {
+			}
+			if (!fire.contains(uuid)) {
 				if (bukkitPlayer.getInventory().getItemInMainHand().getType() == Material.FIRE) {
 					Fireball f = bukkitPlayer.launchProjectile(Fireball.class);
 					f.setVelocity(f.getVelocity().multiply(10));
 					fire.add(uuid);
 					Bukkit.getScheduler().scheduleSyncDelayedTask(game, () -> fire.remove(uuid), 600);
 				}
-			} else if (!sugar.contains(uuid)) {
+			}
+			if (!sugar.contains(uuid)) {
 				if (bukkitPlayer.getInventory().getItemInMainHand().getType() == Material.SUGAR) {
 					if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK){
 						bukkitPlayer.setVelocity(new Vector(0, 2, 0));
