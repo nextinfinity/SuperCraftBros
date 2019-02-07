@@ -20,6 +20,10 @@ public class PlayerDamage implements Listener {
 		this.game = game;
 	}
 
+	/**
+	 * If the player is damaged by the environment, kill them in void, otherwise cancel damage
+	 * @param event
+	 */
 	@EventHandler
 	public void playerDamage(EntityDamageEvent event) {
 		if (event.getEntity() instanceof Player) {
@@ -38,6 +42,10 @@ public class PlayerDamage implements Listener {
 		}
 	}
 
+	/**
+	 * If the player is damaged by another player, give them percent damage and knockback
+	 * @param event
+	 */
 	@EventHandler
 	public void playerDamagePlayer(EntityDamageByEntityEvent event) {
 		if (event.getEntity() instanceof Player && event.getDamager() instanceof Player) {

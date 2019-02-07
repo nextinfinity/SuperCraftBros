@@ -4,7 +4,6 @@
 package net.nextinfinity.supercraftbros.event;
 
 import net.nextinfinity.core.Game;
-import net.nextinfinity.core.arena.Arena;
 import net.nextinfinity.core.arena.GameState;
 import net.nextinfinity.core.entity.GamePlayer;
 import org.bukkit.Bukkit;
@@ -30,14 +29,15 @@ import org.bukkit.util.Vector;
 import java.util.ArrayList;
 import java.util.UUID;
 
+//TODO: Clean this class up
 public class PlayerClassEvents implements Listener {
 
 	private final Game game;
 
-	private final ArrayList<UUID> fire = new ArrayList<UUID>();
-	private final ArrayList<UUID> sugar = new ArrayList<UUID>();
-	private final ArrayList<UUID> doublej = new ArrayList<UUID>();
-	private final ArrayList<UUID> fsmash = new ArrayList<UUID>();
+	private final ArrayList<UUID> fire = new ArrayList<>();
+	private final ArrayList<UUID> sugar = new ArrayList<>();
+	private final ArrayList<UUID> doublej = new ArrayList<>();
+	private final ArrayList<UUID> fsmash = new ArrayList<>();
 
 	public PlayerClassEvents(Game game) {
 		this.game = game;
@@ -58,23 +58,22 @@ public class PlayerClassEvents implements Listener {
 		GamePlayer player = game.getPlayerHandler().getPlayer(bukkitPlayer);
 		final UUID uuid = bukkitPlayer.getUniqueId();
 		if (player.isPlaying() && player.getArena().getState() == GameState.INGAME) {
-			if (bukkitPlayer.getItemInHand().getType() == Material.ENDER_EYE) {
+			if (bukkitPlayer.getInventory().getItemInMainHand().getType() == Material.ENDER_EYE) {
 				event.setCancelled(true);
 			} else if (!fire.contains(uuid)) {
-				if (bukkitPlayer.getItemInHand().getType() == Material.FIRE) {
+				if (bukkitPlayer.getInventory().getItemInMainHand().getType() == Material.FIRE) {
 					Fireball f = bukkitPlayer.launchProjectile(Fireball.class);
 					f.setVelocity(f.getVelocity().multiply(10));
 					fire.add(uuid);
 					Bukkit.getScheduler().scheduleSyncDelayedTask(game, () -> fire.remove(uuid), 600);
 				}
 			} else if (!sugar.contains(uuid)) {
-				if (bukkitPlayer.getItemInHand().getType() == Material.SUGAR && (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK)) {
-					bukkitPlayer.setVelocity(new Vector(0, 2, 0));
-					sugar.add(uuid);
-					Bukkit.getScheduler().scheduleSyncDelayedTask(game, () -> sugar.remove(uuid), 100);
-				}
-				if (bukkitPlayer.getItemInHand().getType() == Material.SUGAR && (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK)) {
-					bukkitPlayer.setVelocity(bukkitPlayer.getLocation().getDirection().multiply(4));
+				if (bukkitPlayer.getInventory().getItemInMainHand().getType() == Material.SUGAR) {
+					if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK){
+						bukkitPlayer.setVelocity(new Vector(0, 2, 0));
+					} else {
+						bukkitPlayer.setVelocity(bukkitPlayer.getLocation().getDirection().multiply(4));
+					}
 					sugar.add(uuid);
 					Bukkit.getScheduler().scheduleSyncDelayedTask(game, () -> sugar.remove(uuid), 100);
 				}
@@ -98,7 +97,6 @@ public class PlayerClassEvents implements Listener {
 			l = l.add(0, -1, 0);
 			for (int x = l.getBlockX() - 1; x <= l.getBlockX() + 1; x++) {
 				for (int z = l.getBlockZ() - 1; z <= l.getBlockZ() + 1; z++) {
-					//SendPacketToAll(new PacketPlayOutWorldEvent(2001,x, l.getBlockY()+1, z, l.getBlock().getState().getTypeId(), false));
 					explodeBlocks(bukkitPlayer, new Location(l.getWorld(), x, l.getBlockY(), z));
 				}
 			}
@@ -108,7 +106,8 @@ public class PlayerClassEvents implements Listener {
 					double d = pl.getLocation().distance(bukkitPlayer.getLocation());
 					if (d < 5) {
 						d = d / 5;
-						pl.setVelocity(new Vector((1.5 - d) * getSide(l2.getBlockX(), l.getBlockX()), 1.5 - d, (1.5 - d) * getSide(l2.getBlockZ(), l.getBlockZ())));
+						pl.setVelocity(new Vector((1.5 - d) * getSide(l2.getBlockX(), l.getBlockX()), 1.5 - d,
+								(1.5 - d) * getSide(l2.getBlockZ(), l.getBlockZ())));
 
 					}
 				}
@@ -121,9 +120,10 @@ public class PlayerClassEvents implements Listener {
 		Location aboveLoc = baseLoc.add(0, 1, 0);
 		if (baseLoc.getBlock().getState().getType() != Material.AIR &&
 				aboveLoc.getBlock().getState().getType() == Material.AIR) {
-			final Entity entity = baseLoc.getWorld().spawnFallingBlock(aboveLoc, baseLoc.getBlock().getState().getType(), baseLoc.getBlock().getState().getData().getData());
-			entity.setVelocity(new Vector((getSide(baseLoc.getBlockX(), playerLoc.getBlockX()) * 0.3), .1, (getSide(baseLoc.getBlockZ(), playerLoc.getBlockZ()) * 0.3)));
-			Bukkit.getScheduler().scheduleSyncDelayedTask(game, () -> entity.remove(), 5);
+			final Entity entity = baseLoc.getWorld().spawnFallingBlock(aboveLoc, baseLoc.getBlock().getBlockData());
+			entity.setVelocity(new Vector((getSide(baseLoc.getBlockX(), playerLoc.getBlockX()) * 0.3), .1,
+					(getSide(baseLoc.getBlockZ(), playerLoc.getBlockZ()) * 0.3)));
+			Bukkit.getScheduler().scheduleSyncDelayedTask(game, entity::remove, 5);
 		}
 	}
 
@@ -159,10 +159,10 @@ public class PlayerClassEvents implements Listener {
 		}
 	}
 
-	public int getSide(int i, int u) {
-		if (i > u) return 1;
-		if (i < u) return -1;
-		return 0;
+
+	//TODO: Example: This utility method probably shouldn't be in a listener class
+	private int getSide(int i, int u) {
+		return Integer.compare(i, u);
 	}
 
 	@EventHandler(priority = EventPriority.LOWEST)
