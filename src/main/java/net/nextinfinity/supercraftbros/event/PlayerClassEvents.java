@@ -39,7 +39,7 @@ public class PlayerClassEvents implements Listener {
 	private final ArrayList<UUID> doublej = new ArrayList<UUID>();
 	private final ArrayList<UUID> fsmash = new ArrayList<UUID>();
 
-	public PlayerClassEvents(Game game, Arena arena) {
+	public PlayerClassEvents(Game game) {
 		this.game = game;
 	}
 

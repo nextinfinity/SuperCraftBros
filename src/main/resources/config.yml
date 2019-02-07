@@ -18,3 +18,5 @@ modes:
 time:
   game-time: 480
   countdown-time: 60
+scb:
+  lives: 3
