@@ -1,9 +1,9 @@
 name: SuperCraftBros
-authors: [Double0negative, MCSG, NextInfinity]
+authors: [NextInfinity, Double0negative, MCSG]
 version: @scbversion@
 api-version: 1.13
 main: net.nextinfinity.supercraftbros.SuperCraftBros
-depend: [FastAsyncWorldEdit, ItemNBTAPI]
+depend: [WorldEdit, ItemNBTAPI]
 softdepend: [Vault]
 commands:
   quit:
@@ -14,5 +14,5 @@ commands:
     description: Starts the game
   join:
     description: Makes you join the game
-  core:
+  infinitycore:
     description: Core command for managing games and arenas
