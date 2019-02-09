@@ -27,16 +27,4 @@ public class SCBPlayer extends GamePlayerImpl {
 		super.heal();
 		damage = 0;
 	}
-
-	public int getLives() {
-		return lives;
-	}
-
-	public void setLives(int lives) {
-		this.lives = lives;
-	}
-
-	public void kill() {
-		lives--;
-	}
 }

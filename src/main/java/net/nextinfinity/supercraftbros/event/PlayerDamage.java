@@ -11,6 +11,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.util.Vector;
 
 public class PlayerDamage implements Listener {
 
@@ -30,11 +31,7 @@ public class PlayerDamage implements Listener {
 			Player bukkitPlayer = (Player) event.getEntity();
 			SCBPlayer player = (SCBPlayer) game.getPlayerHandler().getPlayer(bukkitPlayer);
 			if (player.isPlaying() && player.getArena().getState() == GameState.INGAME) {
-				if (bukkitPlayer.getLocation().getBlockY() < 0) {
-					if (bukkitPlayer.getHealth() > 0) {
-						bukkitPlayer.damage(bukkitPlayer.getHealth());
-					}
-				} else {
+				if (bukkitPlayer.getLocation().getBlockY() >= 0) {
 					event.setDamage(0);
 				}
 			}
@@ -53,8 +50,9 @@ public class PlayerDamage implements Listener {
 			SCBPlayer player = (SCBPlayer) game.getPlayerHandler().getPlayer(bukkitPlayer);
 			if (player.isPlaying() && player.getArena().getState() == GameState.INGAME) {
 				player.damage(Math.pow(event.getFinalDamage(), 2));
-				double multiplier = Math.pow(player.getDamage() / 100, 2);
-				bukkitPlayer.setVelocity(event.getDamager().getLocation().getDirection().multiply(multiplier));
+				player.sendMessage("You are at " + player.getDamage() + "%");
+				double multiplier = Math.pow(player.getDamage() / 50, 2);
+				bukkitPlayer.setVelocity(event.getDamager().getLocation().getDirection().multiply(multiplier).add(new Vector(0, 2, 0)));
 				event.setDamage(0);
 			}
 

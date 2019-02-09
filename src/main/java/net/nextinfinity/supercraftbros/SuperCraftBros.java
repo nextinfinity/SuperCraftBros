@@ -1,6 +1,7 @@
 package net.nextinfinity.supercraftbros;
 
 import net.nextinfinity.core.Game;
+import net.nextinfinity.supercraftbros.event.GameStart;
 import net.nextinfinity.supercraftbros.event.PlayerClassEvents;
 import net.nextinfinity.supercraftbros.event.PlayerDamage;
 import net.nextinfinity.supercraftbros.event.PlayerDeath;
@@ -18,6 +19,7 @@ public class SuperCraftBros extends Game {
 	}
 
 	private void loadSCBListeners() {
+		Bukkit.getPluginManager().registerEvents(new GameStart(), this);
 		Bukkit.getPluginManager().registerEvents(new PlayerClassEvents(this), this);
 		Bukkit.getPluginManager().registerEvents(new PlayerDamage(this), this);
 		Bukkit.getPluginManager().registerEvents(new PlayerDeath(), this);

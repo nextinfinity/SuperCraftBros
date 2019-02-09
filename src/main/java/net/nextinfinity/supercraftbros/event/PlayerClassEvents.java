@@ -179,18 +179,6 @@ public class PlayerClassEvents implements Listener {
 		}
 	}
 
-
-	@EventHandler
-	public void onEntityRespawn(PlayerRespawnEvent event) {
-		final Player bukkitPlayer = event.getPlayer();
-		GamePlayer player = game.getPlayerHandler().getPlayer(bukkitPlayer);
-		Bukkit.getScheduler().scheduleSyncDelayedTask(game, () -> {
-			if (player.isPlaying()) {
-				player.getArena().spawnPlayer(player);
-			}
-		}, 1);
-	}
-
 	@EventHandler
 	public void onPlayerPlaceBlock(BlockPlaceEvent event) {
 		Player bukkitPlayer = event.getPlayer();
