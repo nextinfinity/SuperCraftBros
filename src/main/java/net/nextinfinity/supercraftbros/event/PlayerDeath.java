@@ -18,7 +18,9 @@ public class PlayerDeath implements Listener {
 					"They have " + player.getScore() + " lives left!");
 		}
 		if (player.getScore() > 0) {
+			player.setDamage(0.0);
 			player.getArena().spawnPlayer(player);
+			player.initializeClass();
 		} else {
 			player.getArena().removePlayer(player);
 		}

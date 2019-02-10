@@ -1,13 +1,12 @@
 package net.nextinfinity.supercraftbros.player;
 
 import net.nextinfinity.core.Game;
-import net.nextinfinity.core.entity.impl.GamePlayerImpl;
+import net.nextinfinity.core.entity.impl.CoreGamePlayer;
 import org.bukkit.entity.Player;
 
-public class SCBPlayer extends GamePlayerImpl {
+public class SCBPlayer extends CoreGamePlayer {
 
 	private double damage;
-	private int lives;
 
 	public SCBPlayer(Player player, Game game) {
 		super(player, game);
@@ -20,6 +19,10 @@ public class SCBPlayer extends GamePlayerImpl {
 
 	public double getDamage() {
 		return damage;
+	}
+
+	public void setDamage(double damage) {
+		this.damage = damage;
 	}
 
 	@Override
