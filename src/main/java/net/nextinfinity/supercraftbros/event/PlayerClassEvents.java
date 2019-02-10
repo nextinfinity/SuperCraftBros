@@ -23,7 +23,6 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
@@ -139,7 +138,7 @@ public class PlayerClassEvents implements Listener {
 				bukkitPlayer.setFlying(false);
 				bukkitPlayer.setAllowFlight(false);
 				Vector newVelocity = bukkitPlayer.getLocation().getDirection().multiply(.5);
-				newVelocity.setY(.75);
+				newVelocity.setY(1);
 				bukkitPlayer.setVelocity(newVelocity);
 				doublej.add(uuid);
 			}

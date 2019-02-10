@@ -31,8 +31,18 @@ public class PlayerDamage implements Listener {
 			Player bukkitPlayer = (Player) event.getEntity();
 			SCBPlayer player = (SCBPlayer) game.getPlayerHandler().getPlayer(bukkitPlayer);
 			if (player.isPlaying() && player.getArena().getState() == GameState.INGAME) {
-				if (bukkitPlayer.getLocation().getBlockY() >= 0) {
-					event.setDamage(0);
+				switch (event.getCause()) {
+					case FALL:
+					case ENTITY_ATTACK:
+					case PROJECTILE:
+						break;
+					case VOID:
+						event.setDamage(100);
+						break;
+					default:
+						player.damage(Math.pow(event.getFinalDamage(), 2));
+						player.sendMessage("You are at " + player.getDamage() + "%");
+						event.setDamage(0);
 				}
 			}
 
@@ -52,7 +62,7 @@ public class PlayerDamage implements Listener {
 				player.damage(Math.pow(event.getFinalDamage(), 2));
 				player.sendMessage("You are at " + player.getDamage() + "%");
 				double multiplier = Math.pow(player.getDamage() / 50, 2);
-				bukkitPlayer.setVelocity(event.getDamager().getLocation().getDirection().multiply(multiplier).add(new Vector(0, 2, 0)));
+				bukkitPlayer.setVelocity(event.getDamager().getLocation().getDirection().multiply(multiplier).add(new Vector(0, .5, 0)));
 				event.setDamage(0);
 			}
 
