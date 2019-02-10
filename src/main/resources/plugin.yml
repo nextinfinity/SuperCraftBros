@@ -16,3 +16,5 @@ commands:
     description: Makes you join the game
   infinitycore:
     description: Core command for managing games and arenas
+  scb:
+    description: Core command for managing games and arenas
