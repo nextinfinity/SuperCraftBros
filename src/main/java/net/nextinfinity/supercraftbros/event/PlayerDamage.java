@@ -6,6 +6,7 @@ package net.nextinfinity.supercraftbros.event;
 import net.nextinfinity.core.Game;
 import net.nextinfinity.core.arena.GameState;
 import net.nextinfinity.supercraftbros.player.SCBPlayer;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -38,6 +39,7 @@ public class PlayerDamage implements Listener {
 						break;
 					case VOID:
 						event.setDamage(100);
+						bukkitPlayer.getWorld().playSound(bukkitPlayer.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 1f, 1f);
 						break;
 					default:
 						player.damage(Math.pow(event.getFinalDamage(), 2));
