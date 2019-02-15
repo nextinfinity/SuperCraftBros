@@ -61,7 +61,7 @@ public class PlayerClassEvents implements Listener {
 				event.setCancelled(true);
 			}
 			if (!fire.contains(uuid)) {
-				if (bukkitPlayer.getInventory().getItemInMainHand().getType() == Material.FIRE) {
+				if (bukkitPlayer.getInventory().getItemInMainHand().getType() == Material.FIRE_CHARGE) {
 					Fireball f = bukkitPlayer.launchProjectile(Fireball.class);
 					f.setVelocity(f.getVelocity().multiply(10));
 					fire.add(uuid);
@@ -79,8 +79,12 @@ public class PlayerClassEvents implements Listener {
 					Bukkit.getScheduler().scheduleSyncDelayedTask(game, () -> sugar.remove(uuid), 100);
 				}
 			}
-		} else {
-			event.setCancelled(true);
+			if (bukkitPlayer.getInventory().getItemInMainHand().getType() == Material.TNT) {
+				Location loc = bukkitPlayer.getLocation();
+				Entity tnt = bukkitPlayer.getWorld().spawnEntity(bukkitPlayer.getLocation(), EntityType.PRIMED_TNT);
+				tnt.setVelocity(bukkitPlayer.getLocation().getDirection().multiply(2));
+
+			}
 		}
 	}
 
@@ -175,20 +179,6 @@ public class PlayerClassEvents implements Listener {
 			double y = l.getY();
 			double z = l.getZ();
 			l.getWorld().createExplosion(x, y, z, 3, false, false);
-		}
-	}
-
-	@EventHandler
-	public void onPlayerPlaceBlock(BlockPlaceEvent event) {
-		Player bukkitPlayer = event.getPlayer();
-		GamePlayer player = game.getPlayerHandler().getPlayer(bukkitPlayer);
-		if (player.isPlaying() && player.getArena().getState() == GameState.INGAME) {
-			if (event.getBlockPlaced().getType() == Material.TNT) {
-				Location l = event.getBlockPlaced().getLocation();
-				l.getWorld().spawnEntity(l, EntityType.PRIMED_TNT);
-				event.getBlockPlaced().setType(Material.AIR);
-				event.setCancelled(false);
-			}
 		}
 	}
 }

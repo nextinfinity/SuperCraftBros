@@ -6,6 +6,7 @@ package net.nextinfinity.supercraftbros.event;
 import net.nextinfinity.core.Game;
 import net.nextinfinity.core.arena.GameState;
 import net.nextinfinity.supercraftbros.player.SCBPlayer;
+import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -34,16 +35,19 @@ public class PlayerDamage implements Listener {
 			if (player.isPlaying() && player.getArena().getState() == GameState.INGAME) {
 				switch (event.getCause()) {
 					case FALL:
+						event.setDamage(0);
+						break;
 					case ENTITY_ATTACK:
 					case PROJECTILE:
 						break;
 					case VOID:
 						event.setDamage(100);
-						bukkitPlayer.getWorld().playSound(bukkitPlayer.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 1f, 1f);
+						Location soundLocation = bukkitPlayer.getLocation();
+						soundLocation.setY(0.0);
+						bukkitPlayer.getWorld().playSound(soundLocation, Sound.ENTITY_GENERIC_EXPLODE, 10f, 1f);
 						break;
 					default:
 						player.damage(Math.pow(event.getFinalDamage(), 2));
-						player.sendMessage("You are at " + player.getDamage() + "%");
 						event.setDamage(0);
 				}
 			}
@@ -62,7 +66,6 @@ public class PlayerDamage implements Listener {
 			SCBPlayer player = (SCBPlayer) game.getPlayerHandler().getPlayer(bukkitPlayer);
 			if (player.isPlaying() && player.getArena().getState() == GameState.INGAME) {
 				player.damage(Math.pow(event.getFinalDamage(), 2));
-				player.sendMessage("You are at " + player.getDamage() + "%");
 				double multiplier = Math.pow(player.getDamage() / 50, 2);
 				bukkitPlayer.setVelocity(event.getDamager().getLocation().getDirection().multiply(multiplier).add(new Vector(0, .5, 0)));
 				event.setDamage(0);

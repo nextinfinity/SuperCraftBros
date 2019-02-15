@@ -14,7 +14,7 @@ public class PlayerDeath implements Listener {
 		SCBPlayer player = (SCBPlayer) event.getPlayer();
 		player.setScore(player.getScore() - 1);
 		for (GamePlayer gamePlayer : player.getArena().getPlayers()) {
-			gamePlayer.sendMessage(Settings.getSecondary() + player.getBukkitPlayer().getName() + " died!" +
+			gamePlayer.sendMessage(Settings.getSecondary() + player.getBukkitPlayer().getName() + " died! " +
 					"They have " + player.getScore() + " lives left!");
 		}
 		if (player.getScore() > 0) {
