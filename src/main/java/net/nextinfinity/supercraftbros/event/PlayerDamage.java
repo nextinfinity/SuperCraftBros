@@ -10,6 +10,7 @@ import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -25,30 +26,29 @@ public class PlayerDamage implements Listener {
 
 	/**
 	 * If the player is damaged by the environment, kill them in void, otherwise cancel damage
-	 * @param event
 	 */
-	@EventHandler
+	@EventHandler(priority = EventPriority.HIGHEST)
 	public void playerDamage(EntityDamageEvent event) {
 		if (event.getEntity() instanceof Player) {
 			Player bukkitPlayer = (Player) event.getEntity();
 			SCBPlayer player = (SCBPlayer) game.getPlayerHandler().getPlayer(bukkitPlayer);
 			if (player.isPlaying() && player.getArena().getState() == GameState.INGAME) {
-				switch (event.getCause()) {
-					case FALL:
-						event.setDamage(0);
-						break;
-					case ENTITY_ATTACK:
-					case PROJECTILE:
-						break;
-					case VOID:
-						event.setDamage(100);
-						Location soundLocation = bukkitPlayer.getLocation();
-						soundLocation.setY(0.0);
-						bukkitPlayer.getWorld().playSound(soundLocation, Sound.ENTITY_GENERIC_EXPLODE, 10f, 1f);
-						break;
-					default:
-						player.damage(Math.pow(event.getFinalDamage(), 2));
-						event.setDamage(0);
+				if (event.getDamage() > 0.0) {
+					switch (event.getCause()) {
+						case FALL:
+							event.setDamage(0);
+							event.setCancelled(true);
+							break;
+						case VOID:
+							event.setDamage(100);
+							Location soundLocation = bukkitPlayer.getLocation();
+							soundLocation.setY(0.0);
+							bukkitPlayer.getWorld().playSound(soundLocation, Sound.ENTITY_GENERIC_EXPLODE, 10f, 1f);
+							break;
+						default:
+							player.damage(Math.pow(event.getFinalDamage(), 2));
+							event.setDamage(0);
+					}
 				}
 			}
 
@@ -57,9 +57,8 @@ public class PlayerDamage implements Listener {
 
 	/**
 	 * If the player is damaged by another player, give them percent damage and knockback
-	 * @param event
 	 */
-	@EventHandler
+	@EventHandler(priority = EventPriority.HIGH)
 	public void playerDamagePlayer(EntityDamageByEntityEvent event) {
 		if (event.getEntity() instanceof Player && event.getDamager() instanceof Player) {
 			Player bukkitPlayer = (Player) event.getEntity();
@@ -73,4 +72,5 @@ public class PlayerDamage implements Listener {
 
 		}
 	}
+
 }

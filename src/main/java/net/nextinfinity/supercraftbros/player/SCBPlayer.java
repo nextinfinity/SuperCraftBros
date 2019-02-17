@@ -1,7 +1,7 @@
 package net.nextinfinity.supercraftbros.player;
 
 import net.nextinfinity.core.Game;
-import net.nextinfinity.core.entity.impl.CoreGamePlayer;
+import net.nextinfinity.core.player.impl.CoreGamePlayer;
 import net.nextinfinity.supercraftbros.util.ColorUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -14,9 +14,8 @@ public class SCBPlayer extends CoreGamePlayer {
 		super(player, game);
 	}
 
-	public double damage(double damageAmount) {
+	public void damage(double damageAmount) {
 		setDamage(damage + damageAmount);
-		return damage;
 	}
 
 	public double getDamage() {

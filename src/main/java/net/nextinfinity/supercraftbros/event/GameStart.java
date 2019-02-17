@@ -1,6 +1,6 @@
 package net.nextinfinity.supercraftbros.event;
 
-import net.nextinfinity.core.entity.GamePlayer;
+import net.nextinfinity.core.player.GamePlayer;
 import net.nextinfinity.core.events.GameStartEvent;
 import net.nextinfinity.supercraftbros.util.SCBSettings;
 import org.bukkit.event.EventHandler;
@@ -15,7 +15,7 @@ public class GameStart implements Listener {
 	public void onStart(GameStartEvent event) {
 		List<GamePlayer> players = new ArrayList<>(event.getArena().getPlayers());
 		for (GamePlayer player : players) {
-			player.getTeam().setPrefix(player.getGameClass().getColor().toString());
+			player.getTeam().setColor(player.getGameClass().getColor());
 			player.setScore(SCBSettings.getLives());
 		}
 	}

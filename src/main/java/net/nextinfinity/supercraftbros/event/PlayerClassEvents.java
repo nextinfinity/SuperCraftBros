@@ -5,7 +5,8 @@ package net.nextinfinity.supercraftbros.event;
 
 import net.nextinfinity.core.Game;
 import net.nextinfinity.core.arena.GameState;
-import net.nextinfinity.core.entity.GamePlayer;
+import net.nextinfinity.core.player.GamePlayer;
+import net.nextinfinity.supercraftbros.util.LocationUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -19,7 +20,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockIgniteEvent;
-import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -88,14 +88,7 @@ public class PlayerClassEvents implements Listener {
 		}
 	}
 
-
-	public boolean isOnGround(Player bukkitPlayer) {
-		Location l = bukkitPlayer.getLocation();
-		l = l.add(0, -1, 0);
-		return l.getBlock().getState().getType() != Material.AIR;
-	}
-
-	public void explodePlayers(Player bukkitPlayer) {
+	private void explodePlayers(Player bukkitPlayer) {
 		GamePlayer player = game.getPlayerHandler().getPlayer(bukkitPlayer);
 		if (player.isPlaying()) {
 			Location l = bukkitPlayer.getLocation();
@@ -120,7 +113,7 @@ public class PlayerClassEvents implements Listener {
 		}
 	}
 
-	public void explodeBlocks(Player bukkitPlayer, Location baseLoc) {
+	private void explodeBlocks(Player bukkitPlayer, Location baseLoc) {
 		Location playerLoc = bukkitPlayer.getLocation();
 		Location aboveLoc = baseLoc.add(0, 1, 0);
 		if (baseLoc.getBlock().getState().getType() != Material.AIR &&
@@ -146,7 +139,7 @@ public class PlayerClassEvents implements Listener {
 				bukkitPlayer.setVelocity(newVelocity);
 				doublej.add(uuid);
 			}
-			if (isOnGround(bukkitPlayer)) {
+			if (LocationUtil.isOnGround(bukkitPlayer)) {
 				bukkitPlayer.setAllowFlight(true);
 				if (fsmash.contains(uuid)) {
 					if (bukkitPlayer.isSneaking()) {

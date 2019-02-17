@@ -3,7 +3,7 @@ authors: [NextInfinity, Double0negative, MCSG]
 version: @scbversion@
 api-version: 1.13
 main: net.nextinfinity.supercraftbros.SuperCraftBros
-depend: [WorldEdit, ItemNBTAPI]
+depend: [FastAsyncWorldEdit, ItemNBTAPI]
 softdepend: [Vault]
 commands:
   quit:

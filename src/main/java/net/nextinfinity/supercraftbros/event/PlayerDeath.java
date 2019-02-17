@@ -1,6 +1,6 @@
 package net.nextinfinity.supercraftbros.event;
 
-import net.nextinfinity.core.entity.GamePlayer;
+import net.nextinfinity.core.player.GamePlayer;
 import net.nextinfinity.core.events.GameDeathEvent;
 import net.nextinfinity.core.utils.Settings;
 import net.nextinfinity.supercraftbros.player.SCBPlayer;
