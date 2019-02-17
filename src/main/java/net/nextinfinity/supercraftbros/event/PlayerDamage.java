@@ -6,9 +6,12 @@ package net.nextinfinity.supercraftbros.event;
 import net.nextinfinity.core.Game;
 import net.nextinfinity.core.arena.GameState;
 import net.nextinfinity.supercraftbros.player.SCBPlayer;
+import net.nextinfinity.supercraftbros.util.LocationUtil;
 import org.bukkit.Location;
 import org.bukkit.Sound;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -59,14 +62,20 @@ public class PlayerDamage implements Listener {
 	 * If the player is damaged by another player, give them percent damage and knockback
 	 */
 	@EventHandler(priority = EventPriority.HIGH)
-	public void playerDamagePlayer(EntityDamageByEntityEvent event) {
-		if (event.getEntity() instanceof Player && event.getDamager() instanceof Player) {
+	public void playerDamageByEntity(EntityDamageByEntityEvent event) {
+		if (event.getEntity() instanceof Player) {
 			Player bukkitPlayer = (Player) event.getEntity();
 			SCBPlayer player = (SCBPlayer) game.getPlayerHandler().getPlayer(bukkitPlayer);
 			if (player.isPlaying() && player.getArena().getState() == GameState.INGAME) {
 				player.damage(Math.pow(event.getFinalDamage(), 2));
+				Vector vector;
+				if (event.getDamager() instanceof Projectile) {
+					vector = LocationUtil.getVector((Entity) ((Projectile) event.getDamager()).getShooter(), bukkitPlayer);
+				} else {
+					vector = LocationUtil.getVector(event.getDamager(), bukkitPlayer);
+				}
 				double multiplier = Math.pow(player.getDamage() / 50, 2);
-				bukkitPlayer.setVelocity(event.getDamager().getLocation().getDirection().multiply(multiplier).add(new Vector(0, .5, 0)));
+				bukkitPlayer.setVelocity(vector.multiply(multiplier));
 				event.setDamage(0);
 			}
 

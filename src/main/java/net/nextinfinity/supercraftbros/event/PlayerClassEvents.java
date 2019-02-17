@@ -92,7 +92,7 @@ public class PlayerClassEvents implements Listener {
 		GamePlayer player = game.getPlayerHandler().getPlayer(bukkitPlayer);
 		if (player.isPlaying()) {
 			Location l = bukkitPlayer.getLocation();
-			l = l.add(0, -1, 0);
+			l.add(0, -1, 0);
 			for (int x = l.getBlockX() - 1; x <= l.getBlockX() + 1; x++) {
 				for (int z = l.getBlockZ() - 1; z <= l.getBlockZ() + 1; z++) {
 					explodeBlocks(bukkitPlayer, new Location(l.getWorld(), x, l.getBlockY(), z));
@@ -104,8 +104,7 @@ public class PlayerClassEvents implements Listener {
 					double d = pl.getLocation().distance(bukkitPlayer.getLocation());
 					if (d < 5) {
 						d = d / 5;
-						pl.setVelocity(new Vector((1.5 - d) * getSide(l2.getBlockX(), l.getBlockX()), 1.5 - d,
-								(1.5 - d) * getSide(l2.getBlockZ(), l.getBlockZ())));
+						pl.setVelocity(LocationUtil.getVector(bukkitPlayer, pl).multiply(1.5 - d));
 
 					}
 				}
@@ -114,13 +113,11 @@ public class PlayerClassEvents implements Listener {
 	}
 
 	private void explodeBlocks(Player bukkitPlayer, Location baseLoc) {
-		Location playerLoc = bukkitPlayer.getLocation();
 		Location aboveLoc = baseLoc.add(0, 1, 0);
 		if (baseLoc.getBlock().getState().getType() != Material.AIR &&
 				aboveLoc.getBlock().getState().getType() == Material.AIR) {
 			final Entity entity = baseLoc.getWorld().spawnFallingBlock(aboveLoc, baseLoc.getBlock().getBlockData());
-			entity.setVelocity(new Vector((getSide(baseLoc.getBlockX(), playerLoc.getBlockX()) * 0.3), .1,
-					(getSide(baseLoc.getBlockZ(), playerLoc.getBlockZ()) * 0.3)));
+			entity.setVelocity(LocationUtil.getVector(bukkitPlayer, entity));
 			Bukkit.getScheduler().scheduleSyncDelayedTask(game, entity::remove, 5);
 		}
 	}
@@ -155,12 +152,6 @@ public class PlayerClassEvents implements Listener {
 				fsmash.add(uuid);
 			}
 		}
-	}
-
-
-	//TODO: Example: This utility method probably shouldn't be in a listener class
-	private int getSide(int i, int u) {
-		return Integer.compare(i, u);
 	}
 
 	@EventHandler(priority = EventPriority.LOWEST)
