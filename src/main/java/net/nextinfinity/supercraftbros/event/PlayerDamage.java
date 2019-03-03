@@ -75,6 +75,16 @@ public class PlayerDamage implements Listener {
 					vector = LocationUtil.getVector(event.getDamager(), bukkitPlayer);
 				}
 				double multiplier = Math.pow(player.getDamage() / 50, 2);
+				Vector velocity = vector.multiply(multiplier);
+				if (velocity.getX() == Double.MAX_VALUE) {
+					velocity.setX(Double.MAX_VALUE - 1);
+				}
+				if (velocity.getY() == Double.MAX_VALUE) {
+					velocity.setY(Double.MAX_VALUE - 1);
+				}
+				if (velocity.getZ() == Double.MAX_VALUE) {
+					velocity.setZ(Double.MAX_VALUE - 1);
+				}
 				bukkitPlayer.setVelocity(vector.multiply(multiplier));
 				event.setDamage(0);
 			}

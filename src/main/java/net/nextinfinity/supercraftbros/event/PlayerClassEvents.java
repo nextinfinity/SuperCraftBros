@@ -11,10 +11,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Fireball;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -80,10 +77,8 @@ public class PlayerClassEvents implements Listener {
 				}
 			}
 			if (bukkitPlayer.getInventory().getItemInMainHand().getType() == Material.TNT) {
-				Location loc = bukkitPlayer.getLocation();
 				Entity tnt = bukkitPlayer.getWorld().spawnEntity(bukkitPlayer.getLocation(), EntityType.PRIMED_TNT);
 				tnt.setVelocity(bukkitPlayer.getLocation().getDirection().multiply(2));
-
 			}
 		}
 	}
@@ -155,14 +150,11 @@ public class PlayerClassEvents implements Listener {
 	}
 
 	@EventHandler(priority = EventPriority.LOWEST)
-	public void onEntityExplode(EntityExplodeEvent e) {
-		Location l = e.getLocation();
-		if (e.getEntity() instanceof Fireball) {
-			e.setCancelled(true);
-			double x = l.getX();
-			double y = l.getY();
-			double z = l.getZ();
-			l.getWorld().createExplosion(x, y, z, 3, false, false);
+	public void onEntityExplode(EntityExplodeEvent event) {
+		if (event.getEntity() instanceof Fireball || event.getEntity() instanceof TNTPrimed) {
+			Location l = event.getLocation();
+			l.getWorld().createExplosion(l.getX(), l.getY(), l.getZ(), 3, false, false);
+			event.setCancelled(true);
 		}
 	}
 }
