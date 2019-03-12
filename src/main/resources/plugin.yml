@@ -6,15 +6,5 @@ main: net.nextinfinity.supercraftbros.SuperCraftBros
 depend: [FastAsyncWorldEdit, ItemNBTAPI]
 softdepend: [Vault]
 commands:
-  quit:
-    description: Makes you quit the game
-  leave:
-    description: Makes you quit the game
-  start:
-    description: Starts the game
-  join:
-    description: Makes you join the game
-  infinitycore:
-    description: Core command for managing games and arenas
   scb:
-    description: Core command for managing games and arenas
+    description: SCB command

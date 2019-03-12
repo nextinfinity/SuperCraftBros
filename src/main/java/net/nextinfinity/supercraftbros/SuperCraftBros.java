@@ -1,7 +1,6 @@
 package net.nextinfinity.supercraftbros;
 
 import net.nextinfinity.core.Game;
-import net.nextinfinity.core.commands.executors.CoreCommand;
 import net.nextinfinity.supercraftbros.event.GameStart;
 import net.nextinfinity.supercraftbros.event.PlayerClassEvents;
 import net.nextinfinity.supercraftbros.event.PlayerDamage;
@@ -17,8 +16,7 @@ public class SuperCraftBros extends Game {
 		loadSCBSettings();
 		loadSCBListeners();
 		getPlayerHandler().setPlayerClass(SCBPlayer.class);
-		//TODO: Use original CoreCommand instance? Remove infinitycore command?
-		getCommandHandler().registerCommand("scb", new CoreCommand(this));
+		setCommand("scb");
 	}
 
 	private void loadSCBListeners() {
