@@ -43,7 +43,7 @@ public class PlayerDamage implements Listener {
 							event.setCancelled(true);
 							break;
 						case VOID:
-							event.setDamage(100);
+							event.setDamage(bukkitPlayer.getHealth());
 							Location soundLocation = bukkitPlayer.getLocation();
 							soundLocation.setY(0.0);
 							bukkitPlayer.getWorld().playSound(soundLocation, Sound.ENTITY_GENERIC_EXPLODE, 10f, 1f);
