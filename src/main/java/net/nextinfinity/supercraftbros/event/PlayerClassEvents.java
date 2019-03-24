@@ -25,7 +25,6 @@ import org.bukkit.util.Vector;
 import java.util.ArrayList;
 import java.util.UUID;
 
-//TODO: Clean this class up
 public class PlayerClassEvents implements Listener {
 
 	private final Game game;
@@ -37,15 +36,6 @@ public class PlayerClassEvents implements Listener {
 
 	public PlayerClassEvents(Game game) {
 		this.game = game;
-	}
-
-	@EventHandler(priority = EventPriority.LOWEST)
-	public void blockFire(BlockIgniteEvent e) {
-		final Block block = e.getBlock();
-		Bukkit.getScheduler().scheduleSyncDelayedTask(game, () -> {
-			block.setType(Material.AIR);
-			block.getState().update();
-		}, 60);
 	}
 
 	@EventHandler
@@ -83,6 +73,48 @@ public class PlayerClassEvents implements Listener {
 		}
 	}
 
+	@EventHandler
+	public void onMove(PlayerMoveEvent event) {
+		Player bukkitPlayer = event.getPlayer();
+		UUID uuid = bukkitPlayer.getUniqueId();
+		GamePlayer player = game.getPlayerHandler().getPlayer(bukkitPlayer);
+		if (player.isPlaying() && player.getArena().getState() == GameState.INGAME) {
+			if (bukkitPlayer.isFlying()) {
+				bukkitPlayer.setFlying(false);
+				bukkitPlayer.setAllowFlight(false);
+				Vector newVelocity = bukkitPlayer.getLocation().getDirection().multiply(.5);
+				newVelocity.setY(1);
+				bukkitPlayer.setVelocity(newVelocity);
+				doublej.add(uuid);
+			}
+			if (LocationUtil.isOnGround(bukkitPlayer)) {
+				bukkitPlayer.setAllowFlight(true);
+				if (fsmash.contains(uuid)) {
+					if (bukkitPlayer.isSneaking()) {
+						explodePlayers(bukkitPlayer);
+					}
+					fsmash.remove(uuid);
+				}
+				doublej.remove(uuid);
+			}
+			if (doublej.contains(uuid) && bukkitPlayer.isSneaking()) {
+				bukkitPlayer.setVelocity(new Vector(0, -1, 0));
+				fsmash.add(uuid);
+			}
+		}
+	}
+
+	@EventHandler(priority = EventPriority.LOWEST)
+	public void onEntityExplode(EntityExplodeEvent event) {
+		if (game.getArenaManager().isArenaWorld(event.getLocation().getWorld())) {
+			if (event.getEntity() instanceof Fireball || event.getEntity() instanceof TNTPrimed) {
+				Location l = event.getLocation();
+				l.getWorld().createExplosion(l.getX(), l.getY(), l.getZ(), 3, false, false);
+				event.setCancelled(true);
+			}
+		}
+	}
+
 	private void explodePlayers(Player bukkitPlayer) {
 		GamePlayer player = game.getPlayerHandler().getPlayer(bukkitPlayer);
 		if (player.isPlaying()) {
@@ -114,47 +146,6 @@ public class PlayerClassEvents implements Listener {
 			final Entity entity = baseLoc.getWorld().spawnFallingBlock(aboveLoc, baseLoc.getBlock().getBlockData());
 			entity.setVelocity(LocationUtil.getVector(bukkitPlayer, entity));
 			Bukkit.getScheduler().scheduleSyncDelayedTask(game, entity::remove, 5);
-		}
-	}
-
-	@EventHandler
-	public void onMove(PlayerMoveEvent event) {
-		Player bukkitPlayer = event.getPlayer();
-		UUID uuid = bukkitPlayer.getUniqueId();
-		GamePlayer player = game.getPlayerHandler().getPlayer(bukkitPlayer);
-		if (player.isPlaying() && player.getArena().getState() == GameState.INGAME) {
-			if (bukkitPlayer.isFlying()) {
-				bukkitPlayer.setFlying(false);
-				bukkitPlayer.setAllowFlight(false);
-				Vector newVelocity = bukkitPlayer.getLocation().getDirection().multiply(.5);
-				newVelocity.setY(1);
-				bukkitPlayer.setVelocity(newVelocity);
-				doublej.add(uuid);
-			}
-			if (LocationUtil.isOnGround(bukkitPlayer)) {
-				bukkitPlayer.setAllowFlight(true);
-				if (fsmash.contains(uuid)) {
-					if (bukkitPlayer.isSneaking()) {
-						explodePlayers(bukkitPlayer);
-					}
-					fsmash.remove(uuid);
-				}
-				doublej.remove(uuid);
-
-			}
-			if (doublej.contains(uuid) && bukkitPlayer.isSneaking()) {
-				bukkitPlayer.setVelocity(new Vector(0, -1, 0));
-				fsmash.add(uuid);
-			}
-		}
-	}
-
-	@EventHandler(priority = EventPriority.LOWEST)
-	public void onEntityExplode(EntityExplodeEvent event) {
-		if (event.getEntity() instanceof Fireball || event.getEntity() instanceof TNTPrimed) {
-			Location l = event.getLocation();
-			l.getWorld().createExplosion(l.getX(), l.getY(), l.getZ(), 3, false, false);
-			event.setCancelled(true);
 		}
 	}
 }
