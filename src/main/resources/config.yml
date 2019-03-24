@@ -19,5 +19,9 @@ modes:
 time:
   game-time: 480
   countdown-time: 60
+eco:
+  winning-eco: 1000
+other:
+  join-teleport: true
 scb:
   lives: 3
