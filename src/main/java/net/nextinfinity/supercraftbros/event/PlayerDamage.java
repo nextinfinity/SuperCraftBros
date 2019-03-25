@@ -49,7 +49,7 @@ public class PlayerDamage implements Listener {
 							bukkitPlayer.getWorld().playSound(soundLocation, Sound.ENTITY_GENERIC_EXPLODE, 10f, 1f);
 							break;
 						default:
-							player.damage(Math.pow(event.getFinalDamage(), 2));
+							player.damage(event.getFinalDamage() * 4);
 							event.setDamage(0);
 					}
 				}
@@ -67,7 +67,7 @@ public class PlayerDamage implements Listener {
 			Player bukkitPlayer = (Player) event.getEntity();
 			SCBPlayer player = (SCBPlayer) game.getPlayerHandler().getPlayer(bukkitPlayer);
 			if (player.isPlaying() && player.getArena().getState() == GameState.INGAME) {
-				player.damage(Math.pow(event.getFinalDamage(), 2));
+				player.damage(event.getFinalDamage() * 4);
 				Vector vector;
 				if (event.getDamager() instanceof Projectile) {
 					vector = LocationUtil.getVector((Entity) ((Projectile) event.getDamager()).getShooter(), bukkitPlayer);
