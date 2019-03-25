@@ -20,6 +20,7 @@ import org.bukkit.event.block.BlockIgniteEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
@@ -69,6 +70,13 @@ public class PlayerClassEvents implements Listener {
 			if (bukkitPlayer.getInventory().getItemInMainHand().getType() == Material.TNT) {
 				Entity tnt = bukkitPlayer.getWorld().spawnEntity(bukkitPlayer.getLocation(), EntityType.PRIMED_TNT);
 				tnt.setVelocity(bukkitPlayer.getLocation().getDirection().multiply(2));
+				ItemStack item = bukkitPlayer.getInventory().getItemInMainHand();
+				if (item.getAmount() > 1) {
+					item.setAmount(item.getAmount() - 1);
+					bukkitPlayer.updateInventory();
+				} else {
+					bukkitPlayer.getInventory().remove(item);
+				}
 			}
 		}
 	}
@@ -82,9 +90,9 @@ public class PlayerClassEvents implements Listener {
 			if (bukkitPlayer.isFlying()) {
 				bukkitPlayer.setFlying(false);
 				bukkitPlayer.setAllowFlight(false);
-				Vector newVelocity = bukkitPlayer.getLocation().getDirection().multiply(.5);
+				Vector newVelocity = bukkitPlayer.getLocation().getDirection().multiply(.3);
 				newVelocity.setY(1);
-				bukkitPlayer.setVelocity(newVelocity);
+				bukkitPlayer.setVelocity(bukkitPlayer.getVelocity().add(newVelocity));
 				doublej.add(uuid);
 			}
 			if (LocationUtil.isOnGround(bukkitPlayer)) {
