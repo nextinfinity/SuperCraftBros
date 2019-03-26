@@ -1,18 +1,29 @@
-apply plugin: 'java'
-apply plugin: 'maven'
-group = 'org.mcsg.double0negative'
-version = '1.6.6'
+import org.apache.tools.ant.filters.ReplaceTokens
+
+plugins {
+    id 'java'
+    id 'maven'
+    id 'com.github.johnrengelman.shadow' version '4.0.4'
+}
+
+group = 'net.nextinfinity'
+version = scbversion
 defaultTasks "jar"
 
-repositories {         
-    maven { url "https://hub.spigotmc.org/nexus/content/repositories/snapshots/" }
-    maven { url "http://repo.maven.apache.org/maven2" }
-    maven { url "http://nexus.hc.to/content/repositories/pub_releases" }
-    maven { url "http://maven.sk89q.com/repo/" }
+repositories {
+    maven { url "https://mymavenrepo.com/repo/2HCXIs5LYi74Ylaq1Qen/" }
     mavenLocal()
 }
 dependencies {
-   compile(group: 'org.spigotmc', name: 'spigot', version:'1.11.2-R0.1-SNAPSHOT')
-   compile(group: 'net.milkbowl.vault', name: 'VaultAPI', version:'1.6')
-   compile(group: 'com.sk89q.worldedit', name: 'worldedit-bukkit', version:'6.1.5')
+    compile(group: 'net.nextinfinity', name: 'core', version:'1.0.0') {
+        transitive = false
+    }
+    compileOnly(group: 'org.spigotmc', name: 'spigot-api', version: '1.13.2-R0.1-SNAPSHOT') {
+        transitive = false
+    }
+}
+processResources {
+    filter ReplaceTokens, tokens: [
+            "scbversion": project.property("scbversion")
+    ]
 }

@@ -1,254 +1,318 @@
-classes:
-  Blaze:
-    items:
-      bow:
-        id: 261
-        amount: 1
-        enchantments:
-          ARROW_FIRE: 1
-          ARROW_KNOCKBACK: 1
+zombie:
+  items:
+    '0':
+      v: 1631
+      type: IRON_SHOVEL
+      meta:
+        ==: ItemMeta
+        meta-type: UNSPECIFIC
+        enchants:
+          KNOCKBACK: 1
+          DAMAGE_ALL: 1
+  helmet:
+    v: 1631
+    type: ZOMBIE_HEAD
+  chestplate:
+    v: 1631
+    type: LEATHER_CHESTPLATE
+  leggings:
+    v: 1631
+    type: LEATHER_LEGGINGS
+  boots:
+    v: 1631
+    type: LEATHER_BOOTS
+  inv-item:
+    v: 1631
+    type: ZOMBIE_HEAD
+  color: '2'
+  effects:
+    jump:
+      effect: 8
+      duration: 2147483647
+      amplifier: 2
+      ambient: false
+      has-particles: false
+      has-icon: false
+skeleton:
+  items:
+    '0':
+      v: 1631
+      type: BOW
+      meta:
+        ==: ItemMeta
+        meta-type: UNSPECIFIC
+        enchants:
+          ARROW_KNOCKBACK: 2
           ARROW_INFINITE: 1
+    '1':
+      v: 1631
+      type: ARROW
+    '8':
+      v: 1631
+      type: ARROW
+  helmet:
+    v: 1631
+    type: SKELETON_SKULL
+  inv-item:
+    v: 1631
+    type: SKELETON_SKULL
+  color: f
+  effects:
+    jump:
+      effect: 8
+      duration: 2147483647
+      amplifier: 2
+      ambient: false
+      has-particles: false
+      has-icon: false
+creeper:
+  items:
+    '0':
+      v: 1631
+      type: GUNPOWDER
+      meta:
+        ==: ItemMeta
+        meta-type: UNSPECIFIC
+        enchants:
+          KNOCKBACK: 1
+    '1':
+      v: 1631
+      type: TNT
+      amount: 10
+  helmet:
+    v: 1631
+    type: CREEPER_HEAD
+  inv-item:
+    v: 1631
+    type: CREEPER_HEAD
+  color: a
+  effects:
+    jump:
+      effect: 8
+      duration: 2147483647
+      amplifier: 2
+      ambient: false
+      has-particles: false
+      has-icon: false
+blaze:
+  items:
+    '0':
+      v: 1631
+      type: BOW
+      meta:
+        ==: ItemMeta
+        meta-type: UNSPECIFIC
+        enchants:
           DURABILITY: 2
-      blaze-rod:
-        id: 369
-        amount: 1
-        enchantments:
-          FIRE_ASPECT: 1
-          KNOCKBACK: 1
-      arrow:
-        id: 262
-        amount: 1
-    helmet:
-      id: 298
-      color: 255,144,0
-    chestplate:
-      id: 299
-      color: 255,144,0
-    leggings:
-      id: 300
-      color: 255,144,0
-    boots:
-      id: 301
-      color: 255,144,0
-    effects:
-      JUMP: 4
-  Zombie: 
-    items:
-      iron-shovel:
-        id: 256
-        amount: 1
-        enchantments:
+          ARROW_FIRE: 1
+          ARROW_INFINITE: 1
           ARROW_KNOCKBACK: 1
+    '1':
+      v: 1631
+      type: BLAZE_ROD
+      meta:
+        ==: ItemMeta
+        meta-type: UNSPECIFIC
+        enchants:
+          KNOCKBACK: 1
+          FIRE_ASPECT: 1
+    '8':
+      v: 1631
+      type: ARROW
+  inv-item:
+    v: 1631
+    type: BLAZE_ROD
+  color: e
+  effects:
+    jump:
+      effect: 8
+      duration: 2147483647
+      amplifier: 2
+      ambient: false
+      has-particles: false
+      has-icon: false
+cactus:
+  items:
+    '0':
+      v: 1631
+      type: WOODEN_SWORD
+      meta:
+        ==: ItemMeta
+        meta-type: UNSPECIFIC
+        enchants:
+          KNOCKBACK: 1
           DAMAGE_ALL: 1
-    helmet:
-      id: 298
-      color: 0,100,0
-    chestplate:
-      id: 299
-      color: 0,100,0
-    leggings:
-      id: 300
-      color: 0,100,0
-    boots:
-      id: 301
-      color: 0,100,0
-    effects:
-      JUMP: 2
-  Cactus:
-    items:
-      wooden-sword:
-        id: 268
-        amount: 1
-        enchantments:
-          KNOCKBACK: 1
+  helmet:
+    v: 1631
+    type: CACTUS
+  inv-item:
+    v: 1631
+    type: CACTUS
+  color: '2'
+  effects:
+    jump:
+      effect: 8
+      duration: 2147483647
+      amplifier: 2
+      ambient: false
+      has-particles: false
+      has-icon: false
+enderman:
+  color: '3'
+  items:
+    '0':
+      v: 1631
+      type: ENDER_EYE
+      meta:
+        ==: ItemMeta
+        meta-type: UNSPECIFIC
+        enchants:
           DAMAGE_ALL: 2
-    helmet:
-      id: 298
-      color: 50,150,50
-    chestplate:
-      id: 299
-      color: 50,150,50
-    leggings:
-      id: 300
-      color: 50,150,50
-    boots:
-      id: 301
-      color: 50,150,250
-    effects:
-      JUMP: 2
-  Creeper:
-    items:
-      gunpower:
-        id: 289
-        amount: 1
-        enchantments:
           KNOCKBACK: 1
-      tnt:
-        id: 46
-        amount: 10
-    helmet:
-      id: 298
-      color: 0,200,0
-    chestplate:
-      id: 299
-      color: 0,200,0
-    leggings:
-      id: 300
-      color: 0,200,0
-    boots:
-      id: 301
-      color: 0,0,0
-    effects:
-      JUMP: 2
-  Enderman:
-    items:
-      eye-of-ender:
-        id: 381
-        amount: 1
-        enchantments:
-          KNOCKBACK: 1
-          DAMAGE_ALL: 2
-      ender-pearl:
-        id: 368
-        amount: 20
-    helmet:
-      id: 298
-      color: 37,6,39
-    chestplate:
-      id: 299
-      color: 37,6,39
-    leggings:
-      id: 300
-      color: 37,6,39
-    boots:
-      id: 301
-      color: 37,6,39
-    effects:
-      JUMP: 2
-  Ghast:
-    items:
-      ghast-tear:
-        id: 370
-        amount: 1
-        enchantments:
+    '1':
+      v: 1631
+      type: ENDER_PEARL
+      amount: 16
+  inv-item:
+    v: 1631
+    type: ENDER_EYE
+  effects:
+    jump:
+      effect: 8
+      duration: 2147483647
+      amplifier: 2
+      ambient: false
+      has-particles: false
+      has-icon: false
+ghast:
+  items:
+    '0':
+      v: 1631
+      type: GHAST_TEAR
+      meta:
+        ==: ItemMeta
+        meta-type: UNSPECIFIC
+        enchants:
           KNOCKBACK: 2
           DAMAGE_ALL: 2
-      fire-charge:
-        id: 385
-        amount: 1
-    helmet:
-      id: 298
-      color: 250,0,0
-    chestplate:
-      id: 299
-      color: 250,250,250
-    leggings:
-      id: 300
-      color: 250,250,250
-    boots:
-      id: 301
-      color: 250,250,250
-    effects:
-      JUMP: 4
-  Skeleton:
-    items:
-      bow:
-        id: 261
-        amount: 1
-        enchantments:
-          ARROW_KNOCKBACK: 2
-          ARROW_INFINITE: 1
-      arrow:
-        id: 262
-        amount: 1
-    helmet:
-      id: 298
-      color: 250,250,250
-    chestplate:
-      id: 299
-      color: 250,250,250
-    leggings:
-      id: 300
-      color: 250,250,250
-    boots:
-      id: 301
-      color: 250,250,250
-    effects:
-      JUMP: 2
-  Spider:
-    items:
-      spider-eye:
-        id: 375
-        amount: 1
-        enchantments:
+    '1':
+      v: 1631
+      type: FIRE_CHARGE
+  inv-item:
+    v: 1631
+    type: GHAST_TEAR
+  color: f
+  effects:
+    jump:
+      effect: 8
+      duration: 2147483647
+      amplifier: 4
+      ambient: false
+      has-particles: false
+      has-icon: false
+spider:
+  items:
+    '0':
+      v: 1631
+      type: SPIDER_EYE
+      meta:
+        ==: ItemMeta
+        meta-type: UNSPECIFIC
+        enchants:
           KNOCKBACK: 2
           DAMAGE_ALL: 1
-    helmet:
-      id: 298
-      color: 75,8,15
-    chestplate:
-      id: 299
-      color: 0,0,0
-    leggings:
-      id: 300
-      color: 0,0,0
-    boots:
-      id: 301
-      color: 0,0,0
-    effects:
-      JUMP: 4
-      SPEED: 2
-  Witch:
-    items:
-      emerald:
-        id: 388
-        amount: 1
-        enchantments:
+  inv-item:
+    v: 1631
+    type: SPIDER_EYE
+  color: '0'
+  effects:
+    jump:
+      effect: 8
+      duration: 2147483647
+      amplifier: 4
+      ambient: false
+      has-particles: false
+      has-icon: false
+    speed:
+      effect: 1
+      duration: 2147483647
+      amplifier: 2
+      ambient: false
+      has-particles: false
+      has-icon: false
+witch:
+  items:
+    '0':
+      v: 1631
+      type: EMERALD
+      meta:
+        ==: ItemMeta
+        meta-type: UNSPECIFIC
+        enchants:
           KNOCKBACK: 5
-      poison-potion:
-        id: 373
-        id-modifier: 16420
-        amount: 5
-      sugar:
-        id: 353
-        amount: 1
-    helmet:
-      id: 298
-      color: 148,52,169
-    chestplate:
-      id: 299
-      color: 148,52,169
-    leggings:
-      id: 300
-      color: 148,52,169
-    boots:
-      id: 301
-      color: 9,141,40
-    effects:
-      JUMP: 4
-      NIGHT_VISION: 4
-  Wither:
-    items:
-      bow:
-        id: 261
-        amount: 1
-        enchantments:
-          ARROW_INFINITE: 1
+    '1':
+      v: 1631
+      type: SPLASH_POTION
+      amount: 5
+      meta:
+        ==: ItemMeta
+        meta-type: POTION
+        potion-type: minecraft:strong_poison
+    '2':
+      v: 1631
+      type: SUGAR
+  inv-item:
+    v: 1631
+    type: SPLASH_POTION
+    meta:
+      ==: ItemMeta
+      meta-type: POTION
+      potion-type: minecraft:awkward
+  color: '5'
+  effects:
+    jump:
+      effect: 8
+      duration: 2147483647
+      amplifier: 4
+      ambient: false
+      has-particles: false
+      has-icon: false
+    night_vision:
+      effect: 16
+      duration: 2147483647
+      amplifier: 4
+      ambient: false
+      has-particles: false
+      has-icon: false
+wither:
+  items:
+    '0':
+      v: 1631
+      type: BOW
+      meta:
+        ==: ItemMeta
+        meta-type: UNSPECIFIC
+        enchants:
           ARROW_KNOCKBACK: 2
-      arrow:
-        id: 262
-        amount: 1
-    helmet:
-      id: 298
-      color: 50,50,50
-    chestplate:
-      id: 299
-      color: 50,50,50
-    leggings:
-      id: 300
-      color: 50,50,50
-    boots:
-      id: 301
-      color: 50,50,50
-    effects:
-      JUMP: 4
+          ARROW_INFINITE: 1
+    '8':
+      v: 1631
+      type: ARROW
+    '1':
+      v: 1631
+      type: ARROW
+  helmet:
+    v: 1631
+    type: WITHER_SKELETON_SKULL
+  inv-item:
+    v: 1631
+    type: WITHER_SKELETON_SKULL
+  color: '0'
+  effects:
+    jump:
+      effect: 8
+      duration: 2147483647
+      amplifier: 4
+      ambient: false
+      has-particles: false
+      has-icon: false

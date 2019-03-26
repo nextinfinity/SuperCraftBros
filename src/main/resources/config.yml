@@ -1,13 +1,27 @@
-#Support for percents is in beta and thus may not work fully
-use-percents: false
-#Default seconds for countdown
-countdown: 60
-#Only teleport players who are in an arena when they join
-#This feature is mainly for servers that want this plugin in a single world
-use-arena-teleport: false
-#Amount to award players for winning
-#This will not trigger if Vault is not installed
-winning-economy: 1000
-#The gamemode to set players to after leaving a match
-#If not set this will default to adventure mode
-return-gamemode: ADVENTURE
+text:
+  name: "SuperCraftBros"
+  prefix: "&e[&6{NAME}&e] "
+  primary-color: "6"
+  secondary-color: "e"
+  error-color: "c"
+size:
+  min: 2
+  max: 4
+arena:
+  block-break: false
+  item-manage: false
+  hunger: false
+  fire-block-damage: false
+  explosion-block-damage: false
+modes:
+  game-mode: "ADVENTURE"
+  exit-mode: "SURVIVAL"
+time:
+  game-time: 480
+  countdown-time: 60
+eco:
+  winning-eco: 1000
+other:
+  join-teleport: true
+scb:
+  lives: 3

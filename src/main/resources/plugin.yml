@@ -1,10 +1,10 @@
 name: SuperCraftBros
-authors: [Double0negative, MCSG, NextInfinity]
-version: 1.6.6
-main: org.mcsg.double0negative.supercraftbros.SuperCraftBros
+authors: [NextInfinity, Double0negative, MCSG]
+version: @scbversion@
+api-version: 1.13
+main: net.nextinfinity.supercraftbros.SuperCraftBros
+depend: [FastAsyncWorldEdit, ItemNBTAPI]
+softdepend: [Vault]
 commands:
   scb:
-    description: Super Craft Bros
-    usage: /scb (command) (args)
-    aliases: [scb]
-softdepend: [Vault]
+    description: SCB command
