@@ -16,7 +16,7 @@ public class GameStart implements Listener {
 		List<GamePlayer> players = new ArrayList<>(event.getArena().getPlayers());
 		for (GamePlayer player : players) {
 			player.getTeam().setColor(player.getGameClass().getColor());
-			player.setScore(SCBSettings.getLives());
+			player.getTeam().setScore(SCBSettings.getLives());
 		}
 	}
 }
