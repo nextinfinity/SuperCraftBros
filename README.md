@@ -1,10 +1,10 @@
 # SuperCraftBros Reloaded
 
-##### Double0negative's SuperCraftBros plugin, reloaded! Supports: Bukkit/Spigot 1.8.7+
+##### An adaptation of Super Smash Bros. for Minecraft 1.13+
 
 ## What is it?
 
-Originally based off the classic Nintendo game, SuperCraftBros is a class-based PvP game where players fight to be the last one alive. This reloaded version offers a much more fleshed-out edition than Double0negative's original code and our version also comes with the promise of support for current Minecraft releases.
+Originally based off the classic Nintendo game, SuperCraftBros is a class-based PvP game where players fight to be the last one alive. This reloaded version began with world from double0negative and contains new features, improvements, and support for current and future Minecraft versions.
 
 ## Get Help
 
@@ -14,6 +14,6 @@ For more information about this plugin and how to use it, please see our [wiki](
 
 *Original Code*: @[Double0negative](https://github.com/Double0negative/)
 
-*Maintainer*: @[nextinfinity](https://github.com/nextinfinity/)
+*Developer*: @[nextinfinity](https://github.com/nextinfinity/)
 
 *Documentation*: @[jflory7](https://github.com/jflory7/)
