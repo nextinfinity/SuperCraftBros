@@ -8,6 +8,8 @@ public class PlayerLeave implements Listener {
 
 	@EventHandler
 	public void onLeave(PlayerLeaveArenaEvent event) {
-		event.getPlayer().getTeam().setScore(0);
+		if (event.getPlayer().getTeam() != null) {
+			event.getPlayer().getTeam().setScore(0);
+		}
 	}
 }
