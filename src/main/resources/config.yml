@@ -1,9 +1,10 @@
 text:
-  name: "SuperCraftBros"
-  prefix: "&e[&6{NAME}&e] "
-  primary-color: "6"
-  secondary-color: "e"
-  error-color: "c"
+  name: SuperCraftBros
+  prefix: '&e[&6{NAME}&e] '
+  permission: 'scb'
+  primary-color: '6'
+  secondary-color: 'e'
+  error-color: 'c'
 size:
   min: 2
   max: 4
@@ -14,8 +15,8 @@ arena:
   fire-block-damage: false
   explosion-block-damage: false
 modes:
-  game-mode: "ADVENTURE"
-  exit-mode: "SURVIVAL"
+  game-mode: ADVENTURE
+  exit-mode: SURVIVAL
 time:
   game-time: 480
   countdown-time: 60
