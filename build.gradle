@@ -15,7 +15,7 @@ repositories {
     mavenLocal()
 }
 dependencies {
-    compile(group: 'net.nextinfinity', name: 'core', version:'1.0.0') {
+    compile(group: 'net.nextinfinity', name: 'core', version:'1.0.1') {
         transitive = false
     }
     compileOnly(group: 'org.spigotmc', name: 'spigot-api', version: '1.13.2-R0.1-SNAPSHOT') {
